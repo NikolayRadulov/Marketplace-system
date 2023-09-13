@@ -17,9 +17,8 @@ public class Category extends BaseEntity {
 	@ManyToMany
 	private List<Ad> ads;
 	
-	public Category(String name, List<Ad> ads) {
+	public Category(String name) {
 		this.name = name;
-		this.ads = ads;
 	}
 
 	public Category() {

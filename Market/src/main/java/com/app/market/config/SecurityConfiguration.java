@@ -3,6 +3,7 @@ package com.app.market.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,13 +19,16 @@ import com.app.market.repository.UserRepository;
 import com.app.market.service.UserDetailsServiceImpl;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration {
 	
 	@SuppressWarnings("removal")
 	@Bean
 	public SecurityFilterChain getSecurityFilterChain(HttpSecurity httpSecurity, SecurityContextRepository securityContextRepository) throws Exception {
+		
+		
 		httpSecurity.authorizeHttpRequests()
-		.requestMatchers("/", "/register").permitAll()
+		.requestMatchers("/", "/users/register", "/users/login", "/static/**", "styles/**", "js/**", "/categories/getAll", "/error").permitAll()
 		.requestMatchers("/admin").hasRole(UserRoleEnum.ADMIN.name())
 		.requestMatchers("/moderator").hasRole(UserRoleEnum.MODERATOR.name())
 		.anyRequest().authenticated()
