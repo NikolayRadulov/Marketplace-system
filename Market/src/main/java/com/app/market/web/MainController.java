@@ -13,7 +13,6 @@ public class MainController {
 	
 	public MainController(CategoryService categoryService) {
 		this.categoryService = categoryService;
-		// TODO Auto-generated constructor stub
 	}
 	
 	

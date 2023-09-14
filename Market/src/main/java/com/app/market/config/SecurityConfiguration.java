@@ -16,7 +16,7 @@ import org.springframework.security.web.context.SecurityContextRepository;
 
 import com.app.market.model.enums.UserRoleEnum;
 import com.app.market.repository.UserRepository;
-import com.app.market.service.UserDetailsServiceImpl;
+import com.app.market.service.impl.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -28,8 +28,8 @@ public class SecurityConfiguration {
 		
 		
 		httpSecurity.authorizeHttpRequests()
-		.requestMatchers("/", "/users/register", "/users/login", "/static/**", "styles/**", "js/**", "/categories/getAll", "/error").permitAll()
-		.requestMatchers("/admin").hasRole(UserRoleEnum.ADMIN.name())
+		.requestMatchers("/", "/users/register", "/users/login", "/static/**", "styles/**", "js/**", "/categories/getAll", "/error", "/users/loadUsers", "/users/logout").permitAll()
+		.requestMatchers("users/admin").hasAuthority(UserRoleEnum.ADMIN.name())
 		.requestMatchers("/moderator").hasRole(UserRoleEnum.MODERATOR.name())
 		.anyRequest().authenticated()
 		.and().formLogin().loginPage("/users/login")
@@ -37,7 +37,7 @@ public class SecurityConfiguration {
 		.passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
 		.defaultSuccessUrl("/")
 		.and().logout().logoutUrl("/users/logout")
-		.logoutSuccessUrl("/").invalidateHttpSession(true)
+		.logoutSuccessUrl("/")
 		.and().securityContext()
 		.securityContextRepository(securityContextRepository);
 		

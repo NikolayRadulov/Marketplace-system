@@ -19,7 +19,7 @@ public class UserRole extends BaseEntity {
 	@Column(nullable = false, name = "user_role", unique = true)
 	private UserRoleEnum userRole;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy = "roles")
 	private List<User> users;
 	
 	public UserRole(UserRoleEnum userRole) {

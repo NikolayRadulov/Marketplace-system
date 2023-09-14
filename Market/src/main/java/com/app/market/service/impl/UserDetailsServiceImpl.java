@@ -1,4 +1,4 @@
-package com.app.market.service;
+package com.app.market.service.impl;
 
 import java.util.Collection;
 import java.util.List;

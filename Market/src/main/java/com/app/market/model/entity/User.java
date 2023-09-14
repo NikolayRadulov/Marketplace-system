@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -24,7 +25,7 @@ public class User extends BaseEntity {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<UserRole> roles;
 	
 	@OneToMany(mappedBy = "owner")

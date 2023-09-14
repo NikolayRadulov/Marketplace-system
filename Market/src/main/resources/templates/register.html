@@ -1,26 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="https://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <link rel="stylesheet" th:href="@{/styles/loginAndRegisterPagesStyles.css}">
 </head>
 <body>
     <section id = "form-container">
-        <h1>Log in</h1>
-        <form th:action="@{/users/login}" th:method = "POST">
+        <h1>Register</h1>
+        <form th:action="@{/users/register}" th:method = "POST">
             <div class="field">
                 <label for="username">Enter a username</label>
                 <input type="text" placeholder="ivan589" name = "username"> 
             </div>
             <div class="field">
+                <label for="email">Enter an email</label>
+                <input type="email" placeholder="user@example.com" name = "email">  
+            </div>
+            <div class="field">
                 <label for="password">Enter a password</label>
                 <input type="password" placeholder="*********" name = "password">  
             </div>
-            <a th:href="@{/}">Forgotten password?</a>
-            <button type="submit">Log in</button>
+            
+            <div class="field">
+                <label for="confirmPassword">Confirm password</label>
+                <input type="password" placeholder="*********" name = "confirmPassword">  
+            </div>
+            <button type="submit">Register</button>
         </form>
     </section>
 </body>
 </html>
+
+
+

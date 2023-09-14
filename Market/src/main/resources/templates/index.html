@@ -13,7 +13,10 @@
             <div>
                 <a th:href="@{/users/login}" sec:authorize = "!isAuthenticated()">Login</a>
                 <a th:href="@{/users/register}" sec:authorize = "!isAuthenticated()">Register</a>
-                <a th:href="@{/users/logout}" sec:authorize = "isAuthenticated()">Logout</a>
+                <form th:action="@{/users/logout}" th:method = "POST" sec:authorize = "isAuthenticated()">
+                    <input type="submit" th:text = "Logout">Logout</input>
+                </form>
+                
             </div>
         </nav>
     </header>
