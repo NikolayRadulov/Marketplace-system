@@ -45,6 +45,19 @@ text-align: center;
     font-size: 18px;
 }
 
+.error {
+    border-color: red;
+}
+
+small {
+    color: red;
+}
+
+.invalid-credentials {
+    color: red;
+    font-size: 22px;
+}
+
 #form-container form .field input {
     background-color: var(--form-input_color);
     font-size: 18px;

@@ -28,14 +28,15 @@ public class SecurityConfiguration {
 		
 		
 		httpSecurity.authorizeHttpRequests()
-		.requestMatchers("/", "/users/register", "/users/login", "/static/**", "styles/**", "js/**", "/categories/getAll", "/error", "/users/loadUsers", "/users/logout").permitAll()
+		.requestMatchers("/", "/users/register", "/users/login", "/static/**", "styles/**", "js/**", "/categories/getAll", "/error", "/users/loadUsers", "/users/logout", "/users/login-error").permitAll()
 		.requestMatchers("users/admin").hasAuthority(UserRoleEnum.ADMIN.name())
 		.requestMatchers("/moderator").hasRole(UserRoleEnum.MODERATOR.name())
 		.anyRequest().authenticated()
 		.and().formLogin().loginPage("/users/login")
 		.usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
 		.passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
-		.defaultSuccessUrl("/")
+		.defaultSuccessUrl("/", true)
+		.failureForwardUrl("/users/login-error")
 		.and().logout().logoutUrl("/users/logout")
 		.logoutSuccessUrl("/")
 		.and().securityContext()

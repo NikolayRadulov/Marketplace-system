@@ -1,5 +1,6 @@
 package com.app.market.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	private Collection<? extends GrantedAuthority> getAuthorities(List<UserRole> roles) {
+		if(roles == null) return new ArrayList<SimpleGrantedAuthority>();
 		return roles.stream().map(this::getAuthority).collect(Collectors.toList());
 	}
 	

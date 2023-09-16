@@ -1,9 +1,17 @@
 package com.app.market.service.impl;
 
+import java.time.LocalDateTime;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.app.market.model.dto.UserRegisterDto;
 import com.app.market.model.entity.User;
 import com.app.market.model.entity.UserRole;
 import com.app.market.model.enums.UserRoleEnum;
@@ -15,22 +23,31 @@ import com.app.market.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
+	private final UserDetailsService userDetailsService;
 	private final UserRoleRepository userRoleRepository;
 	private final ModelMapper modelMapper;
 	private final PasswordEncoder passwordEncoder;
 	
-	public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository) {
+	public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserDetailsService userDetailsService) {
 		this.userRepository = userRepository;
+		this.userDetailsService = userDetailsService;
 		this.userRoleRepository = userRoleRepository;
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
-	public void registerUser() {
-		// TODO Auto-generated method stub
+	public void registerUser(UserRegisterDto userRegisterDto) {
+		User user = modelMapper.map(userRegisterDto, User.class);
+		user.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
+		user.setCreatedOn(LocalDateTime.now());
 
+		userRepository.save(user);
+		
+		loginUser(user.getUsername());
 	}
+	
+	
 
 	@Override
 	public void registerInitialUsers() {
@@ -50,5 +67,14 @@ public class UserServiceImpl implements UserService {
 		
 		User normalUser = new User("normal", "normal@gmail.com", "0984589392", passwordEncoder.encode("normalPassword"));
 		userRepository.save(normalUser);	
+	}
+
+	
+	@Override
+	public void loginUser(String username) {
+		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+		
+		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 }

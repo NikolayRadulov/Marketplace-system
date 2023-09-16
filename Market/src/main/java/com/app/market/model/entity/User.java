@@ -1,5 +1,6 @@
 package com.app.market.model.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -24,6 +25,9 @@ public class User extends BaseEntity {
 	
 	@Column(name = "phone_number")
 	private String phoneNumber;
+	
+	@Column(nullable = false, name = "created_on")
+	private LocalDateTime createdOn;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<UserRole> roles;
@@ -88,6 +92,14 @@ public class User extends BaseEntity {
 
 	public void setAds(List<Ad> ads) {
 		this.ads = ads;
+	}
+
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
 	}
 
 }

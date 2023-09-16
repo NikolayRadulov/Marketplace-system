@@ -9,6 +9,7 @@
 <body>
     <section id = "form-container">
         <h1>Log in</h1>
+        <h1 th:if = "${invalidCredentials}" class="invalid-credentials">Invalid credentials!</h1>
         <form th:action="@{/users/login}" th:method = "POST">
             <div class="field">
                 <label for="username">Enter a username</label>

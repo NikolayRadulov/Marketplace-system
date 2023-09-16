@@ -10,24 +10,29 @@
     <section id = "form-container">
         <h1>Register</h1>
         <form th:action="@{/users/register}" th:method = "POST">
-            <div class="field">
-                <label for="username">Enter a username</label>
-                <input type="text" placeholder="ivan589" name = "username"> 
+            <div th:object = "${userRegisterDto}">
+                <div class="field">
+                    <label for="username">Enter a username</label>
+                    <input type="text" th:field = "*{username}" placeholder="ivan589" name = "username" th:errorclass = "error"> 
+                    <small th:if = "${#fields.hasErrors('username')}" th:each = "error : ${#fields.errors('username')}" th:text = "${error}"></small>
+                </div>
+                <div class="field">
+                    <label for="email">Enter an email</label>
+                    <input type="email" th:field = "*{email}" placeholder="user@example.com" name = "email" th:errorclass = "error">  
+                    <small th:if = "${#fields.hasErrors('email')}" th:each = "error : ${#fields.errors('email')}" th:text = "${error}"></small>
+                </div>
+                <div class="field">
+                    <label for="password">Enter a password</label>
+                    <input type="password" th:field = "*{password}" placeholder="*********" name = "password" th:errorclass = "error">  
+                    <small th:each = "error : ${#fields.errors('password')}" th:text = "${error}"></small>
+                </div>
+                
+                <div class="field">
+                    <label for="confirmPassword">Confirm password</label>
+                    <input type="password" placeholder="*********" name = "confirmPassword" th:errorclass = "error">  
+                </div>
+                <button type="submit">Register</button>
             </div>
-            <div class="field">
-                <label for="email">Enter an email</label>
-                <input type="email" placeholder="user@example.com" name = "email">  
-            </div>
-            <div class="field">
-                <label for="password">Enter a password</label>
-                <input type="password" placeholder="*********" name = "password">  
-            </div>
-            
-            <div class="field">
-                <label for="confirmPassword">Confirm password</label>
-                <input type="password" placeholder="*********" name = "confirmPassword">  
-            </div>
-            <button type="submit">Register</button>
         </form>
     </section>
 </body>
