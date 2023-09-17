@@ -4,17 +4,17 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "categories")
 public class Category extends BaseEntity {
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 	
-	@ManyToMany
+	@OneToMany(mappedBy = "category")
 	private List<Ad> ads;
 	
 	public Category(String name) {

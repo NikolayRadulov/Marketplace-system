@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"xmlns = "https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add an ad</title>
+    <link rel="stylesheet" th:href="@{/styles/addAdPageStyles.css}">
+</head>
+<body>
+    <header th:replace = "fragments/headerFragment :: header"></header>
+    <h1 class="head-h1">Ad information</h1>
+    <form th:action="@{/ads/addAd}" th:method = "POST" enctype="multipart/form-data">
+        <section id = "offer">
+            <div class = "input">
+                <label for="name">Enter the ad's title*</label>
+                <input type="text" name="title" placeholder="Ex. I offer a stove with six mounths warranty" required>
+            </div>
+            <div class = "input">
+                <label for="name">Choose the ad's category*</label>
+                <select type="text" name="category" required>
+                    <option th:each = "category : ${categories}" th:text="${category.name}"></option>
+                </select>
+            </div>
+        </section>
+        <section id = "photos">
+            <h1>Photos</h1>
+            <p>Upload up to 5 images. The first will be the ad's main image.</p>
+            <div class="image-upload-container">
+                <input type="file" name = "image1">
+                <input type="file" name = "image2">
+                <input type="file" name = "image3">
+                <input type="file" name = "image4">
+                <input type="file" name = "image5">
+            </div>
+        </section>
+        <section id = "description">
+            <h1>Description*</h1>
+            <textarea name="description" cols="30" rows="10" required></textarea>
+            <small>Max 3000 symbols</small>
+        </section>
+        <section id = "location">
+            <h1>Location</h1>
+            <div class="input">
+                <label for="city">Enter city*</label>
+                <input type="text" name="city" required>
+            </div>
+            <div class="input">
+                <label for="city">Enter address*</label>
+                <input type="text" name="address" required>
+            </div>
+            <div class="input">
+                <label for="city">Enter city zone</label>
+                <input type="text" name="cityZone">
+            </div>
+        </section>
+        <section id = "price">
+            <h1>Price</h1>
+            <div class="input">
+                <label for="price">Enter price*</label>
+                <input type="number" name = "price" required>
+            </div>
+        </section>
+        <section id = "contact-informartion">
+            <h1>Contact information</h1>
+            <div th:object = "${contactUserDto}">
+                <div class="input">
+                    <label for="name">Name</label>
+                    <input type="text" name="name"  readonly>
+                </div>
+                <div class="input">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" th:value = "${email}" readonly>
+                </div>
+                <div class="input">
+                    <label for="phone">Phone number</label>
+                    <input type="tel" name="phone" readonly>
+                </div>
+            </div>
+        </section>
+        <button id = "addBtn" type="submit">Add</button>
+    </form>
+</body>
+</html>

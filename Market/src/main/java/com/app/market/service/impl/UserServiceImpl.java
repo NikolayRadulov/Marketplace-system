@@ -77,4 +77,10 @@ public class UserServiceImpl implements UserService {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
+
+	@Override
+	public User getByName(String name) {
+		// TODO Auto-generated method stub
+		return userRepository.findByUsername(name);
+	}
 }

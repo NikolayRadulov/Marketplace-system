@@ -7,6 +7,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +27,9 @@ public class Ad extends BaseEntity {
 	@ManyToOne
 	private User owner;
 	
+	@OneToMany(mappedBy = "ad")
+	private List<FileEntity> images;
+	
 	public Ad(String name, BigDecimal price, String description) {
 		this.name = name;
 		this.price = price;
@@ -34,8 +39,11 @@ public class Ad extends BaseEntity {
 	@ManyToMany(mappedBy = "ads")
 	private List<Rating> ratings;
 	
-	@ManyToMany(mappedBy = "ads")
-	private List<Category> categories;
+	@ManyToOne
+	private Category category;
+	
+	@OneToOne
+	private Location location;
 	
 	public Ad() {
 		// TODO Auto-generated constructor stub
@@ -81,12 +89,28 @@ public class Ad extends BaseEntity {
 		this.ratings = ratings;
 	}
 
-	public List<Category> getCategories() {
-		return categories;
+	public List<FileEntity> getImages() {
+		return images;
 	}
 
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
+	public void setImages(List<FileEntity> images) {
+		this.images = images;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header th:fragment = "header">
+        <nav>
+            <a th:href="@{/}">Market</a>
+            <div>
+                <a th:href="@{/ads/addAd}" sec:authorize = "isAuthenticated()">Add a new ad</a>
+                <a th:href="@{/users/login}" sec:authorize = "!isAuthenticated()">Login</a>
+                <a th:href="@{/users/register}" sec:authorize = "!isAuthenticated()">Register</a>
+                
+                <form th:action="@{/users/logout}" th:method = "POST" sec:authorize = "isAuthenticated()">
+                    <input type="submit" th:text = "Logout">Logout</input>
+                </form>
+                
+            </div>
+        </nav>
+    </header>
+</body>
+</html>
