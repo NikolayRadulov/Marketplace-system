@@ -31,6 +31,10 @@ nav div a {
     font-size: 20px;
 }
 
+.error-message {
+    color: red;
+}
+
 section {
     background-color: white;
     padding: 20px;

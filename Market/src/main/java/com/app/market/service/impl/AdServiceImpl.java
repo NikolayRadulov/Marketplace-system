@@ -1,12 +1,14 @@
 package com.app.market.service.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.app.market.model.dto.AdOverviewDto;
 import com.app.market.model.dto.ExportAdDto;
 import com.app.market.model.dto.ImportAdDto;
 import com.app.market.model.entity.Ad;
@@ -39,8 +41,12 @@ public class AdServiceImpl implements AdService {
 	}
 
 	@Override
-	public List<Ad> getByCategoryName(String categoryName) {
-		return adRepository.findByCategory(categoryName);
+	public List<AdOverviewDto> getByCategoryName(String categoryName) {
+		List<AdOverviewDto> adOverviewDtos = new ArrayList<>();
+		for(Ad ad : adRepository.findByCategory(categoryName)) {
+			adOverviewDtos.add(new AdOverviewDto(ad.getId() ,ad.getName(),ad.getLocation().getCity() + ", " + ad.getLocation().getAddress(), ad.getPrice().doubleValue()));
+		}
+		return adOverviewDtos;
 	}
 
 	@Override
@@ -63,6 +69,11 @@ public class AdServiceImpl implements AdService {
 		ad.setLocation(location);
 		
 		return adRepository.save(ad);
+	}
+
+	@Override
+	public Ad findById(long id) {
+		return adRepository.findById(id).get();
 	}
 
 }

@@ -1,11 +1,16 @@
-window.addEventListener("load", fetchCategories)
+window.addEventListener("load", fetchImage)
 
 const categoriesSection = document.getElementById('categories');
 
-function fetchCategories() {
-    fetch("http://localhost:8080/categories/getAll")
-    .then(res => res.json())
-    .then(array => array.forEach(element => {
+function fetchImage() {
+    fetch("http://localhost:8080/ads/getImages/2")
+    .then(img => img.json())
+    .then(img => console.log(img))
+    .then(imgSrc => {
+        let img = document.querySelector("img");
+        img.src = imgSrc;
+    })
+    /*.then(array => array.forEach(element => {
        const div = document.createElement("div");
        div.className = "category";
 
@@ -17,5 +22,5 @@ function fetchCategories() {
        div.appendChild(a);
        categoriesSection.appendChild(div);
     }))
-    .catch(e => console.log(e));
+    .catch(e => console.log(e));*/
 }

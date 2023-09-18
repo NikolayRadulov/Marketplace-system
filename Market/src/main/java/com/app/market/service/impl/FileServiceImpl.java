@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Service;
 
+import com.app.market.model.dto.DownloadFileDto;
 import com.app.market.model.dto.UploadFileDto;
 import com.app.market.model.entity.Ad;
 import com.app.market.model.entity.FileEntity;
@@ -28,6 +29,13 @@ public class FileServiceImpl implements FileService {
 		fileEntity.setAd(ad);
 		
 		fileRepository.save(fileEntity);
+	}
+
+	@Override
+	public DownloadFileDto getFile(long id) {
+		FileEntity fileEntity = fileRepository.findById(id).orElseThrow();
+		
+		return new DownloadFileDto(fileEntity.getFileName(), fileEntity.getContentType(), fileEntity.getBytes());
 	}
 
 }

@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 public class ImportAdDto {
 
-	@Size(min = 4, max = 50)
+	@Size(min = 4, max = 50, message = "Title must be between 4 and 50 characters")
 	private String title;
 
 	private String category;
@@ -18,14 +18,18 @@ public class ImportAdDto {
 	private MultipartFile image4;
 	private MultipartFile image5;
 	
-	@Positive
+	@Positive(message = "Price must be positive")
 	private double price;
 	
-	@Size(min = 30, max = 3000)
+	@Size(min = 30, max = 3000, message = "Description must be between 30 and 3000 characters")
 	private String description;
 	
+	@Size(min = 2, max = 30, message = "City must be between 2 and 30 characters")
 	private String city;
+	
+	@Size(min = 6, max = 30, message = "Address must be between 6 and 30 characters")
 	private String address;
+	
 	private String cityZone;	
 	
 	public ImportAdDto() {

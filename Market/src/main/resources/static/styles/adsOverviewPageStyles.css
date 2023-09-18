@@ -1,0 +1,88 @@
+:root {
+    --green_blue: #002f34;
+    --gray_white: #f2f4f5;
+}
+
+html body {
+    overflow-x: hidden;
+    margin: 0px;
+    background-color: var(--gray_white);
+}
+
+header {
+    background-color: var(--green_blue);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 150px;
+}
+
+a {
+    font-size: 22px;
+    color: white;
+    text-decoration: none;
+}
+
+nav div a {
+    margin: 24px;
+    
+    font-size: 20px;
+}
+
+#filters {
+    background-color: white;
+    width: fit-content; 
+    border-radius: 6px;
+    padding: 25px;
+    margin: 50px auto;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+}   
+
+.input label, input {
+    font-size: 18px;
+}
+
+.input input {
+    background-color: var(--gray_white);
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    margin-bottom: 25px;
+}
+
+#filters h1 {
+    font-size: 30px;
+}
+
+
+#list .ad-overview {
+    display: flex;
+    width: 80%;
+    margin: 20px;
+    margin-left: 10%;
+    background-color: white;
+    border-radius: 6px;
+}
+
+#list .ad-overview div {
+    width: 100%;
+}
+#list .ad-overview div h1{
+
+}
+#list .ad-overview div p{
+    position: relative;
+    left: 85%;
+    top: -75px;
+    font-size: 18px;
+}
+#list .ad-overview small {
+    position: relative;
+    top: 30%;
+}

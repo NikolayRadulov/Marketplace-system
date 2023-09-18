@@ -6,7 +6,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,6 +21,8 @@ import com.app.market.service.AdService;
 import com.app.market.service.CategoryService;
 import com.app.market.service.FileService;
 import com.app.market.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/ads")
@@ -41,11 +46,18 @@ public class AdsController {
 		model.addAttribute("categories", categoryService.getAllCategories());
 		model.addAttribute("userContactDto", user);
 		
+		if(!model.containsAttribute("importAdDto"))model.addAttribute("importAdDto", new ImportAdDto());
+		
 		return "addAd.html";
 	}
 
 	@PostMapping("/addAd")
-	public String redirectToHome(@AuthenticationPrincipal UserDetails userDetails, ImportAdDto importAdDto) throws IOException {
+	public String redirectToHome(Model model, @AuthenticationPrincipal UserDetails userDetails, @Valid @ModelAttribute("importAdDto") ImportAdDto importAdDto, BindingResult bindingResult) throws IOException {
+		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("importAdDto", importAdDto);
+			return "addAd.html";
+		}
 		
 		Ad currentAd = adService.addNewAdd(userDetails.getUsername(), importAdDto);
 		
@@ -58,4 +70,14 @@ public class AdsController {
 		
 		return "redirect:/";
 	}
+	
+	@GetMapping("/ads_by_category/{categoryName}")
+	public String getOverviewPage(Model model, @PathVariable("categoryName") String categoryName) {
+		model.addAttribute("ads", adService.getByCategoryName(categoryName));
+		model.addAttribute("categoryName", categoryName);
+		return "adsOverview.html"; 
+	}
+	
+	
+	
 }

@@ -11,6 +11,6 @@ import com.app.market.model.entity.Ad;
 @Repository
 public interface AdRepository extends JpaRepository<Ad, Long>{
 
-	@Query("SELECT a from Ad a JOIN Category c WHERE c.name = :category")
+	@Query("SELECT a from Ad a JOIN a.category c WHERE c.name = :category")
 	List<Ad> findByCategory(String category);
 }
