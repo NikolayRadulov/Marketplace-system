@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.app.market.model.dto.AdFilterDto;
 import com.app.market.model.dto.AdOverviewDto;
 import com.app.market.model.dto.ExportAdDto;
 import com.app.market.model.dto.ImportAdDto;
@@ -74,6 +75,15 @@ public class AdServiceImpl implements AdService {
 	@Override
 	public Ad findById(long id) {
 		return adRepository.findById(id).get();
+	}
+
+	@Override
+	public List<AdOverviewDto> getByCategoryNameAndFilters(String categoryName, AdFilterDto adFilterDto) {
+		List<AdOverviewDto> adOverviewDtos = new ArrayList<>();
+		for(Ad ad : adRepository.findByCategoryAndFilters(categoryName, adFilterDto.getMinPrice(), adFilterDto.getMaxPrice())) {
+			adOverviewDtos.add(new AdOverviewDto(ad.getId() ,ad.getName(),ad.getLocation().getCity() + ", " + ad.getLocation().getAddress(), ad.getPrice().doubleValue()));
+		}
+		return adOverviewDtos;
 	}
 
 }

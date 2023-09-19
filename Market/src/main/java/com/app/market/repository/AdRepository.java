@@ -13,4 +13,7 @@ public interface AdRepository extends JpaRepository<Ad, Long>{
 
 	@Query("SELECT a from Ad a JOIN a.category c WHERE c.name = :category")
 	List<Ad> findByCategory(String category);
+	
+	@Query("SELECT a from Ad a JOIN a.category c WHERE c.name = :category and a.price >= :minPrice and a.price <= :maxPrice")
+	List<Ad> findByCategoryAndFilters(String category, double minPrice, double maxPrice);
 }

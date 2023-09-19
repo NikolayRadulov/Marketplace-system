@@ -24,6 +24,7 @@
                 <label for="minRating">Enter minimal rating</label>
                 <input type="number" name="minRating" min="1" max="5">
             </div>
+            <button type="submit">Apply</button>
         </form>
     </section>
 
@@ -33,9 +34,10 @@
             <div>
                 <h1 th:text = "${ad.title}"></h1>
                 <small th:text = "${ad.location}"></small>
-                <p th:text = "${ad.price}"> </p>
+                <p th:text = "${ad.price}"></p>
             </div>
         </div>
+        <h1 th:if = "${#lists.isEmpty(ads)}" class = "empty-message">Nothing found :(</h1>
     </section>
 </body>
 </html>

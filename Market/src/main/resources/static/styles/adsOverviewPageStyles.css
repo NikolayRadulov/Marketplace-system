@@ -60,6 +60,13 @@ nav div a {
     font-size: 30px;
 }
 
+#filters button {
+    font-size: 18px;
+    background-color: var(--green_blue);
+    color: white;
+    padding: 8px 40px;
+}
+
 
 #list .ad-overview {
     display: flex;
@@ -73,9 +80,12 @@ nav div a {
 #list .ad-overview div {
     width: 100%;
 }
-#list .ad-overview div h1{
 
+.empty-message {
+    font-size: 40px;
+    margin: 100px 40%;
 }
+
 #list .ad-overview div p{
     position: relative;
     left: 85%;

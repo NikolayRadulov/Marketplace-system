@@ -19,7 +19,7 @@
 
     <section id = "categories" >
         <h1>Categories</h1>
-        <ul type = "none" class="category" >
+        <ul type = "none" class="category" > 
            <li th:each = 'category : ${categories}'>
                 <a th:href="@{/ads/ads_by_category/{ca}(ca = ${category.name})}" th:text = "${category.name}"></a>
            </li>

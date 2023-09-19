@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.app.market.model.dto.AdFilterDto;
 import com.app.market.model.dto.ImportAdDto;
 import com.app.market.model.dto.UploadFileDto;
 import com.app.market.model.entity.Ad;
@@ -72,9 +73,11 @@ public class AdsController {
 	}
 	
 	@GetMapping("/ads_by_category/{categoryName}")
-	public String getOverviewPage(Model model, @PathVariable("categoryName") String categoryName) {
-		model.addAttribute("ads", adService.getByCategoryName(categoryName));
+	public String getOverviewPage(Model model, @PathVariable("categoryName") String categoryName, AdFilterDto adFilterDto) {
+		if(adFilterDto.getMaxPrice() == 0 || adFilterDto.getMinPrice() == 0)model.addAttribute("ads", adService.getByCategoryName(categoryName));
+		else model.addAttribute("ads", adService.getByCategoryNameAndFilters(categoryName, adFilterDto));
 		model.addAttribute("categoryName", categoryName);
+		
 		return "adsOverview.html"; 
 	}
 	
