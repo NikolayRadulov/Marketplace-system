@@ -5,6 +5,7 @@ public class AdOverviewDto {
 	private long id;
 	private String title;
 	private String location;
+	private String date;
 	private double price;
 	
 	public AdOverviewDto(long id, String title, String location, double price) {
@@ -48,6 +49,14 @@ public class AdOverviewDto {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }

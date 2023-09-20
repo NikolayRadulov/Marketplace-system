@@ -18,4 +18,6 @@ public interface AdService {
 	Ad addNewAdd(String username, ImportAdDto importAdDto);
 	
 	Ad findById(long id);
+	
+	AdOverviewDto findOverviewById(long id);
 }

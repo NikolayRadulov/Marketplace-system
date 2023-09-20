@@ -72,6 +72,13 @@ public class AdsController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/getAdInfo/{id}") 
+	public String getAdOverviewPage(Model model, @PathVariable("id")long id) {
+		model.addAttribute("ad", adService.findOverviewById(id));
+		model.addAttribute("user", userService.getById(id));
+		return "adInfoPage.html";
+	}
+	
 	@GetMapping("/ads_by_category/{categoryName}")
 	public String getOverviewPage(Model model, @PathVariable("categoryName") String categoryName, AdFilterDto adFilterDto) {
 		if(adFilterDto.getMaxPrice() == 0 || adFilterDto.getMinPrice() == 0)model.addAttribute("ads", adService.getByCategoryName(categoryName));

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.app.market.model.dto.UserContactDto;
 import com.app.market.model.dto.UserRegisterDto;
 import com.app.market.model.entity.User;
 import com.app.market.model.entity.UserRole;
@@ -83,4 +84,12 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userRepository.findByUsername(name);
 	}
+
+	@Override
+	public UserContactDto getById(long id) {
+		User user = userRepository.findById(id).get();
+		
+		return new UserContactDto(user.getEmail(), user.getPhoneNumber());
+	}
+
 }

@@ -86,13 +86,19 @@ nav div a {
     margin: 100px 40%;
 }
 
+#list .ad-overview div h1{
+    color: black;
+}
+
 #list .ad-overview div p{
     position: relative;
     left: 85%;
     top: -75px;
     font-size: 18px;
+    color: black;
 }
 #list .ad-overview small {
     position: relative;
     top: 30%;
+    color: black;
 }

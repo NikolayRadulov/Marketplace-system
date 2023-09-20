@@ -86,4 +86,12 @@ public class AdServiceImpl implements AdService {
 		return adOverviewDtos;
 	}
 
+	@Override
+	public AdOverviewDto findOverviewById(long id) {
+		Ad ad = adRepository.findById(id).get();
+		
+		AdOverviewDto adOverviewDto = new AdOverviewDto(id, ad.getName(), ad.getLocation().getCity(), ad.getPrice().doubleValue());
+		return adOverviewDto;
+	}
+
 }
