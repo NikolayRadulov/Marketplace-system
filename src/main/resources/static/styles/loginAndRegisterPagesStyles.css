@@ -1,0 +1,79 @@
+:root {
+    --background_color: #3a77ff;
+    --form-input_color: #f2f4f5;
+    --button_color: #002f34;
+}
+
+html body {
+    background-color: var(--background_color);
+    margin: 0px;
+    overflow-x: hidden;
+}
+
+#form-container {
+
+background-color: white;
+
+border-radius: 6px;
+
+width: fit-content;
+
+padding: 15px 25px;
+
+margin: auto auto;
+
+margin-top: 10%;
+
+text-align: center;
+}
+
+#form-container form a {
+    text-decoration: none;
+    font-size: 17px;
+    margin: 25px 0px;
+    display: block;
+    position: relative;
+    font-weight: 600;
+    color: black;
+}
+
+
+#form-container form .field {
+    display: flex;
+    flex-direction: column;
+    margin: 35px 15px;
+    font-size: 18px;
+}
+
+.error {
+    border-color: red;
+}
+
+small {
+    color: red;
+}
+
+.invalid-credentials {
+    color: red;
+    font-size: 22px;
+}
+
+#form-container form .field input {
+    background-color: var(--form-input_color);
+    font-size: 18px;
+    padding: 14px;
+    padding-right: 60px;
+    border: none;
+    border-radius: 4px;
+}
+#form-container form .field label {
+    align-self: baseline;
+}
+#form-container form button {
+    background-color: var(--button_color);
+    padding: 8px 54px;
+    font-size: 18px;
+    border-radius: 4px;
+    margin: 10px 5px;
+    color: white;
+}

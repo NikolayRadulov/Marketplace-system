@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/styles/adInfoPageStyles.css}">
+</head>
+<body>
+    <header th:replace = "fragments/headerFragment :: header"></header>
+    <section id = "first_section">
+        <article id="image-container" th:object = "${ad}">
+            <img th:src="@{/ads/getImages/{id}(id = ${id})}" alt="Product's image">
+        </article>
+        <article class="ad-info" th:object = "${ad}">
+            <h1>Ad info</h1>
+            <small th:text = "${date}"></small>
+            <h1 th:text = "${title}"></h1>
+            <p th:text = "${price}">
+        </article>
+        <article class="user-info" th:object = "${user}">
+            <h1>User</h1>
+            <p th:text = "${name}"></p>
+            <p th:text = "${phone}"></p>
+        </article>
+        <article class="description" th:object = "${ad}">
+            <h1>Description</h1>
+            <p th:text = "${description}"></p>
+        </article>
+    </section>
+    <section>
+
+    </section>
+    
+</body>
+</html>

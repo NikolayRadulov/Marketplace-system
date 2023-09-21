@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/styles/loginAndRegisterPagesStyles.css}">
+</head>
+<body>
+    <section id = "form-container">
+        <h1>Log in</h1>
+        <h1 th:if = "${invalidCredentials}" class="invalid-credentials">Invalid credentials!</h1>
+        <form th:action="@{/users/login}" th:method = "POST">
+            <div class="field">
+                <label for="username">Enter a username</label>
+                <input type="text" placeholder="ivan589" name = "username"> 
+            </div>
+            <div class="field">
+                <label for="password">Enter a password</label>
+                <input type="password" placeholder="*********" name = "password">  
+            </div>
+            <a th:href="@{/}">Forgotten password?</a>
+            <button type="submit">Log in</button>
+        </form>
+    </section>
+</body>
+</html>
