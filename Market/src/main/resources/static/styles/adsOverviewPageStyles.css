@@ -31,6 +31,12 @@ nav div a {
     font-size: 20px;
 }
 
+img {
+    max-width: 200px;
+    max-height: 250px;
+    margin-right: 50px;
+}
+
 #filters {
     background-color: white;
     width: fit-content; 
@@ -75,6 +81,7 @@ nav div a {
     margin-left: 10%;
     background-color: white;
     border-radius: 6px;
+    max-height: 300px;
 }
 
 #list .ad-overview div {

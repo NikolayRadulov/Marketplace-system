@@ -7,22 +7,25 @@
     <link rel="stylesheet" th:href="@{/styles/adInfoPageStyles.css}">
 </head>
 <body>
-    <header th:replace = "fragments/header.html :: header"></header>
+    <header th:replace = "fragments/headerFragment :: header"></header>
     <section id = "first_section">
-        <div th:object = "${ad}">
-            <article id="image-container">
-                <img th:src="ads/getImages/{id}(id = ${ad.id})" alt="Product's image">
-            </article>
-            <article class="ad-info">
-                <small th:text = "${ad.date}"></small>
-                <h1 th:text = "${ad.title}"></h1>
-                <p th:text = "${ad.price}">
-            </article>
-        </div>
+        <article id="image-container" th:object = "${ad}">
+            <img th:src="@{/ads/getImages/{id}(id = ${id})}" alt="Product's image">
+        </article>
+        <article class="ad-info" th:object = "${ad}">
+            <h1>Ad info</h1>
+            <small th:text = "${date}"></small>
+            <h1 th:text = "${title}"></h1>
+            <p th:text = "${price}">
+        </article>
         <article class="user-info" th:object = "${user}">
-            <h2>User</h2>
-            <p th:text = "${user.name}"></p>
-            <p th:text = "${user.phone}"></p>
+            <h1>User</h1>
+            <p th:text = "${name}"></p>
+            <p th:text = "${phone}"></p>
+        </article>
+        <article class="description" th:object = "${ad}">
+            <h1>Description</h1>
+            <p th:text = "${description}"></p>
         </article>
     </section>
     <section>

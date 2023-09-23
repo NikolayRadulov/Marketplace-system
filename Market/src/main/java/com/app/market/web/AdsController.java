@@ -57,6 +57,8 @@ public class AdsController {
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("importAdDto", importAdDto);
+			System.out.println("Errors found");
+			bindingResult.getAllErrors().stream().forEach(System.out::println);
 			return "addAd.html";
 		}
 		
