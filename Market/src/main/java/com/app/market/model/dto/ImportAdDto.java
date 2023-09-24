@@ -2,6 +2,7 @@ package com.app.market.model.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
@@ -10,13 +11,11 @@ public class ImportAdDto {
 	@Size(min = 4, max = 50, message = "Title must be between 4 and 50 characters")
 	private String title;
 
+	@NotNull
 	private String category;
 	
-	private MultipartFile image1;
-	private MultipartFile image2;
-	private MultipartFile image3;
-	private MultipartFile image4;
-	private MultipartFile image5;
+	@NotNull
+	private MultipartFile image;
 	
 	@Positive(message = "Price must be positive")
 	private double price;
@@ -24,10 +23,10 @@ public class ImportAdDto {
 	@Size(min = 30, max = 3000, message = "Description must be between 30 and 3000 characters")
 	private String description;
 	
-	@Size(min = 2, max = 50, message = "City must be between 2 and 30 characters")
+	@Size(min = 2, max = 50, message = "City must be between 2 and 50 characters")
 	private String city;
 	
-	@Size(min = 6, max = 50, message = "Address must be between 6 and 30 characters")
+	@Size(min = 6, max = 50, message = "Address must be between 6 and 50 characters")
 	private String address;
 	
 	private String cityZone;	
@@ -57,54 +56,15 @@ public class ImportAdDto {
 	}
 
 
-	public MultipartFile getImage1() {
-		return image1;
+	public MultipartFile getImage() {
+		return image;
 	}
 
 
-	public void setImage1(MultipartFile image1) {
-		this.image1 = image1;
+	public void setImage(MultipartFile image) {
+		this.image = image;
 	}
 
-
-	public MultipartFile getImage2() {
-		return image2;
-	}
-
-
-	public void setImage2(MultipartFile image2) {
-		this.image2 = image2;
-	}
-
-
-	public MultipartFile getImage3() {
-		return image3;
-	}
-
-
-	public void setImage3(MultipartFile image3) {
-		this.image3 = image3;
-	}
-
-
-	public MultipartFile getImage4() {
-		return image4;
-	}
-
-
-	public void setImage4(MultipartFile image4) {
-		this.image4 = image4;
-	}
-
-
-	public MultipartFile getImage5() {
-		return image5;
-	}
-
-
-	public void setImage5(MultipartFile image5) {
-		this.image5 = image5;
-	}
 
 
 	public String getDescription() {

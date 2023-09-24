@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.app.market.model.dto.UserContactDto;
+import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
 import com.app.market.model.entity.User;
 import com.app.market.model.entity.UserRole;
@@ -89,7 +90,14 @@ public class UserServiceImpl implements UserService {
 	public UserContactDto getById(long id) {
 		User user = userRepository.findById(id).get();
 		
-		return new UserContactDto(user.getEmail(), user.getPhoneNumber());
+		return new UserContactDto(user.getId(), user.getEmail(), user.getPhoneNumber());
+	}
+
+	@Override
+	public UserProfileOverviewDto getProfileOverviewById(long id) {
+		User user = userRepository.findById(id).get();
+		UserProfileOverviewDto dto = modelMapper.map(user, UserProfileOverviewDto.class);
+		return dto;
 	}
 
 }

@@ -9,23 +9,32 @@
 <body>
     <header th:replace = "fragments/headerFragment :: header"></header>
     <section id = "first_section">
-        <article id="image-container" th:object = "${ad}">
-            <img th:src="@{/ads/getImages/{id}(id = ${id})}" alt="Product's image">
+        <article id="image-container">
+            <img th:src="@{/ads/getImages/{id}(id = ${ad.id})}" alt="Product's image">
         </article>
-        <article class="ad-info" th:object = "${ad}">
+        <article class="ad-info">
             <h1>Ad info</h1>
-            <small th:text = "${date}"></small>
-            <h1 th:text = "${title}"></h1>
-            <p th:text = "${price}">
+            <small th:text = "${ad.date}"></small>
+            <p th:text = "${ad.title}"></p>
+            <div class="price">
+                <h2 th:text = "${#numbers.formatDecimal(ad.price, 0, 'COMMA', 2, 'POINT')}"></h2>
+                <h2>BGN</h2>
+            </div>
         </article>
-        <article class="user-info" th:object = "${user}">
+        <article class="user-info">
             <h1>User</h1>
-            <p th:text = "${name}"></p>
-            <p th:text = "${phone}"></p>
+            <i class="fa-solid fa-user"></i><p th:text = "${user.email}"></p>
+            <i class="fa-solid fa-phone" th:unless = "${#strings.isEmpty(user.phone)}"></i><p th:text = "${user.phone}"></p>
+            <p th:if = "${#strings.isEmpty(user.phone)}" class="error-message">No phone number provided</p>
+        
+            <a th:href="@{/users/profile/{id}(id = ${user.id})}">
+                <button>Visit profile</button>
+            </a>
+            
         </article>
-        <article class="description" th:object = "${ad}">
+        <article class="description">
             <h1>Description</h1>
-            <p th:text = "${description}"></p>
+            <p th:text = "${ad.description}"></p>
         </article>
     </section>
     <section>

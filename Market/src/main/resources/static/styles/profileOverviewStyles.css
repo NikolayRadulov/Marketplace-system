@@ -1,0 +1,175 @@
+@import url('https://use.fontawesome.com/releases/v6.4.2/css/all.css');
+
+:root {
+    --green_blue: #002f34;
+    --gray_white: #f2f4f5;
+    --danger_red: #dc3545;
+}
+
+html body {
+    overflow-x: hidden;
+    margin: 0px;
+    background-color: var(--gray_white);
+}
+
+header {
+    background-color: var(--green_blue);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 150px;
+}
+
+a {
+    font-size: 22px;
+    color: white;
+    text-decoration: none;
+}
+
+nav div a {
+    margin: 24px;
+    
+    font-size: 20px;
+}
+
+#info-section {
+    display: grid;
+    grid-template-areas:
+        'info rating'
+        'info report';
+    grid-template-columns: 370px;
+    grid-row-gap: 25px;
+    margin: 25px;
+}
+
+article {
+    width: fit-content;
+    border: none;
+    border-radius: 6px;
+    background-color: white;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+#rating input {
+    margin-bottom: 30px;
+}
+
+#image-container {
+    width: 600px;
+    height: 600px;
+    grid-area: img;
+}
+
+img {
+    max-width: 600px;
+    max-height: 600px;
+    margin-right: 15px;
+}
+
+p {
+    font-size: 18px;
+    display: inline-block;
+}
+#list .ad-overview {
+    display: flex;
+    width: 95%;
+    margin: 20px;
+    margin-left: 3%;
+    background-color: white;
+    border-radius: 6px;
+    max-height: 300px;
+    padding: 6px;
+}
+
+#list .ad-overview div {
+    width: 100%;
+}
+
+.empty-message {
+    font-size: 40px;
+    margin: 100px 40%;
+}
+
+#list .ad-overview div h1{
+    color: black;
+}
+
+#list .ad-overview div p{
+    position: relative;
+    left: 85%;
+    top: -75px;
+    font-size: 18px;
+    color: black;
+}
+#list .ad-overview small {
+    position: relative;
+    top: 30%;
+    color: black;
+}
+
+
+i {
+    color: var(--green_blue);
+}
+
+small {
+    color: red;
+}
+
+button {
+    padding: 8px 32px;
+    font-size: 18px;
+    color: white;
+    width: 100%;
+    text-align: center;
+    margin: 25px 0px;
+    background-color: var(--green_blue);
+    border: 3px solid var(--green_blue);
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+#user-info {
+    font-size: 24px;
+    grid-area: info;
+}
+#user-info i{
+    margin-top: 15px;
+}
+
+#rating {
+    grid-area: rating;
+}
+
+#report {
+    grid-area: report;
+}
+
+textarea {
+    resize: none;
+}
+
+.allAdsTitle {
+    left: 50%;
+    transform: translateX(-10%);
+    position: relative;
+}
+
+.info-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}

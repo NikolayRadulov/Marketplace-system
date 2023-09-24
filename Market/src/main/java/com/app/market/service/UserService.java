@@ -1,6 +1,7 @@
 package com.app.market.service;
 
 import com.app.market.model.dto.UserContactDto;
+import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
 import com.app.market.model.entity.User;
 
@@ -15,4 +16,6 @@ public interface UserService {
 	void registerInitialUsers();
 	
 	UserContactDto getById(long id);
+	
+	UserProfileOverviewDto getProfileOverviewById(long id);
 }

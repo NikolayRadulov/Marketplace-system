@@ -1,6 +1,9 @@
+@import url('https://use.fontawesome.com/releases/v6.4.2/css/all.css');
+
 :root {
     --green_blue: #002f34;
     --gray_white: #f2f4f5;
+    --danger_red: #dc3545;
 }
 
 html body {
@@ -11,6 +14,15 @@ html body {
 
 header {
     background-color: var(--green_blue);
+}
+
+#first_section {
+    display: grid;
+    grid-template-areas: "img ad"
+                         "img user"
+                         "desc user";
+    row-gap: 26px;
+    column-gap: 40px;
 }
 
 nav {
@@ -33,24 +45,75 @@ nav div a {
 
 article {
     width: fit-content;
+    border: none;
+    border-radius: 6px;
 }
 
-#image-container, img {
+#image-container {
+    width: 600px;
+    height: 600px;
+    grid-area: img;
+}
+
+img {
     max-width: 600px;
     max-height: 600px;
 }
 
+p {
+    font-size: 18px;
+    display: inline-block;
+    margin: 6px;
+}
+
+i {
+    color: var(--green_blue);
+}
+
+.error-message {
+    color: red;
+}
 
 .user-info {
-    position: relative;
-    left:65%;
-    bottom: 150px;
+    padding: 20px;
+    grid-area: user;
+}
+
+.btns {
+    margin-top: 30px;
+}
+
+button {
+    padding: 8px 32px;
+    font-size: 18px;
+    color: white;
+    width: 100%;
+    text-align: center;
+    margin: 25px 0px;
+    background-color: var(--green_blue);
+}
+
+button:hover {
+    border: 3px solid black;
+    background-color: white;
+    color: black;
+    margin-bottom: 3px;
 }
 
 .ad-info {
-    position: relative;
-    bottom: 575px;;
-    left: 65%;
+    padding: 20px;
+    grid-area: ad;
+}
+
+.ad-info .price{
+    display: flex;
+    gap: 5px;
+}
+
+.description {
+    grid-area: desc;
+    padding: 20px;
+    width: 560px;
 }
 
 section {

@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,6 +35,12 @@ public class User extends BaseEntity {
 	
 	@OneToMany(mappedBy = "owner")
 	private List<Ad> ads;
+	
+	@ManyToMany(mappedBy = "users")
+	private List<Rating> ratings;
+	
+	@OneToOne
+	private FileEntity profilePicture;
 	
 	public User(String username, String email, String phoneNumber, String password) {
 		this.username = username;

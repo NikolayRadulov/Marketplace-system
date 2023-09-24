@@ -1,6 +1,7 @@
 package com.app.market.service.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,11 +44,7 @@ public class AdServiceImpl implements AdService {
 
 	@Override
 	public List<AdOverviewDto> getByCategoryName(String categoryName) {
-		List<AdOverviewDto> adOverviewDtos = new ArrayList<>();
-		for(Ad ad : adRepository.findByCategory(categoryName)) {
-			adOverviewDtos.add(new AdOverviewDto(ad.getId() ,ad.getName(),ad.getLocation().getCity() + ", " + ad.getLocation().getAddress(), ad.getPrice().doubleValue()));
-		}
-		return adOverviewDtos;
+		return getDtos(adRepository.findByCategory(categoryName));
 	}
 
 	@Override
@@ -79,19 +76,44 @@ public class AdServiceImpl implements AdService {
 
 	@Override
 	public List<AdOverviewDto> getByCategoryNameAndFilters(String categoryName, AdFilterDto adFilterDto) {
-		List<AdOverviewDto> adOverviewDtos = new ArrayList<>();
-		for(Ad ad : adRepository.findByCategoryAndFilters(categoryName, adFilterDto.getMinPrice(), adFilterDto.getMaxPrice())) {
-			adOverviewDtos.add(new AdOverviewDto(ad.getId() ,ad.getName(),ad.getLocation().getCity() + ", " + ad.getLocation().getAddress(), ad.getPrice().doubleValue()));
-		}
-		return adOverviewDtos;
+		return getDtos(adRepository.findByCategoryAndFilters(categoryName, adFilterDto.getMinPrice(), adFilterDto.getMaxPrice()));
 	}
 
+	@Override
+	public long getOwnerId(long adId) {
+		return this.adRepository
+				.findById(adId)
+				.get()
+				.getOwner()
+				.getId();
+	}
+	
 	@Override
 	public AdOverviewDto findOverviewById(long id) {
 		Ad ad = adRepository.findById(id).get();
 		
-		AdOverviewDto adOverviewDto = new AdOverviewDto(id, ad.getName(), ad.getLocation().getCity(), ad.getPrice().doubleValue());
+		AdOverviewDto adOverviewDto = new AdOverviewDto(id, ad.getName(), ad.getLocation().getCity(), ad.getPrice().doubleValue(),ad.getDescription());
+		adOverviewDto.setDate(String.valueOf(LocalDateTime.now()));
 		return adOverviewDto;
 	}
+	
+	@Override
+	public List<AdOverviewDto> findByUser(long ownerId) {
+		// TODO Auto-generated method stub
+		return getDtos(adRepository.findByOwner(userRepository.findById(ownerId).get()));
+	}
+	
+	
+	private List<AdOverviewDto> getDtos(List<Ad> ads) {
+		List<AdOverviewDto> adOverviewDtos = new ArrayList<>();
+		
+		for(Ad ad :ads ) {
+			adOverviewDtos.add(new AdOverviewDto(ad.getId() ,ad.getName(),ad.getLocation().getCity() + ", " + ad.getLocation().getAddress(), ad.getPrice().doubleValue(), ad.getDescription()));
+		}
+		
+		return adOverviewDtos;
+	}
+
+	
 
 }

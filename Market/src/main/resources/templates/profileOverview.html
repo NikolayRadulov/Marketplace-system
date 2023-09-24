@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text = "${user.username}"></title>
+    <link rel="stylesheet" th:href="@{/styles/profileOverviewStyles.css}">
+</head>
+<body>
+
+    <header th:replace = "fragments/headerFragment.html :: header"></header>
+    <section id = "info-section">
+        <article id = "user-info">
+            <img src="@{/users/getProfilePicture/{id}(id = ${user.id})}" alt="User profile picture">
+            <form th:action="@{/}" th:method = "post" th:if = "${isProfileOwned}">
+                <input type="file">
+                <button type="submit">Upload profile photo</button>
+            </form>
+            <div class = "info-item">
+                <i class="fa-solid fa-user"></i><p th:text = "${user.username}"></p>
+            </div>
+            <div class = "info-item">
+                <i class="fa-solid fa-envelope"></i><p th:text = "${user.email}"></p>
+            </div>
+            <div class = "info-item">
+                <i class="fa-solid fa-phone"></i><p th:text = "${user.phoneNumber}"></p>
+            </div>
+            <div class = "info-item">
+                <i class="fa-solid fa-calendar-days"></i><p th:text = "${user.createdOn}"></p>
+            </div>
+
+            <button sec:authorized = "hasRole('MODERATOR')">Ban</button>
+            
+        </article>
+
+        <article id = "report" th:unless = "${isProfileOwned}">
+            <h1>Report</h1>
+            <div th:object = "${report}">
+                <form th:action="@{users/profile/{id}(id = ${user.id})}" th:method = "post">
+                    <label for = "score">Report*</label>
+                    <textarea rows="7" name="reportText" cols="42"> </textarea>
+                    <small th:if = "${#fields.hasErrors('reportText')}">Report must be between 30 and 1000 symbols!</small>
+                    <button class="report-btn" type="submit">Report</button> 
+                </form>
+            </div>
+        </article>
+
+        <article id = "rating" th:unless = "${isProfileOwned}">
+            <h1>Rate</h1>
+            <div th:object = "${rating}">
+                <form th:action="@{users/profile/{id}(id = ${user.id})}" th:method = "post">
+                        <label for = "score">Rate user from 1(Very bad) to 10(Great)*</label>
+                        <input type="number" min="1" max="10" name="score">
+                        <small th:if = "${#fields.hasErrors('score')}">Rating must be between 1 and 10</small>
+                        <label for="comment">Comment</label>
+                        <textarea rows="7" type="text" name="comment"></textarea>
+                    <button class="rate-btn" type="submit">Rate</button> 
+                </form>
+            </div>
+            
+        </article>
+    </section>
+    <h1 class="allAdsTitle">All ads from user</h1>
+    <hr>
+    <section th:replace = "fragments/adsListFragment.html :: adList"></section>
+</body>
+</html>

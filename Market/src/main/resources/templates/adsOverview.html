@@ -28,18 +28,6 @@
         </form>
     </section>
 
-    <section id = "list">
-        <a th:each = "ad : ${ads}" th:href="@{/ads/getAdInfo/{id}(id = ${ad.id})}" >
-            <div class="ad-overview">
-                <img th:src="@{/ads/getImages/{id}(id = ${ad.id})}" alt="Ad image">
-                <div>
-                    <h1 th:text = "${ad.title}"></h1>
-                    <small th:text = "${ad.location}"></small>
-                    <p th:text = "${ad.price}"></p>
-                </div>
-            </div>
-        </a>
-        <h1 th:if = "${#lists.isEmpty(ads)}" class = "empty-message">Nothing found :(</h1>
-    </section>
+    <section th:replace = "fragments/adsListFragment.html :: adList"></section>
 </body>
 </html>

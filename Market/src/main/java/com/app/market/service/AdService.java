@@ -20,4 +20,8 @@ public interface AdService {
 	Ad findById(long id);
 	
 	AdOverviewDto findOverviewById(long id);
+	
+	List<AdOverviewDto> findByUser(long ownerId);
+	
+	public long getOwnerId(long adId);
 }

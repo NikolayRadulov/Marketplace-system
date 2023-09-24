@@ -1,13 +1,10 @@
 package com.app.market.model.entity;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -27,17 +24,14 @@ public class Ad extends BaseEntity {
 	@ManyToOne
 	private User owner;
 	
-	@OneToMany(mappedBy = "ad")
-	private List<FileEntity> images;
+	@OneToOne(mappedBy = "ad")
+	private FileEntity image;
 	
 	public Ad(String name, BigDecimal price, String description) {
 		this.name = name;
 		this.price = price;
 		this.description = description;
 	}
-
-	@ManyToMany(mappedBy = "ads")
-	private List<Rating> ratings;
 	
 	@ManyToOne
 	private Category category;
@@ -81,23 +75,15 @@ public class Ad extends BaseEntity {
 		this.owner = owner;
 	}
 
-	public List<Rating> getRatings() {
-		return ratings;
+	public FileEntity getImage() {
+		return image;
 	}
 
-	public void setRatings(List<Rating> ratings) {
-		this.ratings = ratings;
+	public void setImage(FileEntity images) {
+		this.image = images;
 	}
 
-	public List<FileEntity> getImages() {
-		return images;
-	}
-
-	public void setImages(List<FileEntity> images) {
-		this.images = images;
-	}
-
-	public Category getCategory() {
+	public Category getCategory() 	{
 		return category;
 	}
 

@@ -57,19 +57,12 @@ public class AdsController {
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("importAdDto", importAdDto);
-			System.out.println("Errors found");
-			bindingResult.getAllErrors().stream().forEach(System.out::println);
 			return "addAd.html";
 		}
 		
 		Ad currentAd = adService.addNewAdd(userDetails.getUsername(), importAdDto);
 		
-		fileService.saveFile(new UploadFileDto(importAdDto.getImage1()), currentAd);
-		fileService.saveFile(new UploadFileDto(importAdDto.getImage2()), currentAd);
-		fileService.saveFile(new UploadFileDto(importAdDto.getImage3()), currentAd);
-		fileService.saveFile(new UploadFileDto(importAdDto.getImage4()), currentAd);
-		fileService.saveFile(new UploadFileDto(importAdDto.getImage5()), currentAd);
-		
+		fileService.saveFile(new UploadFileDto(importAdDto.getImage()), currentAd);	
 		
 		return "redirect:/";
 	}
@@ -77,7 +70,7 @@ public class AdsController {
 	@GetMapping("/getAdInfo/{id}") 
 	public String getAdOverviewPage(Model model, @PathVariable("id")long id) {
 		model.addAttribute("ad", adService.findOverviewById(id));
-		model.addAttribute("user", userService.getById(id));
+		model.addAttribute("user", userService.getById(adService.getOwnerId(id)));
 		return "adInfoPage.html";
 	}
 	

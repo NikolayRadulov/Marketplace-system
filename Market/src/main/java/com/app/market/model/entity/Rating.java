@@ -5,7 +5,6 @@ import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,11 +17,8 @@ public class Rating extends BaseEntity {
 	@Column
 	private String comment;
 	
-	@ManyToOne
-	private User writer;
-	
 	@ManyToMany
-	private List<Ad> ads;
+	private List<User> users;
 	
 	public Rating(double score, String comment) {
 		this.score = score;
@@ -47,22 +43,6 @@ public class Rating extends BaseEntity {
 
 	public void setComment(String comment) {
 		this.comment = comment;
-	}
-
-	public List<Ad> getAds() {
-		return ads;
-	}
-
-	public void setAds(List<Ad> ads) {
-		this.ads = ads;
-	}
-
-	public User getWriter() {
-		return writer;
-	}
-
-	public void setWriter(User writer) {
-		this.writer = writer;
 	}
 
 }

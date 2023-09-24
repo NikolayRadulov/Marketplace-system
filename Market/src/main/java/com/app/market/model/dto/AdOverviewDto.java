@@ -7,12 +7,14 @@ public class AdOverviewDto {
 	private String location;
 	private String date;
 	private double price;
+	private String description;
 	
-	public AdOverviewDto(long id, String title, String location, double price) {
+	public AdOverviewDto(long id, String title, String location, double price, String description) {
 		this.id = id; 
 		this.title = title;
 		this.location = location;
 		this.price = price;
+		this.description = description;
 	}
 
 	public AdOverviewDto() {
@@ -57,6 +59,14 @@ public class AdOverviewDto {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

@@ -9,13 +9,22 @@
     <header th:fragment = "header">
         <nav>
             <a th:href="@{/}">Market</a>
+
+            <div th:if = "${isOnMainPage}" sec:authorize = "isAuthenticated()">
+               <a th:href = "@{/users/profile/{id}(id = ${userId})}">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Profile</span>
+               </a>
+            </div>
+            
+
             <div>
                 <a th:href="@{/ads/addAd}" sec:authorize = "isAuthenticated()">Add a new ad</a>
                 <a th:href="@{/users/login}" sec:authorize = "!isAuthenticated()">Login</a>
                 <a th:href="@{/users/register}" sec:authorize = "!isAuthenticated()">Register</a>
                 
                 <form th:action="@{/users/logout}" th:method = "POST" sec:authorize = "isAuthenticated()">
-                    <input type="submit" th:text = "Logout">Logout</input>
+                    <input type="submit">Logout</input>
                 </form>
                 
             </div>

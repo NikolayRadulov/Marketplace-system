@@ -35,7 +35,7 @@ public class AdsRestController {
 	public HttpEntity<byte[]> getAdImages(@PathVariable("adId") long id) {
 		Ad ad = adService.findById(id);
 		
-		FileEntity image = ad.getImages().get(0);
+		FileEntity image = ad.getImage();
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType(MimeTypeUtils.parseMimeType(image.getContentType())));

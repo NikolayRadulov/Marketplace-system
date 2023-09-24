@@ -2,12 +2,14 @@ package com.app.market.model.dto;
 
 public class UserContactDto {
 
+	private long id;
 	private String email;
 	private String phone;
 	
-	public UserContactDto(String email, String phone) {
+	public UserContactDto(long id, String email, String phone) {
 		this.email = email;
 		this.phone = phone;
+		this.id = id;
 	}
 	
 	public UserContactDto() {
@@ -28,5 +30,13 @@ public class UserContactDto {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

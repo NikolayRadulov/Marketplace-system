@@ -1,17 +1,24 @@
 package com.app.market.web;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.app.market.model.dto.ImportRatingDto;
+import com.app.market.model.dto.ImportReportDto;
+import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
+import com.app.market.service.AdService;
 import com.app.market.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -23,9 +30,11 @@ import jakarta.validation.Valid;
 public class UserController {
 
 	private final UserService userService;
+	private final AdService adService;
 	
-	public UserController(UserService userService) {
+	public UserController(UserService userService, AdService adService) {
 		this.userService = userService;
+		this.adService = adService;
 	}
 	
 	@GetMapping("/login")
@@ -68,6 +77,19 @@ public class UserController {
 	@GetMapping("/admin")
 	public String getAdminPage() {
 		return "admin.html";
+	}
+	
+	@GetMapping("profile/{id}")
+	public String getOverviewPage(Model model, @PathVariable("id")long id, @AuthenticationPrincipal UserDetails userDetails) {
+		UserProfileOverviewDto userProfileOverviewDto = userService.getProfileOverviewById(id);
+		model.addAttribute("user", userProfileOverviewDto);
+		if(userDetails.getUsername().equals(userProfileOverviewDto.getUsername())) model.addAttribute("isProfileOwned", true);
+		
+		model.addAttribute("ads", adService.findByUser(id));
+		model.addAttribute("report", new ImportReportDto());
+		model.addAttribute("rating", new ImportRatingDto());
+		
+		return "profileOverview.html";
 	}
 	
 
