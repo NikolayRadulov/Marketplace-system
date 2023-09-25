@@ -11,9 +11,9 @@
     <header th:replace = "fragments/headerFragment.html :: header"></header>
     <section id = "info-section">
         <article id = "user-info">
-            <img src="@{/users/getProfilePicture/{id}(id = ${user.id})}" alt="User profile picture">
-            <form th:action="@{/}" th:method = "post" th:if = "${isProfileOwned}">
-                <input type="file">
+            <img th:src="@{/users/getProfilePicture/{profileName}(profileName = ${user.username})}" alt="User profile picture">
+            <form th:action="@{/users/addProfilePicture/{id}(id = ${user.id})}" th:method = "post" th:if = "${isProfileOwned}" enctype="multipart/form-data">
+                <input type="file" name = "img">
                 <button type="submit">Upload profile photo</button>
             </form>
             <div class = "info-item">
@@ -27,10 +27,7 @@
             </div>
             <div class = "info-item">
                 <i class="fa-solid fa-calendar-days"></i><p th:text = "${user.createdOn}"></p>
-            </div>
-
-            <button sec:authorized = "hasRole('MODERATOR')">Ban</button>
-            
+            </div>            
         </article>
 
         <article id = "report" th:unless = "${isProfileOwned}">
@@ -57,7 +54,54 @@
                     <button class="rate-btn" type="submit">Rate</button> 
                 </form>
             </div>
-            
+        </article>
+
+        <article id = "moderator-panel" sec:authorize = "hasAuthority('MODERATOR')" th:unless = "${isProfileOwned}"> 
+            <h1>Ban user</h1>
+            <form th:action="@{/users/banUser}">
+                <div class="radio-button-div">
+                    <input type="radio" name="numberOfHours" value="12">
+                    <label for="numberOfHours">12 hours</label>
+                </div>
+                <div class="radio-button-div">
+                    <input type="radio" name="numberOfHours" value="24">
+                    <label for="numberOfHours">1 day</label>
+                </div>
+                <div class="radio-button-div">
+                    <input type="radio" name="numberOfHours" value="48">
+                    <label for="numberOfHours">2 days</label>
+                </div>
+                <div class="radio-button-div">
+                    <input type="radio" name="numberOfHours" value="72">
+                    <label for="numberOfHours">3 days</label>
+                </div>
+                <div class="radio-button-div">
+                    <input type="radio" name="numberOfHours" value="168">
+                    <label for="numberOfHours">1 week</label>
+                </div>
+                
+                <button type="submit">Ban</button>
+            </form>
+
+        </article>
+
+        <article id = "admin-panel" sec:authorize = "hasAuthority('ADMIN')" th:if = "${isUserAdmin}">
+            <h1>User role</h1>
+            <form th:action="@{/users/changeRole/{id}(id = ${user.id})}" th:method = "post">
+                <div class="radio-button-div">
+                    <input type="radio" name="authority" value="USER">
+                    <label for="numberOfHours">USER</label>
+                </div>
+                <div class="radio-button-div">
+                    <input type="radio" name="authority" value="MODERATOR">
+                    <label for="numberOfHours">MODERATOR</label>
+                </div>
+                <div class="radio-button-div">
+                    <input type="radio" name="authority" value="ADMIN">
+                    <label for="numberOfHours">ADMIN</label>
+                </div>
+                <button type="submit">Change role</button>
+            </form>
         </article>
     </section>
     <h1 class="allAdsTitle">All ads from user</h1>

@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	private UserDetails getDatails(com.app.market.model.entity.User userEntity) {
-		
+		if(userEntity == null) return null;
 		return new User(userEntity.getUsername(), userEntity.getPassword(), getAuthorities(userEntity.getRoles()));
 	}
 

@@ -9,6 +9,7 @@ public class UserProfileOverviewDto {
 	private String email;
 	private String phoneNumber;
 	private LocalDateTime createdOn;
+	private int rolesCount;
 	
 	
 	public UserProfileOverviewDto(long id, String username, String email, String phoneNumber, LocalDateTime createdOn) {
@@ -72,6 +73,16 @@ public class UserProfileOverviewDto {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+
+	public int getRolesCount() {
+		return rolesCount;
+	}
+
+
+	public void setRolesCount(int rolesCount) {
+		this.rolesCount = rolesCount;
 	}
 
 }

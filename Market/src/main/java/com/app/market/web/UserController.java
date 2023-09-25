@@ -1,5 +1,7 @@
 package com.app.market.web;
 
+import java.io.IOException;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.app.market.model.dto.ImportRatingDto;
 import com.app.market.model.dto.ImportReportDto;
+import com.app.market.model.dto.UploadFileDto;
 import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
 import com.app.market.service.AdService;
@@ -47,6 +51,18 @@ public class UserController {
 		redirectAttributes.addFlashAttribute("invalidCredentials", true);
 		return "redirect:/users/login";
 	}
+	
+	@PostMapping("/addProfilePicture/{id}")
+	public String setProfilePicture(@PathVariable("id")long id, UploadFileDto uploadFileDto) {
+		try {
+			userService.setProfilePicture(id, uploadFileDto);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "redirect:/users/profile/"+id;
+	}
 
 	
 	@GetMapping("/loadUsers")
@@ -74,6 +90,13 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	@PostMapping("changeRole/{id}")
+	public String changeUserRole(@PathVariable("id") long userId, @RequestParam("authority")String authority) {
+		userService.changeUserAuthority(userId, authority);
+		
+		return "redirect:/users/profile/"+userId;
+	}
+	
 	@GetMapping("/admin")
 	public String getAdminPage() {
 		return "admin.html";
@@ -82,14 +105,22 @@ public class UserController {
 	@GetMapping("profile/{id}")
 	public String getOverviewPage(Model model, @PathVariable("id")long id, @AuthenticationPrincipal UserDetails userDetails) {
 		UserProfileOverviewDto userProfileOverviewDto = userService.getProfileOverviewById(id);
+		boolean isProfileOwned = userDetails.getUsername().equals(userProfileOverviewDto.getUsername());
+		
 		model.addAttribute("user", userProfileOverviewDto);
-		if(userDetails.getUsername().equals(userProfileOverviewDto.getUsername())) model.addAttribute("isProfileOwned", true);
+		model.addAttribute("isUserAdmin", userProfileOverviewDto.getRolesCount() != 2 || isProfileOwned);
+		model.addAttribute("isProfileOwned", isProfileOwned);
 		
 		model.addAttribute("ads", adService.findByUser(id));
 		model.addAttribute("report", new ImportReportDto());
 		model.addAttribute("rating", new ImportRatingDto());
 		
 		return "profileOverview.html";
+	}
+	
+	@PostMapping("/profileSearch")
+	public String redirectToProfile(@RequestParam("profileName")String username) {
+		return "redirect:/users/profile/" + userService.getByName(username).getId();
 	}
 	
 

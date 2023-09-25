@@ -15,6 +15,10 @@
             <input type="text" placeholder="What are you looking for?">
             <button type="submit">Search</button>
         </form>
+        <form th:action="@{/users/profileSearch}" th:method = "POST">
+            <input type="text" placeholder="Search user" name="profileName">
+            <button type="submit">Search</button>
+        </form>
     </section>
 
     <section id = "categories" >

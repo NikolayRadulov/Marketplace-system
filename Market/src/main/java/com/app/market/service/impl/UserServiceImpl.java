@@ -1,6 +1,8 @@
 package com.app.market.service.impl;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,12 +13,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.app.market.model.dto.UploadFileDto;
 import com.app.market.model.dto.UserContactDto;
 import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
+import com.app.market.model.entity.FileEntity;
 import com.app.market.model.entity.User;
 import com.app.market.model.entity.UserRole;
 import com.app.market.model.enums.UserRoleEnum;
+import com.app.market.repository.FileRepository;
 import com.app.market.repository.UserRepository;
 import com.app.market.repository.UserRoleRepository;
 import com.app.market.service.UserService;
@@ -27,13 +32,15 @@ public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 	private final UserDetailsService userDetailsService;
 	private final UserRoleRepository userRoleRepository;
+	private final FileRepository fileRepository;
 	private final ModelMapper modelMapper;
 	private final PasswordEncoder passwordEncoder;
 	
-	public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserDetailsService userDetailsService) {
+	public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserDetailsService userDetailsService, FileRepository fileRepository) {
 		this.userRepository = userRepository;
 		this.userDetailsService = userDetailsService;
 		this.userRoleRepository = userRoleRepository;
+		this.fileRepository = fileRepository;
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -53,8 +60,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void registerInitialUsers() {
-		if(userRepository.count() != 0) return;
-		
 		UserRole adminRole = new UserRole(UserRoleEnum.ADMIN);
 		UserRole moderatorRole = new UserRole(UserRoleEnum.MODERATOR);
 		
@@ -64,11 +69,11 @@ public class UserServiceImpl implements UserService {
 		User adminUser = new User("admin", "admin@gmail.com", "0984589332", passwordEncoder.encode("adminPassword"));
 		adminUser.getRoles().add(adminRole);
 		adminUser.getRoles().add(moderatorRole);
-		adminUser.getRoles().forEach(System.out::println);
 		userRepository.save(adminUser);
 		
-		User normalUser = new User("normal", "normal@gmail.com", "0984589392", passwordEncoder.encode("normalPassword"));
-		userRepository.save(normalUser);	
+		User moderatorUser = new User("moderator", "moderator@gmail.com", "0984583421", passwordEncoder.encode("moderatorPassword"));
+		moderatorUser.getRoles().add(moderatorRole);
+		userRepository.save(moderatorUser);
 	}
 
 	
@@ -97,7 +102,48 @@ public class UserServiceImpl implements UserService {
 	public UserProfileOverviewDto getProfileOverviewById(long id) {
 		User user = userRepository.findById(id).get();
 		UserProfileOverviewDto dto = modelMapper.map(user, UserProfileOverviewDto.class);
+		dto.setRolesCount(user.getRoles().size());
 		return dto;
+	}
+
+	@Override
+	public void setProfilePicture(long userId, UploadFileDto uploadFileDto) throws IOException {
+		User profile = userRepository.findById(userId).get();
+		
+		FileEntity fileEntity = new FileEntity(uploadFileDto.getImg().getContentType(), 
+											   uploadFileDto.getImg().getOriginalFilename(),
+											   uploadFileDto.getImg().getBytes());
+		fileRepository.save(fileEntity);
+		profile.setProfilePicture(fileEntity);
+		userRepository.save(profile);
+	}
+
+	@Override
+	public void changeUserAuthority(long userId, String authority) {
+		User user = userRepository.findById(userId).get();
+		
+		switch (authority) {
+			case "USER": {
+				user.setRoles(new ArrayList<>());
+			}
+			break;
+			case "MODERATOR": {
+				ArrayList<UserRole> roles = new ArrayList<>();
+				roles.add(userRoleRepository.findByUserRole(UserRoleEnum.MODERATOR));
+				user.setRoles(roles);
+			}
+			break;
+			case "ADMIN": {
+				ArrayList<UserRole> roles = new ArrayList<>();
+				roles.add(userRoleRepository.findByUserRole(UserRoleEnum.MODERATOR));
+				roles.add(userRoleRepository.findByUserRole(UserRoleEnum.ADMIN));
+				user.setRoles(roles);
+			}
+			break;
+			default: throw new IllegalArgumentException("Unexpected value: " + authority);
+		}
+		
+		userRepository.save(user);
 	}
 
 }

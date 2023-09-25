@@ -25,6 +25,7 @@ public class MainController {
 	public String getHomePage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 		model.addAttribute("categories", categoryService.getAllCategories());
 		model.addAttribute("isOnMainPage", true);
+		
 		if (userDetails != null) model.addAttribute("userId", userService.getByName(userDetails.getUsername()).getId());
 		return "index.html";
 	}

@@ -1,6 +1,7 @@
 package com.app.market.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -47,6 +48,10 @@ public class User extends BaseEntity {
 		this.email = email;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
+		this.createdOn = LocalDateTime.now();
+		this.roles = new ArrayList<>();
+		this.ads = new ArrayList<>();
+		this.ratings = new ArrayList<>();
 	}
 
 	public User() {
@@ -107,6 +112,22 @@ public class User extends BaseEntity {
 
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+
+	public FileEntity getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(FileEntity profilePicture) {
+		this.profilePicture = profilePicture;
 	}
 
 }

@@ -37,8 +37,8 @@ nav div a {
 #info-section {
     display: grid;
     grid-template-areas:
-        'info rating'
-        'info report';
+        'info rating mod'
+        'info report adm';
     grid-template-columns: 370px;
     grid-row-gap: 25px;
     margin: 25px;
@@ -70,10 +70,22 @@ form {
     grid-area: img;
 }
 
+#user-info img {
+    max-width: 250px;
+    max-height: 250px;
+    margin: 10px;
+    border-radius: 6px;
+}
+
 img {
     max-width: 600px;
     max-height: 600px;
     margin-right: 15px;
+}
+
+.radio-button-div {
+    margin-bottom: 15px;
+    font-size: 18px;
 }
 
 p {
@@ -172,4 +184,19 @@ textarea {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+}
+
+
+#moderator-panel {
+    grid-area: mod;
+}
+
+#admin-panel {
+    grid-area: adm;
+}
+
+#moderator-panel h1, #admin-panel h1 {
+    font-size: 30px;
+    margin: 10px;
+    margin-bottom: 25px;
 }

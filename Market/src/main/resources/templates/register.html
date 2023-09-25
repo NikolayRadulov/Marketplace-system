@@ -22,6 +22,11 @@
                     <small th:if = "${#fields.hasErrors('email')}" th:each = "error : ${#fields.errors('email')}" th:text = "${error}"></small>
                 </div>
                 <div class="field">
+                    <label for="phoneNumber">Enter your phone number</label>
+                    <input type="tel" th:field = "*{phoneNumber}" placeholder="088*******" name = "phoneNumber" th:errorclass = "error">  
+                    <small th:each = "error : ${#fields.errors('phoneNumber')}" th:text = "${error}"></small>
+                </div>
+                <div class="field">
                     <label for="password">Enter a password</label>
                     <input type="password" th:field = "*{password}" placeholder="*********" name = "password" th:errorclass = "error">  
                     <small th:each = "error : ${#fields.errors('password')}" th:text = "${error}"></small>
