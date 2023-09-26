@@ -4,6 +4,7 @@
     --green_blue: #002f34;
     --gray_white: #f2f4f5;
     --danger_red: #dc3545;
+
 }
 
 html body {
@@ -199,4 +200,12 @@ textarea {
     font-size: 30px;
     margin: 10px;
     margin-bottom: 25px;
+}
+
+#rating-stars {
+    margin: 20px 40px;
+}
+
+#rating-stars i {
+    color: #ffb612;
 }

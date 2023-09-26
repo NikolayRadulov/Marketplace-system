@@ -1,10 +1,8 @@
 package com.app.market.model.entity;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,8 +15,8 @@ public class Rating extends BaseEntity {
 	@Column
 	private String comment;
 	
-	@ManyToMany
-	private List<User> users;
+	@ManyToOne
+	private User user;
 	
 	public Rating(double score, String comment) {
 		this.score = score;
@@ -43,6 +41,14 @@ public class Rating extends BaseEntity {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

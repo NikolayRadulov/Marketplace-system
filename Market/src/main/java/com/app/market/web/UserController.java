@@ -106,10 +106,13 @@ public class UserController {
 	public String getOverviewPage(Model model, @PathVariable("id")long id, @AuthenticationPrincipal UserDetails userDetails) {
 		UserProfileOverviewDto userProfileOverviewDto = userService.getProfileOverviewById(id);
 		boolean isProfileOwned = userDetails.getUsername().equals(userProfileOverviewDto.getUsername());
-		
+
 		model.addAttribute("user", userProfileOverviewDto);
 		model.addAttribute("isUserAdmin", userProfileOverviewDto.getRolesCount() != 2 || isProfileOwned);
 		model.addAttribute("isProfileOwned", isProfileOwned);
+		model.addAttribute("profileAuthority", userService.getUserAuthority(userProfileOverviewDto.getRolesCount()));
+		System.out.println(userProfileOverviewDto.getRating());
+		model.addAttribute("userStarRating", userProfileOverviewDto.getRating());
 		
 		model.addAttribute("ads", adService.findByUser(id));
 		model.addAttribute("report", new ImportReportDto());

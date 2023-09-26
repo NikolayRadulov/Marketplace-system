@@ -2,6 +2,7 @@ package com.app.market.model.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -37,7 +38,7 @@ public class User extends BaseEntity {
 	@OneToMany(mappedBy = "owner")
 	private List<Ad> ads;
 	
-	@ManyToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "user")
 	private List<Rating> ratings;
 	
 	@OneToOne
@@ -114,8 +115,12 @@ public class User extends BaseEntity {
 		this.createdOn = createdOn;
 	}
 
+	public void addNewRating(Rating rating) {
+		this.ratings.add(rating);
+	}
+	
 	public List<Rating> getRatings() {
-		return ratings;
+		return Collections.unmodifiableList(ratings);
 	}
 
 	public void setRatings(List<Rating> ratings) {

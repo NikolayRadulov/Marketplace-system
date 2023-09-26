@@ -27,7 +27,14 @@
             </div>
             <div class = "info-item">
                 <i class="fa-solid fa-calendar-days"></i><p th:text = "${user.createdOn}"></p>
-            </div>            
+            </div>
+              
+            <div class="info-item" sec:authorize = "hasAuthority('ADMIN')">
+                <i class="fa-solid fa-user-lock"></i><p th:text = "${profileAuthority}"></p>
+            </div> 
+            <div class = "info-item" id = "rating-stars">
+                <i class="fa-solid fa-star" th:each="i : ${#numbers.sequence(1, userStarRating/1)}"></i>
+            </div>        
         </article>
 
         <article id = "report" th:unless = "${isProfileOwned}">
@@ -45,9 +52,9 @@
         <article id = "rating" th:unless = "${isProfileOwned}">
             <h1>Rate</h1>
             <div th:object = "${rating}">
-                <form th:action="@{users/profile/{id}(id = ${user.id})}" th:method = "post">
-                        <label for = "score">Rate user from 1(Very bad) to 10(Great)*</label>
-                        <input type="number" min="1" max="10" name="score">
+                <form th:action="@{/ratings/addRating/{id}(id = ${user.id})}" th:method = "post">
+                        <label for = "score">Rate user from 1(Very bad) to 5(Great)*</label>
+                        <input type="number" min="1" max="5" name="score">
                         <small th:if = "${#fields.hasErrors('score')}">Rating must be between 1 and 10</small>
                         <label for="comment">Comment</label>
                         <textarea rows="7" type="text" name="comment"></textarea>

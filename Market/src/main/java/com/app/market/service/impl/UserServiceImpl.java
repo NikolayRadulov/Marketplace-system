@@ -3,6 +3,7 @@ package com.app.market.service.impl;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,10 +19,12 @@ import com.app.market.model.dto.UserContactDto;
 import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
 import com.app.market.model.entity.FileEntity;
+import com.app.market.model.entity.Rating;
 import com.app.market.model.entity.User;
 import com.app.market.model.entity.UserRole;
 import com.app.market.model.enums.UserRoleEnum;
 import com.app.market.repository.FileRepository;
+import com.app.market.repository.RatingRepository;
 import com.app.market.repository.UserRepository;
 import com.app.market.repository.UserRoleRepository;
 import com.app.market.service.UserService;
@@ -33,14 +36,16 @@ public class UserServiceImpl implements UserService {
 	private final UserDetailsService userDetailsService;
 	private final UserRoleRepository userRoleRepository;
 	private final FileRepository fileRepository;
+	private final RatingRepository ratingRepository;
 	private final ModelMapper modelMapper;
 	private final PasswordEncoder passwordEncoder;
 	
-	public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserDetailsService userDetailsService, FileRepository fileRepository) {
+	public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserDetailsService userDetailsService, FileRepository fileRepository, RatingRepository ratingRepository) {
 		this.userRepository = userRepository;
 		this.userDetailsService = userDetailsService;
 		this.userRoleRepository = userRoleRepository;
 		this.fileRepository = fileRepository;
+		this.ratingRepository = ratingRepository;
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -56,8 +61,6 @@ public class UserServiceImpl implements UserService {
 		loginUser(user.getUsername());
 	}
 	
-	
-
 	@Override
 	public void registerInitialUsers() {
 		UserRole adminRole = new UserRole(UserRoleEnum.ADMIN);
@@ -101,7 +104,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserProfileOverviewDto getProfileOverviewById(long id) {
 		User user = userRepository.findById(id).get();
+		List<Rating> ratings = ratingRepository.findByUser(user);
+		
+		double rating = 0;
+		for (Rating currRating : ratings) {
+			rating += currRating.getScore();
+		}
+		rating /= (double)ratings.size();
+		
 		UserProfileOverviewDto dto = modelMapper.map(user, UserProfileOverviewDto.class);
+		dto.setRating((int)Math.round(rating));
 		dto.setRolesCount(user.getRoles().size());
 		return dto;
 	}
@@ -144,6 +156,14 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		userRepository.save(user);
+	}
+
+	@Override
+	public String getUserAuthority(int size) {
+		if(size == 2) return "Admin";
+		if(size == 1) return "Moderator";
+		
+		return "User";
 	}
 
 }

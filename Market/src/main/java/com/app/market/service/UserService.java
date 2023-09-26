@@ -25,4 +25,6 @@ public interface UserService {
 	void setProfilePicture(long userId, UploadFileDto uploadFileDto) throws IOException;
 	
 	void changeUserAuthority(long userId, String authority);
+	
+	String getUserAuthority(int rolesCount);
 }
