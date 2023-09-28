@@ -27,7 +27,7 @@ public class RatingServiceImpl implements RatingService {
 	@Override
 	public void addNewUserRaiting(long userId, ImportRatingDto importRatingDto, UserDetails userDetails) {
 		User user = userRepository.findById(userId).get();
-		User sender = userRepository.findByUsername(userDetails.getUsername());
+		//TODO: Implement non-multiple rating  User sender = userRepository.findByUsername(userDetails.getUsername());
 		Rating rating = modelMapper.map(importRatingDto, Rating.class);
 		
 		rating.setUser(user);

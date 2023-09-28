@@ -22,7 +22,6 @@ import com.app.market.model.dto.ImportReportDto;
 import com.app.market.model.dto.UploadFileDto;
 import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
-import com.app.market.repository.ReportRepository;
 import com.app.market.service.AdService;
 import com.app.market.service.ReportService;
 import com.app.market.service.UserService;
@@ -125,16 +124,25 @@ public class UserController {
 		return "profileOverview.html";
 	}
 	
+	@PostMapping("/profileSearch")
+	public String redirectToProfile(@RequestParam("profileName")String username) {
+		return "redirect:/users/profile/" + userService.getByName(username).getId();
+	}
+	
 	@PostMapping("/reportUser/{id}")
-	public String createReport(@Valid ImportReportDto importReportDto, @PathVariable("id") long id, @AuthenticationPrincipal UserDetails userDetails) {
+	public String createReport(@PathVariable("id") long id,
+							   @Valid ImportReportDto importReportDto, BindingResult bindingResult,
+							   @AuthenticationPrincipal UserDetails userDetails) {
 		reportService.issueReport(importReportDto, id, userService.getByName(userDetails.getUsername()).getId());
 		
 		return "redirect:/users/profile/"+id;
 	}
 	
-	@PostMapping("/profileSearch")
-	public String redirectToProfile(@RequestParam("profileName")String username) {
-		return "redirect:/users/profile/" + userService.getByName(username).getId();
+	@GetMapping("/moderators")
+	public String getModeratorPage(Model model) {
+		model.addAttribute("reports", reportService.getAllReports());
+		
+		return "moderatorPage";
 	}
 	
 

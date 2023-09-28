@@ -19,6 +19,15 @@
             <input type="text" placeholder="Search user" name="profileName">
             <button type="submit">Search</button>
         </form>
+
+        <div class="roles-btns">
+            <a th:href="@{/users/moderators}" sec:authorize = "hasAuthority('MODERATOR')">
+                <button class="link-button">Moderator page</button>
+            </a>
+            <a th:href="@{/users/admins}" sec:authorize = "hasAuthority('ADMIN')">
+                <button class="link-button">Admin page</button>
+            </a>
+        </div>
     </section>
 
     <section id = "categories" >

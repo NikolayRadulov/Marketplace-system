@@ -1,0 +1,44 @@
+:root {
+    --green_blue: #002f34;
+    --gray_white: #f2f4f5;
+}
+
+body {
+    margin: 0px;
+    overflow-x: hidden;
+    background-color: var(--gray_white);
+}
+
+header {
+    background-color: var(--green_blue);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 150px;
+}
+
+a{
+    font-size: 22px;
+    color: white;
+    text-decoration: none;
+}
+
+nav div a {
+    margin: 24px;
+    
+    font-size: 20px;
+}
+
+.report-container {
+    display: block;
+    padding: 20px;
+    background-color: white;
+    width: 70%;
+    height: fit-content;
+    margin: 30px 15%;
+    color: black;
+    text-decoration: none;
+}
+

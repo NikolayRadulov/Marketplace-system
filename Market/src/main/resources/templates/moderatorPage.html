@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderators</title>
+    <link rel="stylesheet" th:href="@{/styles/moderatorPageStyles.css}">
+</head>
+<body>
+    <header th:replace = "fragments/headerFragment :: header"></header>
+    <section id = "reports">
+        <a th:href="@{/reports/getReportInfo/{id}(id = report.id)}" class="report-container" th:each = "report, iterator : ${reports}">
+            <div >
+                <h1>Report #<span th:text = "${iterator.index}"></span></h1>
+            </div>
+        </a>
+    </section>
+</body>
+</html>

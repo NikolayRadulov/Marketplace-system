@@ -209,3 +209,9 @@ textarea {
 #rating-stars i {
     color: #ffb612;
 }
+
+.ad-overview img {
+    max-width: 300px;
+    max-height: 300px;
+    margin-right: 20px;
+}

@@ -127,3 +127,7 @@ article {
 h1 {
     font-size: 30px;
 }
+
+.description p {
+    word-break: break-all;
+}
