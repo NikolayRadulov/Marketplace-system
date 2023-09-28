@@ -22,7 +22,9 @@ import com.app.market.model.dto.ImportReportDto;
 import com.app.market.model.dto.UploadFileDto;
 import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
+import com.app.market.repository.ReportRepository;
 import com.app.market.service.AdService;
+import com.app.market.service.ReportService;
 import com.app.market.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,10 +37,12 @@ public class UserController {
 
 	private final UserService userService;
 	private final AdService adService;
+	private final ReportService reportService;
 	
-	public UserController(UserService userService, AdService adService) {
+	public UserController(UserService userService, AdService adService, ReportService reportService) {
 		this.userService = userService;
 		this.adService = adService;
+		this.reportService = reportService;
 	}
 	
 	@GetMapping("/login")
@@ -119,6 +123,13 @@ public class UserController {
 		model.addAttribute("rating", new ImportRatingDto());
 		
 		return "profileOverview.html";
+	}
+	
+	@PostMapping("/reportUser/{id}")
+	public String createReport(@Valid ImportReportDto importReportDto, @PathVariable("id") long id, @AuthenticationPrincipal UserDetails userDetails) {
+		reportService.issueReport(importReportDto, id, userService.getByName(userDetails.getUsername()).getId());
+		
+		return "redirect:/users/profile/"+id;
 	}
 	
 	@PostMapping("/profileSearch")

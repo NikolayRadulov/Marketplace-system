@@ -40,8 +40,8 @@
         <article id = "report" th:unless = "${isProfileOwned}">
             <h1>Report</h1>
             <div th:object = "${report}">
-                <form th:action="@{users/profile/{id}(id = ${user.id})}" th:method = "post">
-                    <label for = "score">Report*</label>
+                <form th:action="@{users/reportUser/{id}(id = ${user.id})}" th:method = "post">
+                    <label for = "reportText">Report*</label>
                     <textarea rows="7" name="reportText" cols="42"> </textarea>
                     <small th:if = "${#fields.hasErrors('reportText')}">Report must be between 30 and 1000 symbols!</small>
                     <button class="report-btn" type="submit">Report</button> 
