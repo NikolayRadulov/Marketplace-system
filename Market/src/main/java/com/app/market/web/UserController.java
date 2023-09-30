@@ -23,7 +23,6 @@ import com.app.market.model.dto.UploadFileDto;
 import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
 import com.app.market.service.AdService;
-import com.app.market.service.ReportService;
 import com.app.market.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -36,12 +35,10 @@ public class UserController {
 
 	private final UserService userService;
 	private final AdService adService;
-	private final ReportService reportService;
 	
-	public UserController(UserService userService, AdService adService, ReportService reportService) {
+	public UserController(UserService userService, AdService adService) {
 		this.userService = userService;
 		this.adService = adService;
-		this.reportService = reportService;
 	}
 	
 	@GetMapping("/login")
