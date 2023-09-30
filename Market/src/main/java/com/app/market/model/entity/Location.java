@@ -1,10 +1,7 @@
 package com.app.market.model.entity;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,9 +16,6 @@ public class Location extends BaseEntity {
 	
 	@Column(name = "city_zone")
 	private String cityZone;
-	
-	@OneToMany
-	private List<Ad> ads;
 
 	public Location(String city, String address, String cityZone) {
 		this.city = city;
@@ -55,14 +49,6 @@ public class Location extends BaseEntity {
 
 	public void setCityZone(String cityZone) {
 		this.cityZone = cityZone;
-	}
-
-	public List<Ad> getAds() {
-		return ads;
-	}
-
-	public void setAds(List<Ad> ads) {
-		this.ads = ads;
 	}
 
 }

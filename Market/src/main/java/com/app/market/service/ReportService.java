@@ -10,4 +10,10 @@ public interface ReportService {
 	void issueReport(ImportReportDto importReportDto, long reportedUserId, long senderId);
 	
 	List<ReportOverviewDto> getAllReports();
+	
+	ReportOverviewDto getById(long id);
+	
+	void removeReport(long id);
+	
+	void removeAllUserReports(long userId);
 }

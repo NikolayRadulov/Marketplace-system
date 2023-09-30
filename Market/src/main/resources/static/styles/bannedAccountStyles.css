@@ -1,0 +1,16 @@
+h1 {
+    font-size: 52px;
+}
+
+h3 {
+    font-size: 38px;
+    margin: 20px;
+}
+
+div {
+    position: relative;
+    left: 30vw;
+    top: 20vh;
+    text-align: center;
+    width: fit-content;
+}

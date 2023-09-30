@@ -16,7 +16,10 @@ public class Rating extends BaseEntity {
 	private String comment;
 	
 	@ManyToOne
-	private User user;
+	private User ratedUser;
+	
+	@ManyToOne
+	private User ratingUser;
 	
 	public Rating(double score, String comment) {
 		this.score = score;
@@ -43,12 +46,20 @@ public class Rating extends BaseEntity {
 		this.comment = comment;
 	}
 
-	public User getUser() {
-		return user;
+	public User getRatedUser() {
+		return ratedUser;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setRatedUser(User ratedUser) {
+		this.ratedUser = ratedUser;
+	}
+
+	public User getRatingUser() {
+		return ratingUser;
+	}
+
+	public void setRatingUser(User ratingUser) {
+		this.ratingUser = ratingUser;
 	}
 
 }

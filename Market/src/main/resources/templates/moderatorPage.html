@@ -9,9 +9,10 @@
 <body>
     <header th:replace = "fragments/headerFragment :: header"></header>
     <section id = "reports">
-        <a th:href="@{/reports/getReportInfo/{id}(id = report.id)}" class="report-container" th:each = "report, iterator : ${reports}">
-            <div >
-                <h1>Report #<span th:text = "${iterator.index}"></span></h1>
+        <h1 th:if = "${#lists.isEmpty(reports)}" class="empty-text">No reports :)</h1>
+        <a th:href="@{/reports/getReportInfo/{id}(id = ${report.id})}" class="report-container" th:each = "report, iterator : ${reports}">
+            <div>
+                <h1>Report #<span th:text = "${iterator.count}"></span></h1>
             </div>
         </a>
     </section>

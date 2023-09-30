@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.market.service.CategoryService;
 
 @RestController
-public class CategoryController {
+public class CategoryRestController {
 
 	private final CategoryService categoryService;
 	
-	public CategoryController(CategoryService categoryService) {
+	public CategoryRestController(CategoryService categoryService) {
 		this.categoryService = categoryService;
 	}
 	

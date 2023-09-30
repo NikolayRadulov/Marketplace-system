@@ -49,7 +49,7 @@ public class AdsController {
 		
 		if(!model.containsAttribute("importAdDto"))model.addAttribute("importAdDto", new ImportAdDto());
 		
-		return "addAd.html";
+		return "addAd";
 	}
 
 	@PostMapping("/addAd")
@@ -57,7 +57,7 @@ public class AdsController {
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("importAdDto", importAdDto);
-			return "addAd.html";
+			return "addAd";
 		}
 		
 		Ad currentAd = adService.addNewAdd(userDetails.getUsername(), importAdDto);
@@ -71,7 +71,7 @@ public class AdsController {
 	public String getAdOverviewPage(Model model, @PathVariable("id")long id) {
 		model.addAttribute("ad", adService.findOverviewById(id));
 		model.addAttribute("user", userService.getById(adService.getOwnerId(id)));
-		return "adInfoPage.html";
+		return "adInfoPage";
 	}
 	
 	@GetMapping("/ads_by_category/{categoryName}")
@@ -80,7 +80,7 @@ public class AdsController {
 		else model.addAttribute("ads", adService.getByCategoryNameAndFilters(categoryName, adFilterDto));
 		model.addAttribute("categoryName", categoryName);
 		
-		return "adsOverview.html"; 
+		return "adsOverview"; 
 	}
 	
 	

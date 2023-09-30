@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <link rel="stylesheet" th:href="@{/styles/reportOverviewStyles.css}">
+</head>
+<body>
+    <header th:replace = "fragments/headerFragment :: header"></header>
+    <section id = "reportInfo">
+        <p th:text = "${report.reportMessage}"></p>
+        <div class="btns">
+            <a th:href="@{/users/profile/{id}(id = ${reportedUserId})}">
+                <button>Visit profile</button>
+            </a>
+            <a th:href="@{/reports/markReportAsRead/{id}(id = ${report.id})}" th:method = "delete">
+                <button class="danger-btn">Mark as read</button>
+            </a>
+        </div>
+           
+    </section>
+</body>
+</html>

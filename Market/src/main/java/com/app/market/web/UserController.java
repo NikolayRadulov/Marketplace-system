@@ -23,6 +23,8 @@ import com.app.market.model.dto.UploadFileDto;
 import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
 import com.app.market.service.AdService;
+import com.app.market.service.BannedUserService;
+import com.app.market.service.ReportService;
 import com.app.market.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,15 +37,19 @@ public class UserController {
 
 	private final UserService userService;
 	private final AdService adService;
+	private final ReportService reportService;
+	private final BannedUserService bannedUserService;
 	
-	public UserController(UserService userService, AdService adService) {
+	public UserController(UserService userService, AdService adService, ReportService reportService, BannedUserService bannedUserService) {
 		this.userService = userService;
 		this.adService = adService;
+		this.reportService = reportService;
+		this.bannedUserService = bannedUserService;
 	}
 	
 	@GetMapping("/login")
 	public String getLoginPage() {
-		return "login.html";
+		return "login";
 	}
 	
 	@PostMapping("/login-error")
@@ -74,7 +80,7 @@ public class UserController {
 	@GetMapping("/register")
 	public String getRegisterPage(Model model) {
 		if(!model.containsAttribute("userRegisterDto")) model.addAttribute("userRegisterDto", new UserRegisterDto());
-		return "register.html";
+		return "register";
 	}
 	
 	@PostMapping("/register")
@@ -82,7 +88,7 @@ public class UserController {
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("userRegisterDto", userRegisterDto);
 			model.addAttribute("org.springframework.validation.BindingResult.userRegisterDto", bindingResult);
-			return "register.html";
+			return "register";
 		}
 		userService.registerUser(userRegisterDto);
 		httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
@@ -99,7 +105,7 @@ public class UserController {
 	
 	@GetMapping("/admin")
 	public String getAdminPage() {
-		return "admin.html";
+		return "admin";
 	}
 	
 	@GetMapping("profile/{id}")
@@ -111,14 +117,13 @@ public class UserController {
 		model.addAttribute("isUserAdmin", userProfileOverviewDto.getRolesCount() != 2 || isProfileOwned);
 		model.addAttribute("isProfileOwned", isProfileOwned);
 		model.addAttribute("profileAuthority", userService.getUserAuthority(userProfileOverviewDto.getRolesCount()));
-		System.out.println(userProfileOverviewDto.getRating());
 		model.addAttribute("userStarRating", userProfileOverviewDto.getRating());
 		
 		model.addAttribute("ads", adService.findByUser(id));
 		model.addAttribute("report", new ImportReportDto());
 		model.addAttribute("rating", new ImportRatingDto());
 		
-		return "profileOverview.html";
+		return "profileOverview";
 	}
 	
 	@PostMapping("/profileSearch")
@@ -142,5 +147,11 @@ public class UserController {
 		return "moderatorPage";
 	}
 	
+	@PostMapping("/banUser/{id}")
+	public String banUser(@PathVariable("id")long id, @RequestParam("numberOfHours")long hours) {
+		bannedUserService.banUser(id, hours);
+		
+		return "redirect:/users/profile/"+id;
+	}
 
 }

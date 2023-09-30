@@ -26,15 +26,19 @@ public class RatingServiceImpl implements RatingService {
 
 	@Override
 	public void addNewUserRaiting(long userId, ImportRatingDto importRatingDto, UserDetails userDetails) {
-		User user = userRepository.findById(userId).get();
-		//TODO: Implement non-multiple rating  User sender = userRepository.findByUsername(userDetails.getUsername());
+		User ratedUser = userRepository.findById(userId).get();
+		User ratingUser = userRepository.findByUsername(userDetails.getUsername());
+				
+		if(ratingRepository.findByRatingUserAndRatedUser(ratingUser, ratedUser) != null) {
+			System.out.println("User already rated");
+			return;
+		}
 		Rating rating = modelMapper.map(importRatingDto, Rating.class);
 		
-		rating.setUser(user);
+		rating.setRatedUser(ratedUser);
+		rating.setRatingUser(ratingUser);
 		ratingRepository.save(rating);
-		
-		user.addNewRating(rating);
-		userRepository.save(user);
+
 	}
 
 }

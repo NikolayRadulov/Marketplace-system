@@ -27,7 +27,7 @@ public class MainController {
 		model.addAttribute("isOnMainPage", true);
 		
 		if (userDetails != null) model.addAttribute("userId", userService.getByName(userDetails.getUsername()).getId());
-		return "index.html";
+		return "index";
 	}
 
 }

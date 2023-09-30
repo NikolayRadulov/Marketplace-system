@@ -9,7 +9,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -35,12 +34,6 @@ public class User extends BaseEntity {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<UserRole> roles;
 	
-	@OneToMany(mappedBy = "owner")
-	private List<Ad> ads;
-	
-	@OneToMany(mappedBy = "user")
-	private List<Rating> ratings;
-	
 	@OneToOne
 	private FileEntity profilePicture;
 	
@@ -51,8 +44,6 @@ public class User extends BaseEntity {
 		this.phoneNumber = phoneNumber;
 		this.createdOn = LocalDateTime.now();
 		this.roles = new ArrayList<>();
-		this.ads = new ArrayList<>();
-		this.ratings = new ArrayList<>();
 	}
 
 	public User() {
@@ -84,7 +75,7 @@ public class User extends BaseEntity {
 	}
 
 	public List<UserRole> getRoles() {
-		return roles;
+		return Collections.unmodifiableList(this.roles);
 	}
 
 	public void setRoles(List<UserRole> roles) {
@@ -99,32 +90,12 @@ public class User extends BaseEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public List<Ad> getAds() {
-		return ads;
-	}
-
-	public void setAds(List<Ad> ads) {
-		this.ads = ads;
-	}
-
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
-	}
-
-	public void addNewRating(Rating rating) {
-		this.ratings.add(rating);
-	}
-	
-	public List<Rating> getRatings() {
-		return Collections.unmodifiableList(ratings);
-	}
-
-	public void setRatings(List<Rating> ratings) {
-		this.ratings = ratings;
 	}
 
 	public FileEntity getProfilePicture() {

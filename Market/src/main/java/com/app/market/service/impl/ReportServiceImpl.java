@@ -33,10 +33,16 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public void issueReport(ImportReportDto importReportDto, long reportedUserId, long senderId) {
-		// TODO: Add user filter user senderUser = userRepository.findById(senderId).get();
 		User reportedUser = userRepository.findById(reportedUserId).get();
+		User reporterUser = userRepository.findById(senderId).get();
+		if(reportRepository.findByReportedUserAndReporterUser(reportedUser, reporterUser) != null) {
+			System.out.println("User already reported");
+			return;
+		}
+		
 		Report report = modelMapper.map(importReportDto, Report.class);
 		report.setReportedUser(reportedUser);
+		report.setReporterUser(reporterUser);
 
 		reportRepository.save(report);
 	}
@@ -52,6 +58,27 @@ public class ReportServiceImpl implements ReportService {
 	
 	private ReportOverviewDto mapReportToOverview(Report report) {
 		return new ReportOverviewDto(report.getId(), report.getReportedUser().getId(), report.getReportText());
+	}
+
+
+
+	@Override
+	public ReportOverviewDto getById(long id) {
+		return mapReportToOverview(reportRepository.findById(id).get());
+	}
+
+
+
+	@Override
+	public void removeReport(long id) {
+		reportRepository.delete(reportRepository.findById(id).get());
+	}
+
+
+
+	@Override
+	public void removeAllUserReports(long userId) {
+		reportRepository.deleteAll(reportRepository.findByReportedUser(userRepository.findById(userId).get()));
 	}
 
 }

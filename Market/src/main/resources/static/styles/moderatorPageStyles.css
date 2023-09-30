@@ -42,3 +42,7 @@ nav div a {
     text-decoration: none;
 }
 
+.empty-text {
+    font-size: 44px;
+    margin: 150px 41vw;
+}

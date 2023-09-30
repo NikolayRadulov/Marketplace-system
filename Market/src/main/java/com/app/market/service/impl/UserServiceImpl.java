@@ -39,6 +39,7 @@ public class UserServiceImpl implements UserService {
 	private final RatingRepository ratingRepository;
 	private final ModelMapper modelMapper;
 	private final PasswordEncoder passwordEncoder;
+
 	
 	public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserDetailsService userDetailsService, FileRepository fileRepository, RatingRepository ratingRepository) {
 		this.userRepository = userRepository;
@@ -104,7 +105,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserProfileOverviewDto getProfileOverviewById(long id) {
 		User user = userRepository.findById(id).get();
-		List<Rating> ratings = ratingRepository.findByUser(user);
+		List<Rating> ratings = ratingRepository.findByRatedUser(user);
 		
 		double rating = 0;
 		for (Rating currRating : ratings) {

@@ -23,9 +23,6 @@ public class FileEntity extends BaseEntity {
 	@OneToOne
 	private Ad ad;
 	
-	@OneToOne
-	private User user;
-	
 	public FileEntity(String contentType, String fileName, byte[] bytes) {
 		this.contentType = contentType;
 		this.fileName = fileName;

@@ -11,5 +11,7 @@ import com.app.market.model.entity.User;
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, Long>{
 
-	List<Rating> findByUser(User user);
+	List<Rating> findByRatedUser(User user);
+	
+	Rating findByRatingUserAndRatedUser(User rated, User raiting);
 }

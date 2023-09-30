@@ -1,0 +1,69 @@
+:root {
+    --green_blue: #002f34;
+    --gray_white: #f2f4f5;
+    --danger-red: #dc3545;
+}
+
+body {
+    margin: 0px;
+    overflow-x: hidden;
+    background-color: var(--gray_white);
+}
+
+header {
+    background-color: var(--green_blue);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 150px;
+}
+
+a{
+    font-size: 22px;
+    color: white;
+    text-decoration: none;
+}
+
+nav div a {
+    margin: 24px;   
+    font-size: 20px;
+}
+
+#reportInfo {
+    background-color: white;
+    padding: 20px;
+    width: 60%;
+    height: fit-content;
+    margin: 60px auto;
+}
+
+#reportInfo p {
+    word-break: break-all;
+    font-size: 26px;
+}
+
+button {
+    color: white;
+    background-color: var(--green_blue);
+    width: 70%;
+    padding: 8px 10px;
+    margin: 10px 15%;
+    border: 5px solid var(--green_blue);
+    font-size: 20px;
+}
+
+#reportInfo a .danger-btn {
+    background-color: var(--danger-red);
+    border: 5px solid var(--danger-red);
+}
+
+#reportInfo a button:hover {
+    background-color: white;
+    color: black;
+}
+
+.btns {
+    margin-top: 100px;
+}
