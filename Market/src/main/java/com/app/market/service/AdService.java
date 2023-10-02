@@ -24,4 +24,6 @@ public interface AdService {
 	List<AdOverviewDto> findByUser(long ownerId);
 	
 	public long getOwnerId(long adId);
+	
+	int getAdsCount();
 }

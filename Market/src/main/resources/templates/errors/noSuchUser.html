@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banned profile</title>
+    <title>User not found</title>
     <link rel="stylesheet" th:href="@{/styles/errorPageStyles.css}">
+
 </head>
 <body>
-   <div>
-        <h1>Account banned :(</h1>
-        <h3>
-            Ban expiration date: <span th:text = "${#temporals.format(expirationDate, 'dd/MM/yyyy HH:mm')}"></span>
-        </h3>
-   </div> 
-    
+    <div>
+        <h1>User not found!</h1>
+        <h3>The account may have been deleted.</h3>
+    </div>
 </body>
 </html>

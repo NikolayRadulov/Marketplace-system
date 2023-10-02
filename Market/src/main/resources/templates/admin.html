@@ -4,12 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admins</title>
+    <link rel="stylesheet" th:href="@{/styles/adminPageStyles.css}">
 </head>
 <body>
-    <section id = "system-info">
-        <div class="list-item">
-            <i class="fa-solid fa-rectangle-ad"></i><!--TODO Complete admin page-->
-        </div>
+    <header th:replace = "fragments/headerFragment :: header"></header>
+    <section id = "first-section">
+        <article id = "system-info">
+            <h1>System info</h1>
+            <div class="list-item">
+                <div class="item">
+                    <i class="fa-solid fa-rectangle-ad"></i><p></p>
+                </div>
+                <div class="item">
+                    <i class="fa-solid fa-users"></i><p></p>
+                </div>
+                <div class="item">
+                    <i class="fa-solid fa-flag"></i><p></p>
+                </div>
+                <div class="item">
+                    <i class="fa-solid fa-person-circle-xmark"></i><p></p>
+                </div>
+                <div class="item">
+                    <i class="fa-solid fa-user-pen"></i><p></p>
+                </div>
+            </div>
+        </article>
+        <article id = "moderators-info">
+            <h1>Moderators</h1>
+            <div class="names">
+                
+            </div>
+        </article>
     </section>
+    <script th:src = "@{/js/adminScript.js}"></script>
 </body>
 </html>

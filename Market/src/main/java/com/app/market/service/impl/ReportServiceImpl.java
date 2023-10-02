@@ -81,4 +81,11 @@ public class ReportServiceImpl implements ReportService {
 		reportRepository.deleteAll(reportRepository.findByReportedUser(userRepository.findById(userId).get()));
 	}
 
+
+
+	@Override
+	public int getAllReportsCount() {
+		return reportRepository.findAll().size();
+	}
+
 }

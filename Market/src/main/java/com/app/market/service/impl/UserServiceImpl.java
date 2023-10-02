@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -165,6 +166,29 @@ public class UserServiceImpl implements UserService {
 		if(size == 1) return "Moderator";
 		
 		return "User";
+	}
+
+	@Override
+	public int getAllUsers() {
+		return userRepository.findAll().size();
+	}
+
+	@Override
+	public int getUserCountByRole(UserRoleEnum userRoleEnum) {
+		int count = 0;
+		for(User user : userRepository.findAll()) {
+			if(user.getRoles().size() == 1) count++;
+		}
+		return count;
+	}
+
+	@Override
+	public List<String> getModeratorsUsernames() {
+		return this.userRepository.findAll()
+				.stream()
+				.filter(user -> user.getRoles().size() == 1)
+				.map(user -> user.getUsername())
+				.collect(Collectors.toList());
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.app.market.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,41 @@ public class BannedUserServiceImpl implements BannedUserService {
 	public void banUser(long userId, long hours) {
 		User user = userRepository.findById(userId).get();
 		bannedUserRepository.save(new BannedUser(user.getUsername(), LocalDateTime.now().plusHours(hours)));
+	}
+
+	@Override
+	public int getBannedUsersCount() {
+		// TODO Auto-generated method stub
+		return bannedUserRepository.findAll().size();
+	}
+
+	@Override
+	public void clearExpiredBans() {
+		List<BannedUser> toRemove = new ArrayList<>();
+		for (BannedUser bannedUser : bannedUserRepository.findAll()) {
+			if(checkIsBanExpired(bannedUser)) {
+				toRemove.add(bannedUser);
+			}
+		}
+		bannedUserRepository.deleteAll(toRemove);
+	}
+	
+	private boolean checkIsBanExpired(BannedUser bannedUser) {
+		if(bannedUser == null) return true;
+		return bannedUser.getBanExpire().isBefore(LocalDateTime.now());
+	}
+
+	@Override
+	public BannedUser checkBannedUser(String bannedUserName) {
+		BannedUser bannedUser = bannedUserRepository.findByUsername(bannedUserName);
+		if(bannedUser == null) return null;
+		
+		if(checkIsBanExpired(bannedUser)) {
+			bannedUserRepository.delete(bannedUser);
+			return null;
+		}
+		
+		return bannedUser;
 	}
 
 }

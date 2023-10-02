@@ -22,6 +22,7 @@ import com.app.market.model.dto.ImportReportDto;
 import com.app.market.model.dto.UploadFileDto;
 import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
+import com.app.market.model.entity.User;
 import com.app.market.service.AdService;
 import com.app.market.service.BannedUserService;
 import com.app.market.service.ReportService;
@@ -103,7 +104,7 @@ public class UserController {
 		return "redirect:/users/profile/"+userId;
 	}
 	
-	@GetMapping("/admin")
+	@GetMapping("/admins")
 	public String getAdminPage() {
 		return "admin";
 	}
@@ -128,7 +129,13 @@ public class UserController {
 	
 	@PostMapping("/profileSearch")
 	public String redirectToProfile(@RequestParam("profileName")String username) {
-		return "redirect:/users/profile/" + userService.getByName(username).getId();
+		User user  = userService.getByName(username);
+		
+		if(user == null) {
+			return "errors/noSuchUser";
+		}
+		
+		return "redirect:/users/profile/" + user.getId();
 	}
 	
 	@PostMapping("/reportUser/{id}")

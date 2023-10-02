@@ -1,12 +1,14 @@
 package com.app.market.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.app.market.model.dto.UploadFileDto;
 import com.app.market.model.dto.UserContactDto;
 import com.app.market.model.dto.UserProfileOverviewDto;
 import com.app.market.model.dto.UserRegisterDto;
 import com.app.market.model.entity.User;
+import com.app.market.model.enums.UserRoleEnum;
 
 public interface UserService {
 
@@ -27,4 +29,10 @@ public interface UserService {
 	void changeUserAuthority(long userId, String authority);
 	
 	String getUserAuthority(int rolesCount);
+	
+	int getAllUsers();
+	
+	int getUserCountByRole(UserRoleEnum userRoleEnum);
+	
+	List<String> getModeratorsUsernames();
 }

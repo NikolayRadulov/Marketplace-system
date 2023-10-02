@@ -114,6 +114,11 @@ public class AdServiceImpl implements AdService {
 		return adOverviewDtos;
 	}
 
+	@Override
+	public int getAdsCount() {
+		return adRepository.findAll().size();
+	}
+
 	
 
 }

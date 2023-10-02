@@ -1,7 +1,6 @@
 package com.app.market.filter;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -29,12 +28,7 @@ public class BlockedUserInterceptor implements HandlerInterceptor {
 		Principal principal = httpServletRequest.getUserPrincipal();
 		if(principal == null) return;
 		
-		BannedUser bannedUser = bannedUserService.findByUsername(principal.getName());
-		
-		if(bannedUser != null && bannedUser.getBanExpire().isBefore(LocalDateTime.now())) {
-			bannedUserService.expireBan(bannedUser.getId());
-			return;
-		}
+		BannedUser bannedUser = bannedUserService.checkBannedUser(principal.getName());
 		
 		if(bannedUser != null) {
 			if(modelAndView == null) modelAndView = new ModelAndView();

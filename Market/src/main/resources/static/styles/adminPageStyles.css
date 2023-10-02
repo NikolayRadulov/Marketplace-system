@@ -1,0 +1,68 @@
+@import url('https://use.fontawesome.com/releases/v6.4.2/css/all.css');
+
+:root {
+    --green_blue: #002f34;
+    --gray_white: #f2f4f5;
+}
+
+body {
+    margin: 0px;
+    overflow-x: hidden;
+    background-color: var(--gray_white);
+}
+
+header {
+    background-color: var(--green_blue);
+}
+
+#first-section {
+    display: flex;
+    padding: 70px 10px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 150px;
+}
+
+a{
+    font-size: 22px;
+    color: white;
+    text-decoration: none;
+}
+
+nav div a {
+    margin: 24px;
+    
+    font-size: 20px;
+}
+
+article {
+    padding: 20px;
+    background-color: white;
+    width: max-content;
+}
+
+i {
+    color: var(--green_blue);
+    margin-right: 15px;
+}
+
+.item {
+    display: flex;
+    font-size: 26px;
+    margin: 30px 0px;
+}
+
+.item p {
+    margin: 0px;
+}
+
+h1 {
+    font-size: 34px;
+}
+
+

@@ -9,4 +9,10 @@ public interface BannedUserService {
 	void expireBan(long bannedUserId);
 	
 	void banUser(long userId, long hours);
+	
+	int getBannedUsersCount();
+	
+	void clearExpiredBans();
+	
+	BannedUser checkBannedUser(String bannedUserName);
 }

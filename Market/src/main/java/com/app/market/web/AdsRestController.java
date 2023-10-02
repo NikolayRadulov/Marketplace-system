@@ -44,5 +44,10 @@ public class AdsRestController {
 		
 		return new HttpEntity<>(image.getBytes(), headers);
 	}
+	
+	@GetMapping("/getAllAdsCount")
+	public HttpEntity<Integer> getAdsCount() {
+		return new HttpEntity<Integer>(adService.getAdsCount());
+	}
 
 }

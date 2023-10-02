@@ -16,4 +16,6 @@ public interface ReportService {
 	void removeReport(long id);
 	
 	void removeAllUserReports(long userId);
+	
+	int getAllReportsCount();
 }

@@ -1,5 +1,7 @@
 package com.app.market.web;
 
+import java.util.List;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.market.model.entity.FileEntity;
+import com.app.market.model.enums.UserRoleEnum;
+import com.app.market.service.BannedUserService;
 import com.app.market.service.UserService;
 
 @RequestMapping("/users")
@@ -17,9 +21,11 @@ import com.app.market.service.UserService;
 public class UsersRestController {
 
 	private final UserService userService;
+	private final BannedUserService bannedUserService;
 	
-	public UsersRestController(UserService userService) {
+	public UsersRestController(UserService userService, BannedUserService bannedUserService) {
 		this.userService = userService;
+		this.bannedUserService = bannedUserService;
 	}
 	
 	
@@ -37,5 +43,25 @@ public class UsersRestController {
 		
 		return new HttpEntity<>(image.getBytes(), headers);
 	}
+	
+	@GetMapping("/getAllUsersCount")
+	public HttpEntity<Integer> getUsersCount() {
+		return new HttpEntity<>(userService.getAllUsers());
+	}
 
+	
+	@GetMapping("/getAllBannedUsersCount")
+	public HttpEntity<Integer> getBannedUsersCount() {
+		return new HttpEntity<>(bannedUserService.getBannedUsersCount());
+	}
+	
+	@GetMapping("/getUsersCountByRole/{userRole}")
+	public HttpEntity<Integer> getUserRoleCount(@PathVariable("userRole")String userRole) {
+		return new HttpEntity<>(userService.getUserCountByRole(UserRoleEnum.valueOf(userRole)));
+	}
+	
+	@GetMapping("/getModerators")
+	public HttpEntity<List<String>> getModerators() {
+		return new HttpEntity<>(userService.getModeratorsUsernames());
+	}
 }
