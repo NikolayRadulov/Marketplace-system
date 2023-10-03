@@ -9,28 +9,6 @@ html body {
     overflow-x: hidden;
 }
 
-header {
-    background-color: var(--button_color);
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 150px;
-}
-
-a{
-    font-size: 22px;
-    color: white;
-    text-decoration: none;
-}
-
-nav div a {
-    margin: 24px;
-    
-    font-size: 20px;
-}
-
 .error-message {
     color: red;
 }

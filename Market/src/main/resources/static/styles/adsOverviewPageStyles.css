@@ -9,28 +9,6 @@ html body {
     background-color: var(--gray_white);
 }
 
-header {
-    background-color: var(--green_blue);
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 150px;
-}
-
-a {
-    font-size: 22px;
-    color: white;
-    text-decoration: none;
-}
-
-nav div a {
-    margin: 24px;
-    
-    font-size: 20px;
-}
-
 img {
     max-width: 200px;
     max-height: 250px;

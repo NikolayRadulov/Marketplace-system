@@ -72,12 +72,12 @@ public class UserServiceImpl implements UserService {
 		userRoleRepository.save(moderatorRole);
 		
 		User adminUser = new User("admin", "admin@gmail.com", "0984589332", passwordEncoder.encode("adminPassword"));
-		adminUser.getRoles().add(adminRole);
-		adminUser.getRoles().add(moderatorRole);
+		adminUser.addRole(adminRole);
+		adminUser.addRole(moderatorRole);;
 		userRepository.save(adminUser);
 		
 		User moderatorUser = new User("moderator", "moderator@gmail.com", "0984583421", passwordEncoder.encode("moderatorPassword"));
-		moderatorUser.getRoles().add(moderatorRole);
+		moderatorUser.addRole(moderatorRole);
 		userRepository.save(moderatorUser);
 	}
 

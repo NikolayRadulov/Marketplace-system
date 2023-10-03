@@ -10,21 +10,22 @@
         <nav>
             <a th:href="@{/}">Market</a>
 
-            <div th:if = "${isOnMainPage}" sec:authorize = "isAuthenticated()">
-               <a th:href = "@{/users/profile/{id}(id = ${userId})}">
-                    <i class="fa-regular fa-user"></i>
-                    <span>Profile</span>
-               </a>
+            <div th:if = "${isOnMainPage}" sec:authorize = "isAuthenticated()">            
+                <a th:href="@{/users/profile/{id}(id = ${userId})}">
+                    <i class="fa-solid fa-user"></i> <span>Profile</span>
+                </a>
             </div>
             
 
-            <div>
-                <a th:href="@{/ads/addAd}" sec:authorize = "isAuthenticated()">Add a new ad</a>
+            <div class="actions">
+                <a th:href="@{/ads/addAd}" sec:authorize = "isAuthenticated()">
+                    <button>Add a new ad</button>
+                </a>
                 <a th:href="@{/users/login}" sec:authorize = "!isAuthenticated()">Login</a>
                 <a th:href="@{/users/register}" sec:authorize = "!isAuthenticated()">Register</a>
                 
                 <form th:action="@{/users/logout}" th:method = "POST" sec:authorize = "isAuthenticated()">
-                    <input type="submit">Logout</input>
+                    <button type="submit" id="logout-btn">Logout</button>
                 </form>
                 
             </div>

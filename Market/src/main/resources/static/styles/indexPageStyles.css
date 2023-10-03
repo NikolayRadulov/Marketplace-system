@@ -8,28 +8,6 @@ body {
     overflow-x: hidden;
 }
 
-header {
-    background-color: var(--green_blue);
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 150px;
-}
-
-a{
-    font-size: 22px;
-    color: white;
-    text-decoration: none;
-}
-
-nav div a {
-    margin: 24px;
-    
-    font-size: 20px;
-}
-
 #search {
     background-color: var(--gray_white);
     padding: 46px 300px;
@@ -69,6 +47,7 @@ nav div a {
 
 #categories h1 {
     font-size: 36px;
+    margin-top:10px;
 }
 
 #categories .category {
@@ -77,6 +56,7 @@ nav div a {
     padding: 5px;
     display: flex;
     gap: 180px;
+    row-gap:140px;
     flex-wrap: wrap;
     margin-top: 76px;
 }

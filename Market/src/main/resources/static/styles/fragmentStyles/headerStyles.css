@@ -1,0 +1,54 @@
+@import url('https://use.fontawesome.com/releases/v6.4.2/css/all.css');
+
+header {
+    background-color: var(--green_blue);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 150px;
+}
+
+a {
+    font-size: 22px;
+    color: white;
+    text-decoration: none;
+}
+
+#logout-btn {
+    background: transparent;
+    font-size: 20px;
+    color: white;
+}
+
+a button {
+    border: 3px solid white;
+    color: white;
+    background: transparent;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.actions form {
+    height:fit-content;
+    margin: 30px;
+}
+
+div i {
+    color: white;
+}
+
+header a {
+    display: block;
+    height:fit-content;
+    margin-top:25px;
+    font-size:24px;
+}

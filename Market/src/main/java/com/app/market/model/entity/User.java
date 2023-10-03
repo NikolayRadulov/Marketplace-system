@@ -74,6 +74,9 @@ public class User extends BaseEntity {
 		this.password = password;
 	}
 
+	public void addRole(UserRole role) {
+		this.roles.add(role);
+	}
 	public List<UserRole> getRoles() {
 		return Collections.unmodifiableList(this.roles);
 	}
