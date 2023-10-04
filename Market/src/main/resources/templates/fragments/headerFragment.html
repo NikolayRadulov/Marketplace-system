@@ -8,7 +8,11 @@
 <body>
     <header th:fragment = "header">
         <nav>
-            <a th:href="@{/}">Market</a>
+            <div class="mainPageLink">
+                <i class="fa-solid fa-store"></i>
+                <a th:href="@{/}">Market</a>
+            </div>
+            
 
             <div th:if = "${isOnMainPage}" sec:authorize = "isAuthenticated()">            
                 <a th:href="@{/users/profile/{id}(id = ${userId})}">

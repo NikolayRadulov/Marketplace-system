@@ -1,5 +1,10 @@
 @import url('https://use.fontawesome.com/releases/v6.4.2/css/all.css');
 
+:root {
+    --green_blue: #002f34;
+    --gray_white: #f2f4f5;
+}
+
 header {
     background-color: var(--green_blue);
 }
@@ -7,19 +12,17 @@ header {
 nav {
     display: flex;
     justify-content: space-between;
-    padding: 20px 150px;
-}
-
-a {
-    font-size: 22px;
-    color: white;
-    text-decoration: none;
+    padding: 0px 150px;
+    height:135px;
 }
 
 #logout-btn {
     background: transparent;
     font-size: 20px;
+    margin-top:30px;
     color: white;
+    cursor:pointer;
+    border: none;
 }
 
 a button {
@@ -46,9 +49,24 @@ div i {
     color: white;
 }
 
-header a {
+header nav a {
+    color: white;
+    text-decoration: none;
     display: block;
     height:fit-content;
-    margin-top:25px;
+    margin: 10px;
+    margin-top:50px;
     font-size:24px;
+}
+
+
+.mainPageLink {
+    height:fit-content;
+    margin-top:50px;
+    font-size:30px;
+    display: flex;
+    gap:10px;
+}
+header nav .mainPageLink a {
+    margin: 2px;
 }

@@ -63,6 +63,7 @@ body {
 
 button {
     border: 5px solid var(--green_blue);
+    border-radius:4px;
 }
 
 button:hover {
@@ -83,4 +84,10 @@ button:hover {
     padding: 8px 46px;
     width: fit-content;
     font-size: 26px;
+    border-color: var(--green_blue);
+    
+}
+
+a {
+    text-decoration: none;
 }
