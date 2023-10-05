@@ -65,6 +65,7 @@ public class AdServiceImpl implements AdService {
 		ad.setOwner(user);
 		ad.setCategory(categoryRepository.getByName(importAdDto.getCategory()));
 		ad.setLocation(location);
+		ad.setPostedOn(LocalDateTime.now());
 		
 		return adRepository.save(ad);
 	}
@@ -93,7 +94,7 @@ public class AdServiceImpl implements AdService {
 		Ad ad = adRepository.findById(id).get();
 		
 		AdOverviewDto adOverviewDto = new AdOverviewDto(id, ad.getName(), ad.getLocation().getCity(), ad.getPrice().doubleValue(),ad.getDescription());
-		adOverviewDto.setDate(String.valueOf(LocalDateTime.now()));
+		adOverviewDto.setDate(ad.getPostedOn());
 		return adOverviewDto;
 	}
 	

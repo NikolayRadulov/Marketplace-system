@@ -50,6 +50,17 @@ body {
     margin-top:10px;
 }
 
+.category-item a{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category-img {
+    width: 95px;
+    height: 95px;
+}
+
 #categories .category {
     font-size: 20px;
     width: fit-content;

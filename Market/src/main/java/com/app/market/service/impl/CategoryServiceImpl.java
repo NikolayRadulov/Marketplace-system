@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public void addCategories() {
 		if(categoryRepository.count() != 0) return;
 		
-		String[] categories = {"Sports", "Cars", "Electronics", "Animals", "Furniture", "Mode", "Vacation", "Services", "Tools and machines", "Jobs", "Clothes", "Lessons and courses"};
+		String[] categories = {"Sports", "Cars", "Electronics", "Animals", "Houses", "Furniture", "Mode", "Vacation", "Services", "Machines", "Jobs", "Clothes", "Education"};
 
 		for (String categoryName : categories) {
 			categoryRepository.save(new Category(categoryName));

@@ -34,8 +34,11 @@
     <section id = "categories" >
         <h1>Categories</h1>
         <ul type = "none" class="category" > 
-           <li th:each = 'category : ${categories}'>
-                <a th:href="@{/ads/ads_by_category/{ca}(ca = ${category.name})}" th:text = "${category.name}"></a>
+           <li th:each = 'category : ${categories}' class="category-item">
+                <a th:href="@{/ads/ads_by_category/{ca}(ca = ${category.name})}" >
+                    <img th:src="@{/categoryImages/{image}(image = ${#strings.toLowerCase(category.name)} + '.png')}" alt="Category image" class="category-img">
+                    <span th:text = "${category.name}"></span>
+                </a>
            </li>
         </ul>
     </section>

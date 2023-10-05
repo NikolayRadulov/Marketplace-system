@@ -1,11 +1,13 @@
 package com.app.market.model.dto;
 
+import java.time.LocalDateTime;
+
 public class AdOverviewDto {
 
 	private long id;
 	private String title;
 	private String location;
-	private String date;
+	private LocalDateTime date;
 	private double price;
 	private String description;
 	
@@ -53,20 +55,20 @@ public class AdOverviewDto {
 		this.id = id;
 	}
 
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
 	public String getDescription() {
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
 }

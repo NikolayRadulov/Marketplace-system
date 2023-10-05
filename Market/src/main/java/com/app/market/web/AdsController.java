@@ -45,7 +45,7 @@ public class AdsController {
 	public String getPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.getByName(userDetails.getUsername());
 		model.addAttribute("categories", categoryService.getAllCategories());
-		model.addAttribute("userContactDto", user);
+		model.addAttribute("contactUserDto", userService.getById(user.getId()));
 		
 		if(!model.containsAttribute("importAdDto"))model.addAttribute("importAdDto", new ImportAdDto());
 		

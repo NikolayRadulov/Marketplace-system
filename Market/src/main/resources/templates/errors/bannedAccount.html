@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/styles/errorPageStyles.css}">
 </head>
 <body>
-   <div>
+   <div id = "error-container">
         <h1>Account banned :(</h1>
         <h3>
             Ban expiration date: <span th:text = "${#temporals.format(expirationDate, 'dd/MM/yyyy HH:mm')}"></span>

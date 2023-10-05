@@ -66,18 +66,18 @@
             </section>
             <section id = "contact-informartion">
                 <h1>Contact information</h1>
-                <div th:object = "${contactUserDto}">
+                <div>
                     <div class="input">
                         <label for="name">Name</label>
-                        <input type="text" name="name"  readonly>
+                        <input type="text" name="name" th:value = "${contactUserDto.name}"  readonly>
                     </div>
                     <div class="input">
                         <label for="email">Email</label>
-                        <input type="email" name="email" th:text = "${email}" readonly>
+                        <input type="email" name="email" th:value = "${contactUserDto.email}" readonly>
                     </div>
                     <div class="input">
                         <label for="phone">Phone number</label>
-                        <input type="tel" name="phone" readonly>
+                        <input type="tel" name="phoneNumber" th:value = "${contactUserDto.phoneNumber}" readonly>
                     </div>
                 </div>
             </section>

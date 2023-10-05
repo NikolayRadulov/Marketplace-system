@@ -15,9 +15,13 @@
         </article>
         <article class="ad-info">
             <h1>Ad info</h1>
-            <small th:text = "${ad.date}"></small>
-            <p th:text = "${ad.title}"></p>
+            <div class="item">
+                <i class="fa-solid fa-calendar-days"></i>
+                <small th:text = "${#temporals.format(ad.date, 'dd/MM/yyyy HH:mm')}"></small>
+            </div>
+            <h2 th:text = "${ad.title}"></h2>
             <div class="price">
+                <i class="fa-solid fa-money-bill"></i>
                 <h2 th:text = "${#numbers.formatDecimal(ad.price, 0, 'COMMA', 2, 'POINT')}"></h2>
                 <h2>BGN</h2>
             </div>
@@ -26,8 +30,8 @@
             <h1>User</h1>
             <i class="fa-solid fa-user"></i><p th:text = "${user.email}"></p>
             <br>
-            <i class="fa-solid fa-phone" th:unless = "${#strings.isEmpty(user.phone)}"></i><p th:text = "${user.phone}"></p>
-            <p th:if = "${#strings.isEmpty(user.phone)}" class="error-message">No phone number provided</p>
+            <i class="fa-solid fa-phone" th:unless = "${#strings.isEmpty(user.phoneNumber)}"></i><p th:text = "${user.phoneNumber}"></p>
+            <p th:if = "${#strings.isEmpty(user.phoneNumber)}" class="error-message">No phone number provided</p>
         
             <a th:href="@{/users/profile/{id}(id = ${user.id})}">
                 <button>Visit profile</button>

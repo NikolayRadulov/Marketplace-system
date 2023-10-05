@@ -2,7 +2,6 @@ package com.app.market.model.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -78,7 +77,7 @@ public class User extends BaseEntity {
 		this.roles.add(role);
 	}
 	public List<UserRole> getRoles() {
-		return Collections.unmodifiableList(this.roles);
+		return this.roles;
 	}
 
 	public void setRoles(List<UserRole> roles) {

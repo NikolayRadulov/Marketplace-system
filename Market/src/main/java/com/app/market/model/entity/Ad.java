@@ -1,6 +1,7 @@
 package com.app.market.model.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,6 +21,9 @@ public class Ad extends BaseEntity {
 	
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String description;
+	
+	@Column(nullable = false, name = "posted_on")
+	private LocalDateTime postedOn;
 	
 	@ManyToOne
 	private User owner;
@@ -97,6 +101,14 @@ public class Ad extends BaseEntity {
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+
+	public LocalDateTime getPostedOn() {
+		return postedOn;
+	}
+
+	public void setPostedOn(LocalDateTime postedOn) {
+		this.postedOn = postedOn;
 	}
 
 }

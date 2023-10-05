@@ -83,9 +83,21 @@ button:hover {
     grid-area: ad;
 }
 
-.ad-info .price{
+.ad-info .price {
     display: flex;
     gap: 5px;
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+.ad-info .price h2{
+    margin: 0px;
+}
+
+.ad-info .price i{
+    margin-top: 7px;
+    margin-right: 5px;
+    font-size: 22px;
 }
 
 .description {
@@ -108,4 +120,14 @@ h1 {
 
 .description p {
     word-break: break-all;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.ad-info i {
+    color: var(--green_blue);
 }

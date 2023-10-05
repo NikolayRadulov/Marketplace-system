@@ -3,16 +3,19 @@ package com.app.market.model.dto;
 public class UserContactDto {
 
 	private long id;
+	private String name;
 	private String email;
-	private String phone;
+	private String phoneNumber;
 	
-	public UserContactDto(long id, String email, String phone) {
+	public UserContactDto(long id, String name, String email, String phoneNumber) {
+		this.name = name;
 		this.email = email;
-		this.phone = phone;
+		this.phoneNumber = phoneNumber;
 		this.id = id;
 	}
 	
 	public UserContactDto() {
+		this.name = "";
 		// TODO Auto-generated constructor stub
 	}
 
@@ -24,12 +27,12 @@ public class UserContactDto {
 		this.email = email;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public long getId() {
@@ -38,5 +41,13 @@ public class UserContactDto {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

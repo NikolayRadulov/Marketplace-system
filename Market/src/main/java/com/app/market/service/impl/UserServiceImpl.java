@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 	public UserContactDto getById(long id) {
 		User user = userRepository.findById(id).get();
 		
-		return new UserContactDto(user.getId(), user.getEmail(), user.getPhoneNumber());
+		return new UserContactDto(user.getId(), user.getUsername(), user.getEmail(), user.getPhoneNumber());
 	}
 
 	@Override

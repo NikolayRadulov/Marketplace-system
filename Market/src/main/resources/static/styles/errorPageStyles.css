@@ -1,13 +1,18 @@
-h1 {
+body {
+    overflow: hidden;
+    margin: 0px;
+}
+
+#error-container h1 {
     font-size: 52px;
 }
 
-h3 {
+#error-container h3 {
     font-size: 38px;
     margin: 20px;
 }
 
-div {
+#error-container {
     position: relative;
     left: 30vw;
     top: 20vh;
