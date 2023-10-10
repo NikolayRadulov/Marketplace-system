@@ -1,10 +1,17 @@
 package com.app.market.services;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +22,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import com.app.market.model.dto.AdFilterDto;
 import com.app.market.model.dto.AdOverviewDto;
+import com.app.market.model.dto.ImportAdDto;
+import com.app.market.model.entity.Ad;
+import com.app.market.model.entity.Location;
 import com.app.market.repository.AdRepository;
 import com.app.market.repository.CategoryRepository;
 import com.app.market.repository.LocationRepository;
@@ -71,6 +82,47 @@ public class AdServiceImplTests {
 		Mockito.verify(gson).toJson(anyCollection());
 	}
 	
+	@Test
+	public void testAddNewAd() {
+		//Arrange
+		ImportAdDto importAdDto = Mockito.mock(ImportAdDto.class);
+
+		//Act
+		toTest.addNewAdd(anyString(), importAdDto);
+		
+		//Assert
+		Mockito.verify(adRepository).save(any());
+		Mockito.verify(locationRepository).save(any());
+		Mockito.verify(categoryRepository).getByName(any());
+		
+	}
+	
+	@Test
+	public void testGetByCategoryNameAndFilters() {
+		//Arrange
+		AdFilterDto adFilterDto = Mockito.mock(AdFilterDto.class);
+		List<AdOverviewDto> adOverviewDtos = new ArrayList<>();
+		
+		Mockito.when(toTest.getByCategoryNameAndFilters("dsc", adFilterDto)).thenReturn(adOverviewDtos);
+		//Act
+		List<AdOverviewDto> dtos = toTest.getByCategoryNameAndFilters("dsc", adFilterDto);
+		
+		//Assert
+		Mockito.verify(adRepository).findByCategoryAndFilters(anyString(),anyDouble(), anyDouble());
+		
+		Assertions.assertEquals(adOverviewDtos, dtos);
+	}
+	
+	@Test
+	public void testGetSize() {
+		//Arrange
+		
+		//Act
+		toTest.getAdsCount();
+		
+		//Assert
+		Mockito.verify(adRepository).findAll();
+	}
 	
 
 }
