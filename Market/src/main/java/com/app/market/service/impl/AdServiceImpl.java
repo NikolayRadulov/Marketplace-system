@@ -18,6 +18,7 @@ import com.app.market.model.entity.Location;
 import com.app.market.model.entity.User;
 import com.app.market.repository.AdRepository;
 import com.app.market.repository.CategoryRepository;
+import com.app.market.repository.FileRepository;
 import com.app.market.repository.LocationRepository;
 import com.app.market.repository.UserRepository;
 import com.app.market.service.AdService;
@@ -32,14 +33,16 @@ public class AdServiceImpl implements AdService {
 	private final LocationRepository locationRepository;
 	private final Gson gson;
 	private final ModelMapper modelMapper;
+	private final FileRepository fileRepository;
 	
-	public AdServiceImpl(AdRepository adRepository, Gson gson, ModelMapper modelMapper, UserRepository userRepository, CategoryRepository categoryRepository, LocationRepository locationRepository) {
+	public AdServiceImpl(AdRepository adRepository, Gson gson, ModelMapper modelMapper, UserRepository userRepository, CategoryRepository categoryRepository, LocationRepository locationRepository, FileRepository fileRepository) {
 		this.adRepository = adRepository;
 		this.userRepository = userRepository;
 		this.categoryRepository = categoryRepository;
 		this.locationRepository = locationRepository;
 		this.gson = gson;
 		this.modelMapper = modelMapper;
+		this.fileRepository = fileRepository;
 	}
 
 	@Override
@@ -118,6 +121,13 @@ public class AdServiceImpl implements AdService {
 	@Override
 	public int getAdsCount() {
 		return adRepository.findAll().size();
+	}
+
+	@Override
+	public void deleteAd(long id) {
+		Ad ad = adRepository.findById(id).get();
+		this.fileRepository.delete(ad.getImage());
+		this.adRepository.deleteById(id);
 	}
 
 	

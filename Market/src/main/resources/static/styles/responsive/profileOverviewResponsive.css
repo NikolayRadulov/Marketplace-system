@@ -1,0 +1,40 @@
+@media only screen and (max-width: 1000px) {
+   #info-section {
+        display: flex;
+        flex-direction: column;
+   }
+}
+
+@media only screen and (max-width: 800px) {
+    #list .ad-overview div p {
+        left: 0px;
+        top: -35px;
+    }
+    
+}
+
+@media only screen and (max-width: 550px) {
+   .allAdsTitle {
+        left: 20px;
+        transform: none;
+   }
+   .empty-message {
+        font-size: 28px;
+        margin: 100px 5%;  
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .ad-overview img {
+        max-width: 100px;
+        max-height: 100px;
+        margin-right: 20px;
+    }
+    
+}
+
+
+
+
+
+

@@ -29,5 +29,10 @@ public class MainController {
 		if (userDetails != null) model.addAttribute("userId", userService.getByName(userDetails.getUsername()).getId());
 		return "index";
 	}
+	
+	@GetMapping("/permissions/forbidden")
+	public String pageNotVisible() {
+		return "notAuthorized.html";
+	}
 
 }

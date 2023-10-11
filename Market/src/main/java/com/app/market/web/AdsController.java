@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,6 +67,18 @@ public class AdsController {
 		
 		return "redirect:/";
 	}
+	
+	@DeleteMapping("/deleteAd/{id}")
+	public String deleteAd(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id")long id) {	
+		if(!adService.findById(id).getOwner().getUsername().equals(userDetails.getUsername())) {
+			return "redirect:/permissions/forbidden";
+		}
+		
+		adService.deleteAd(id);
+		
+		return "redirect:/";
+	}
+	
 	
 	@GetMapping("/getAdInfo/{id}") 
 	public String getAdOverviewPage(Model model, @PathVariable("id")long id) {

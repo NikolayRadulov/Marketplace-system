@@ -26,4 +26,6 @@ public interface AdService {
 	public long getOwnerId(long adId);
 	
 	int getAdsCount();
+	
+	void deleteAd(long id);
 }

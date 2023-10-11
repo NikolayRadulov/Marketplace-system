@@ -1,0 +1,12 @@
+@media only screen and (max-width: 1100px) {
+    .roles-btns {
+        margin-left: 10%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .roles-btns {
+        flex-direction: column;
+        margin-left: 0px;
+    }
+}

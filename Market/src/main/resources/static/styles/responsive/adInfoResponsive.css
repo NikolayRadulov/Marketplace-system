@@ -1,0 +1,23 @@
+@media only screen and (max-width: 1200px) {
+    #first_section {
+        display: flex;
+        flex-direction: column;
+        margin: 20px 10px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #image-container, img {
+        max-width: 300px;
+        max-height: 400px;
+    }
+    .description {
+        width: 400px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .description {
+        width: 250px;
+    }
+}

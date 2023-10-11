@@ -1,0 +1,21 @@
+@media only screen and (max-width: 800px) {
+    #list .ad-overview div p {
+        left: 0px;
+        top: -35px;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .empty-message {
+        font-size: 28px;
+        margin: 100px 5%;  
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    img {
+        max-width: 100px;
+        max-height: 100px;
+        margin-right: 20px;
+    }
+}

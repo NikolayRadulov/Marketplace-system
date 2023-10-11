@@ -7,8 +7,6 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +24,9 @@ import com.app.market.model.dto.AdFilterDto;
 import com.app.market.model.dto.AdOverviewDto;
 import com.app.market.model.dto.ImportAdDto;
 import com.app.market.model.entity.Ad;
-import com.app.market.model.entity.Location;
 import com.app.market.repository.AdRepository;
 import com.app.market.repository.CategoryRepository;
+import com.app.market.repository.FileRepository;
 import com.app.market.repository.LocationRepository;
 import com.app.market.repository.UserRepository;
 import com.app.market.service.impl.AdServiceImpl;
@@ -50,12 +48,14 @@ public class AdServiceImplTests {
 	private Gson gson;
 	@Mock
 	private ModelMapper modelMapper;
+	@Mock
+	private FileRepository fileRepository;
 	
 	private AdServiceImpl toTest;
 	
 	@BeforeEach
 	void setUp() {
-		toTest = new AdServiceImpl(adRepository, gson, modelMapper, userRepository, categoryRepository, locationRepository);
+		toTest = new AdServiceImpl(adRepository, gson, modelMapper, userRepository, categoryRepository, locationRepository, fileRepository);
 	}
 	
 	@Test
@@ -124,5 +124,15 @@ public class AdServiceImplTests {
 		Mockito.verify(adRepository).findAll();
 	}
 	
-
+	@Test
+	public void testDeleteAd() {
+		//Arrange
+		Mockito.when(adRepository.findById(anyLong())).thenReturn(Optional.of(new Ad()));
+		//Act
+		toTest.deleteAd(anyLong());
+		
+		//Assert
+		Mockito.verify(fileRepository).delete(any());
+		Mockito.verify(adRepository).deleteById(anyLong());
+	}
 }

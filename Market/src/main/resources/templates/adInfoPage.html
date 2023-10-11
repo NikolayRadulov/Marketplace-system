@@ -6,6 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" th:href="@{/styles/adInfoPageStyles.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/styles/fragmentStyles/headerStyles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/responsive/headerResponsive.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/responsive/adInfoResponsive.css}">
 </head>
 <body>
     <header th:replace = "fragments/headerFragment :: header"></header>
@@ -25,6 +27,10 @@
                 <h2 th:text = "${#numbers.formatDecimal(ad.price, 0, 'COMMA', 2, 'POINT')}"></h2>
                 <h2>BGN</h2>
             </div>
+
+            <form th:action="@{/ads/deleteAd/{id}(id = ${ad.id})}" th:method = "DELETE" id = "deleteAd">
+                <button type="submit">Delete</button>
+            </form>
         </article>
         <article class="user-info">
             <h1>User</h1>
