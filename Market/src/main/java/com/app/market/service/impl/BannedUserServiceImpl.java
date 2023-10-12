@@ -30,8 +30,7 @@ public class BannedUserServiceImpl implements BannedUserService {
 
 	@Override
 	public void expireBan(long bannedUserId) {
-		BannedUser bannedUser = bannedUserRepository.findById(bannedUserId).get();
-		bannedUserRepository.delete(bannedUser);
+		bannedUserRepository.deleteById(bannedUserId);
 	}
 
 	@Override
