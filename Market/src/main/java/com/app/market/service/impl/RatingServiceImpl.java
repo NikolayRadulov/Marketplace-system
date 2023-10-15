@@ -29,10 +29,8 @@ public class RatingServiceImpl implements RatingService {
 		User ratedUser = userRepository.findById(userId).get();
 		User ratingUser = userRepository.findByUsername(userDetails.getUsername());
 				
-		if(ratingRepository.findByRatingUserAndRatedUser(ratingUser, ratedUser) != null) {
-			System.out.println("User already rated");
-			return;
-		}
+		if(ratingRepository.findByRatingUserAndRatedUser(ratingUser, ratedUser) != null) return;
+		
 		Rating rating = modelMapper.map(importRatingDto, Rating.class);
 		
 		rating.setRatedUser(ratedUser);

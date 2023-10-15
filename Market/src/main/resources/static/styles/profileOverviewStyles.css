@@ -107,11 +107,6 @@ p {
     color: black;
 }
 
-
-i {
-    color: var(--green_blue);
-}
-
 small {
     color: red;
 }
@@ -136,8 +131,9 @@ button:hover {
     font-size: 24px;
     grid-area: info;
 }
-#user-info i{
+#user-info i {
     margin-top: 15px;
+    color: var(--green_blue);
 }
 
 #rating {

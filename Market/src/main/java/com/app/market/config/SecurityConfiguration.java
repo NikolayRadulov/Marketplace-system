@@ -30,7 +30,7 @@ public class SecurityConfiguration {
 		httpSecurity.authorizeHttpRequests()
 		.requestMatchers("/", "/users/register", "/users/login", "/static/**", "styles/**", "js/**", "categoryImages/**", "/categories/getAll", "/error", "/users/loadUsers", "/users/logout", "/users/login-error").permitAll()
 		.requestMatchers("users/admins", "users/changeRole").hasAuthority(UserRoleEnum.ADMIN.name())
-		.requestMatchers("users/moderators", "users/banUser/{id}").hasRole(UserRoleEnum.MODERATOR.name())
+		.requestMatchers("users/moderators", "users/banUser/{id}").hasAuthority(UserRoleEnum.MODERATOR.name())
 		.anyRequest().authenticated()
 		.and().formLogin().loginPage("/users/login")
 		.usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)

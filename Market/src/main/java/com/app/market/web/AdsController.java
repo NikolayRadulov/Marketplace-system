@@ -2,6 +2,7 @@ package com.app.market.web;
 
 import java.io.IOException;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.app.market.model.dto.AdFilterDto;
 import com.app.market.model.dto.ImportAdDto;
@@ -71,7 +73,7 @@ public class AdsController {
 	@DeleteMapping("/deleteAd/{id}")
 	public String deleteAd(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id")long id) {	
 		if(!adService.findById(id).getOwner().getUsername().equals(userDetails.getUsername())) {
-			return "redirect:/permissions/forbidden";
+			return "redirect:/ads/forbidden";
 		}
 		
 		adService.deleteAd(id);
@@ -79,11 +81,19 @@ public class AdsController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/forbidden")
+	@ResponseStatus(code = HttpStatus.FORBIDDEN)
+	public String getForbidenPage() {
+		return "/errors/notAuthorized.html";
+	}
 	
 	@GetMapping("/getAdInfo/{id}") 
-	public String getAdOverviewPage(Model model, @PathVariable("id")long id) {
+	public String getAdOverviewPage(Model model,@AuthenticationPrincipal UserDetails userDetails ,@PathVariable("id")long id) {
+		boolean isProfileOwned = userDetails.getUsername().equals(adService.findById(id).getOwner().getUsername());
+
 		model.addAttribute("ad", adService.findOverviewById(id));
 		model.addAttribute("user", userService.getById(adService.getOwnerId(id)));
+		model.addAttribute("isProfileOwned", isProfileOwned);
 		return "adInfoPage";
 	}
 	

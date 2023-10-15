@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oops</title>
+    <title>Bad request</title>
+    <link rel="stylesheet" th:href="@{/styles/errorPageStyles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/fragmentStyles/headerStyles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/responsive/headerResponsive.css}">
 </head>
 <body>
-    Oops, we had trouble finding the page that you were looking for, we'll see the issue and fix it as soon as possible.
+   <header th:replace = "fragments/headerFragment :: header"></header>
+   <div id = "error-container">
+        <h1>Something went wrong</h1>
+        <h3>
+           Something went wrong, we will check and fix the issue.
+        </h3>
+   </div> 
+    
 </body>
 </html>

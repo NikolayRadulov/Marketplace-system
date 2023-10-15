@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ad</title>
     <link rel="stylesheet" th:href="@{/styles/adInfoPageStyles.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/styles/fragmentStyles/headerStyles.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/styles/responsive/headerResponsive.css}">
@@ -28,7 +28,7 @@
                 <h2>BGN</h2>
             </div>
 
-            <form th:action="@{/ads/deleteAd/{id}(id = ${ad.id})}" th:method = "DELETE" id = "deleteAd">
+            <form th:action="@{/ads/deleteAd/{id}(id = ${ad.id})}" th:method = "DELETE" id = "deleteAd" th:if = "${isProfileOwned}">
                 <button type="submit">Delete</button>
             </form>
         </article>

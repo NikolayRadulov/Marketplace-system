@@ -22,9 +22,10 @@ article {
     padding: 20px;
     background-color: white;
     width: max-content;
+    margin: 20px;
 }
 
-i {
+.item i {
     color: var(--green_blue);
     margin-right: 15px;
 }
