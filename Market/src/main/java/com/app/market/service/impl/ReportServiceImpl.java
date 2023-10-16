@@ -35,10 +35,7 @@ public class ReportServiceImpl implements ReportService {
 	public void issueReport(ImportReportDto importReportDto, long reportedUserId, long senderId) {
 		User reportedUser = userRepository.findById(reportedUserId).get();
 		User reporterUser = userRepository.findById(senderId).get();
-		if(reportRepository.findByReportedUserAndReporterUser(reportedUser, reporterUser) != null) {
-			System.out.println("User already reported");
-			return;
-		}
+		if(reportRepository.findByReportedUserAndReporterUser(reportedUser, reporterUser) != null) return;
 		
 		Report report = modelMapper.map(importReportDto, Report.class);
 		report.setReportedUser(reportedUser);

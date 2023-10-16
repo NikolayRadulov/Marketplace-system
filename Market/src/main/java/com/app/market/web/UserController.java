@@ -92,6 +92,7 @@ public class UserController {
 			return "register";
 		}
 		userService.registerUser(userRegisterDto);
+		userService.loginUser(userRegisterDto.getUsername());
 		httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
 		
 		return "redirect:/";

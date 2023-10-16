@@ -59,8 +59,6 @@ public class UserServiceImpl implements UserService {
 		user.setCreatedOn(LocalDateTime.now());
 
 		userRepository.save(user);
-		
-		loginUser(user.getUsername());
 	}
 	
 	@Override
