@@ -19,4 +19,6 @@ public interface AdRepository extends JpaRepository<Ad, Long>{
 	List<Ad> findByCategoryAndFilters(String category, double minPrice, double maxPrice);
 	
 	List<Ad> findByOwner(User owner);
+	
+	List<Ad> findByNameContains(String text);
 }

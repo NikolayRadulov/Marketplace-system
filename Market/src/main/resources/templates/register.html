@@ -34,7 +34,8 @@
                 
                 <div class="field">
                     <label for="confirmPassword">Confirm password</label>
-                    <input type="password" placeholder="*********" name = "confirmPassword" th:errorclass = "error">  
+                    <input type="password" placeholder="*********" name = "confirmPassword" th:errorclass = "error">
+                    <small th:if="${passwordMismatch}">Passwords must match</small>
                 </div>
                 <button type="submit">Register</button>
             </div>

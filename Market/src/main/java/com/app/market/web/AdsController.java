@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.app.market.model.dto.AdFilterDto;
@@ -55,11 +56,21 @@ public class AdsController {
 		return "addAd";
 	}
 
+	@PostMapping("/search")
+	public String searchAds(Model model, @RequestParam("text")String text) {
+		model.addAttribute("ads", adService.findByTitleContaining(text));
+		model.addAttribute("filters", false);
+		return "adsOverview";
+	}
+	
 	@PostMapping("/addAd")
 	public String redirectToHome(Model model, @AuthenticationPrincipal UserDetails userDetails, @Valid @ModelAttribute("importAdDto") ImportAdDto importAdDto, BindingResult bindingResult) throws IOException {
 		
 		if(bindingResult.hasErrors()) {
+			User user = userService.getByName(userDetails.getUsername());
+			model.addAttribute("categories", categoryService.getAllCategories());
 			model.addAttribute("importAdDto", importAdDto);
+			model.addAttribute("contactUserDto", userService.getById(user.getId()));
 			return "addAd";
 		}
 		
@@ -102,6 +113,7 @@ public class AdsController {
 		if(adFilterDto.getMaxPrice() == 0 || adFilterDto.getMinPrice() == 0)model.addAttribute("ads", adService.getByCategoryName(categoryName));
 		else model.addAttribute("ads", adService.getByCategoryNameAndFilters(categoryName, adFilterDto));
 		model.addAttribute("categoryName", categoryName);
+		model.addAttribute("filters", true);
 		
 		return "adsOverview"; 
 	}

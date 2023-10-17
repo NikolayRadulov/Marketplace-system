@@ -28,4 +28,6 @@ public interface AdService {
 	int getAdsCount();
 	
 	void deleteAd(long id);
+	
+	List<AdOverviewDto> findByTitleContaining(String text);
 }

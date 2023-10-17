@@ -130,6 +130,11 @@ public class AdServiceImpl implements AdService {
 		this.adRepository.deleteById(id);
 	}
 
+	@Override
+	public List<AdOverviewDto> findByTitleContaining(String text) {
+		return getDtos(this.adRepository.findByNameContains(text));
+	}
+
 	
 
 }

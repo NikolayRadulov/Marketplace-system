@@ -14,7 +14,7 @@
 <body>
     <header th:replace = "fragments/headerFragment.html :: header"></header>
 
-    <section id = "filters">
+    <section id="filters" th:if = "${filters}">
         <h1>Filters</h1>
         <form th:action="@{/ads/ads_by_category/{categoryName}(categoryName = ${categoryName})}">
             <div class="input">
@@ -24,10 +24,6 @@
             <div class="input">
                 <label for="maxPrice">Enter maximal price</label>
                 <input type="number" name="maxPrice">
-            </div>
-            <div class="input">
-                <label for="minRating">Enter minimal rating</label>
-                <input type="number" name="minRating" min="1" max="5">
             </div>
             <button type="submit">Apply</button>
         </form>

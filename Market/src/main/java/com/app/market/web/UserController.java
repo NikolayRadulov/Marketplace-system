@@ -87,6 +87,7 @@ public class UserController {
 	@PostMapping("/register")
 	public String getHomePage(Model model, @Valid @ModelAttribute("userRegisterDto") UserRegisterDto userRegisterDto, BindingResult bindingResult, HttpSession httpSession) {
 		if(bindingResult.hasErrors()) {
+			if(!userRegisterDto.getPassword().equals(userRegisterDto.getConfirmPassword())) model.addAttribute("passwordMismatch", true);
 			model.addAttribute("userRegisterDto", userRegisterDto);
 			model.addAttribute("org.springframework.validation.BindingResult.userRegisterDto", bindingResult);
 			return "register";

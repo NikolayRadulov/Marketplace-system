@@ -15,7 +15,7 @@
     
     <section id = "search">
         <form th:action="@{/ads/search}" th:method = "POST">
-            <input type="text" placeholder="What are you looking for?">
+            <input type="text" placeholder="What are you looking for?" name = "text">
             <button type="submit">Search</button>
         </form>
         <form th:action="@{/users/profileSearch}" th:method = "POST">
