@@ -42,7 +42,9 @@
         </article>
 
         <article id = "report" th:unless = "${isProfileOwned}">
+            <small th:if="${alreadyReported}">Already reported</small>
             <h1>Report</h1>
+            
             <div th:object = "${report}">
                 <form th:action="@{/users/reportUser/{id}(id = ${user.id})}" th:method = "post">
                     <label for = "score">Report*</label>
@@ -53,16 +55,18 @@
             </div>
         </article>
 
-        <article id = "rating" th:unless = "${isProfileOwned}">
+        <article id="rating" th:unless="${isProfileOwned}">
+            <small th:if="${alreadyRated}">Already rated</small>
             <h1>Rate</h1>
-            <div th:object = "${rating}">
-                <form th:action="@{/ratings/addRating/{id}(id = ${user.id})}" th:method = "post">
-                        <label for = "score">Rate user from 1(Very bad) to 5(Great)*</label>
-                        <input type="number" min="1" max="5" name="score">
-                        <small th:if = "${#fields.hasErrors('score')}">Rating must be between 1 and 10</small>
-                        <label for="comment">Comment</label>
-                        <textarea rows="7" type="text" name="comment"></textarea>
-                    <button class="rate-btn" type="submit">Rate</button> 
+            
+            <div th:object="${rating}">
+                <form th:action="@{/ratings/addRating/{id}(id = ${user.id})}" th:method="post">
+                    <label for="score">Rate user from 1(Very bad) to 5(Great)*</label>
+                    <input type="number" min="1" max="5" name="score">
+                    <small th:if="${#fields.hasErrors('score')}">Rating must be between 1 and 10</small>
+                    <label for="comment">Comment</label>
+                    <textarea rows="7" type="text" name="comment"></textarea>
+                    <button class="rate-btn" type="submit">Rate</button>
                 </form>
             </div>
         </article>

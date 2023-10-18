@@ -143,8 +143,11 @@ public class UserController {
 	@PostMapping("/reportUser/{id}")
 	public String createReport(@PathVariable("id") long id,
 							   @Valid ImportReportDto importReportDto, BindingResult bindingResult,
-							   @AuthenticationPrincipal UserDetails userDetails) {
-		reportService.issueReport(importReportDto, id, userService.getByName(userDetails.getUsername()).getId());
+							   @AuthenticationPrincipal UserDetails userDetails,
+							   RedirectAttributes redirectAttributes) {
+		boolean isSuccessfull = reportService.issueReport(importReportDto, id, userService.getByName(userDetails.getUsername()).getId());
+		
+		if(!isSuccessfull) redirectAttributes.addFlashAttribute("alreadyReported", true);
 		
 		return "redirect:/users/profile/"+id;
 	}

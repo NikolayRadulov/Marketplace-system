@@ -7,7 +7,7 @@ import com.app.market.model.dto.ReportOverviewDto;
 
 public interface ReportService {
 
-	void issueReport(ImportReportDto importReportDto, long reportedUserId, long senderId);
+	boolean issueReport(ImportReportDto importReportDto, long reportedUserId, long senderId);
 	
 	List<ReportOverviewDto> getAllReports();
 	

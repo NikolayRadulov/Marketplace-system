@@ -26,12 +26,17 @@ public class RaitingsController {
 	
 	
 	@PostMapping("/addRating/{id}")
-	public String addRating(@AuthenticationPrincipal UserDetails userDetails ,@PathVariable("id")long id, @Valid ImportRatingDto importRatingDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String addRating(@AuthenticationPrincipal UserDetails userDetails,
+							@PathVariable("id")long id, @Valid ImportRatingDto importRatingDto,
+							BindingResult bindingResult,
+							RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("importRatingDto", importRatingDto);
 			return "redirect:/users/profile/"+id;
 		}
-		ratingService.addNewUserRaiting(id, importRatingDto, userDetails);
+		boolean isSuccessful = ratingService.addNewUserRaiting(id, importRatingDto, userDetails);
+		
+		if(!isSuccessful) redirectAttributes.addFlashAttribute("alreadyRated", true);
 		
 		return "redirect:/users/profile/"+id; 
 	}

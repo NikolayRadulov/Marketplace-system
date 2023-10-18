@@ -6,5 +6,5 @@ import com.app.market.model.dto.ImportRatingDto;
 
 public interface RatingService {
 
-	void addNewUserRaiting(long userId, ImportRatingDto importRatingDto, UserDetails sender);
+	boolean addNewUserRaiting(long userId, ImportRatingDto importRatingDto, UserDetails sender);
 }

@@ -25,11 +25,11 @@ public class RatingServiceImpl implements RatingService {
 	}
 
 	@Override
-	public void addNewUserRaiting(long userId, ImportRatingDto importRatingDto, UserDetails userDetails) {
+	public boolean addNewUserRaiting(long userId, ImportRatingDto importRatingDto, UserDetails userDetails) {
 		User ratedUser = userRepository.findById(userId).get();
 		User ratingUser = userRepository.findByUsername(userDetails.getUsername());
 				
-		if(ratingRepository.findByRatingUserAndRatedUser(ratingUser, ratedUser) != null) return;
+		if(ratingRepository.findByRatingUserAndRatedUser(ratingUser, ratedUser) != null) return false;
 		
 		Rating rating = modelMapper.map(importRatingDto, Rating.class);
 		
@@ -37,6 +37,7 @@ public class RatingServiceImpl implements RatingService {
 		rating.setRatingUser(ratingUser);
 		ratingRepository.save(rating);
 
+		return true;
 	}
 
 }
