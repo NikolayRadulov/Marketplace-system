@@ -35,6 +35,25 @@ public class ImportAdDto {
 		// TODO Auto-generated constructor stub
 	}
 
+	public ImportAdDto(@Size(min = 4, max = 50, message = "Title must be between 4 and 50 characters") String title,
+			@NotNull String category, @NotNull MultipartFile image,
+			@Positive(message = "Price must be positive") double price,
+			@Size(min = 30, max = 3000, message = "Description must be between 30 and 3000 characters") String description,
+			@Size(min = 4, max = 50, message = "City must be between 4 and 50 characters") String city,
+			@Size(min = 6, max = 50, message = "Address must be between 6 and 50 characters") String address,
+			String cityZone) {
+		this.title = title;
+		this.category = category;
+		this.image = image;
+		this.price = price;
+		this.description = description;
+		this.city = city;
+		this.address = address;
+		this.cityZone = cityZone;
+	}
+
+
+
 
 	public String getTitle() {
 		return title;

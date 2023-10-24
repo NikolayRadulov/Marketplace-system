@@ -32,6 +32,23 @@ public class UserRegisterDto {
 	public UserRegisterDto() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public UserRegisterDto(
+			@NotBlank @Size(min = 4, max = 20, message = "Username must be between 4 and 20 characters") @Pattern(regexp = "[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*", message = "Username must only contain letters, digits, underscore or dot. It can not begin or end with dot or underscore!") String username,
+			@NotBlank @Email @Size(min = 9, max = 30, message = "Email must be between 9 and 30 charecters") String email,
+			@NotBlank @Size(min = 10, max = 10, message = "Invalid phone number") String phoneNumber,
+			@NotBlank @Size(min = 6, max = 25, message = "Password must be between 6 and 25 characters") String password,
+			@NotBlank @Size(min = 6, max = 25) String confirmPassword) {
+		this.username = username;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+	}
+
+
 
 	public String getUsername() {
 		return username;
