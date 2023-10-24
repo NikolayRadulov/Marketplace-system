@@ -3,8 +3,10 @@ package com.app.market.model.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -25,7 +27,7 @@ public class Ad extends BaseEntity {
 	@Column(nullable = false, name = "posted_on")
 	private LocalDateTime postedOn;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private User owner;
 	
 	@OneToOne(mappedBy = "ad")

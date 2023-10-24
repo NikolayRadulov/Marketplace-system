@@ -1,10 +1,12 @@
 package com.app.market.web;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.app.market.service.CategoryService;
 import com.app.market.service.UserService;
@@ -31,8 +33,9 @@ public class MainController {
 	}
 	
 	@GetMapping("/permissions/forbidden")
+	@ResponseStatus(code = HttpStatus.FORBIDDEN)
 	public String pageNotVisible() {
-		return "notAuthorized.html";
+		return "errors/notAuthorized";
 	}
 
 }

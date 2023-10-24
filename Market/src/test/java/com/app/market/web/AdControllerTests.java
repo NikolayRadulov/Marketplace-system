@@ -1,6 +1,5 @@
 package com.app.market.web;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -10,20 +9,26 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.CsrfRequestPostProcessor;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.app.market.model.dto.ImportAdDto;
 import com.app.market.model.dto.UserRegisterDto;
-import com.app.market.repository.AdRepository;
 import com.app.market.repository.UserRepository;
 import com.app.market.service.AdService;
 import com.app.market.service.UserService;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class AdControllerTests {
 
 	@Autowired
@@ -38,25 +43,15 @@ public class AdControllerTests {
 	@Autowired
 	private AdService adService;
 	
-	@Autowired
-	private AdRepository adRepository;
-	
 	@BeforeAll
 	public void setUp() {
-		tearDown();
-		UserRegisterDto userRegisterDto = new UserRegisterDto("user", "user@abv.bg", "0894536772", "somePassword", "somePassword");
+		if(userRepository.count() != 0) return;
+		
+		UserRegisterDto userRegisterDto = new UserRegisterDto("user2", "user2@abv.bg", "0894536772", "somePassword", "somePassword");
+		ImportAdDto validImportAdDto = new ImportAdDto("valid2", "dto", new MockMultipartFile("someName", new byte[255]), 456.43, "some description", "burgas", "meden rudnik", null);
 		
 		userService.registerUser(userRegisterDto);
-		
-		ImportAdDto validImportAdDto = new ImportAdDto("valid", "dto", new MockMultipartFile("someName", new byte[255]), 456.43, "some description", "burgas", "meden rudnik", null);
-
 		adService.addNewAdd("user", validImportAdDto);
-	}
-	
-	@AfterAll
-	public void tearDown() {
-		adRepository.deleteAll();
-		userRepository.deleteAll();
 	}
 	
 	@Test
@@ -69,6 +64,15 @@ public class AdControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(username = "user", roles = "USER")
+	public void testSearchAdd() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.post("/ads/search").param("text", "someText").with(csrf()))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.view().name("adsOverview"))
+		.andExpect(MockMvcResultMatchers.model().attributeExists("ads", "filters"));
+	}
+	
+	@Test
 	@WithMockUser(username = "user", authorities = {"MODERATOR","ADMIN"})
 	public void testDeleteAd() throws Exception {		
 		mockMvc.perform(MockMvcRequestBuilders.delete("/ads/deleteAd/1"))
@@ -77,8 +81,8 @@ public class AdControllerTests {
 	
 	@Test
 	@WithMockUser(username = "user", authorities = {"MODERATOR","ADMIN"})
-	public void testGetAd() throws Exception {	
-		mockMvc.perform(MockMvcRequestBuilders.get("/ads/getAdInfo/5"))
+	public void testGetAdInfo() throws Exception {	
+		mockMvc.perform(MockMvcRequestBuilders.get("/ads/getAdInfo/1"))
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.view().name("adInfoPage"))
 		.andExpect(MockMvcResultMatchers.model().attributeExists("ad", "user", "isProfileOwned"));
