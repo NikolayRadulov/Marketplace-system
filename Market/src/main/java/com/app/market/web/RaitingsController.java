@@ -1,6 +1,7 @@
 package com.app.market.web;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,8 @@ import com.app.market.model.dto.ImportRatingDto;
 import com.app.market.service.RatingService;
 
 import jakarta.validation.Valid;
+
+
 
 @RequestMapping("/ratings")
 @Controller

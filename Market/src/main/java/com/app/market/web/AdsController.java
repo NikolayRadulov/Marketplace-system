@@ -115,7 +115,7 @@ public class AdsController {
 		model.addAttribute("categoryName", categoryName);
 		model.addAttribute("filters", true);
 		
-		return "adsOverview"; 
+		return "adsOverview";	
 	}
 	
 	
