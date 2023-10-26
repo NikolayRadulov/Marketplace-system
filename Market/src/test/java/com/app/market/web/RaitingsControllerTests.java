@@ -11,8 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.app.market.model.dto.ImportRatingDto;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 public class RaitingsControllerTests {
@@ -22,14 +20,10 @@ public class RaitingsControllerTests {
 	
 	@Test
 	@WithMockUser("user")
-	public void testAddRating() throws Exception {
-		ImportRatingDto importRatingDto = new ImportRatingDto();
-		importRatingDto.setScore(3.4);
-		importRatingDto.setComment("Some comment");
-		
-		mockMvc.perform(MockMvcRequestBuilders.post("/ads/addRating/1").with(csrf()))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.forwardedUrl("/users/profile/1"));
+	public void testAddRating() throws Exception {		
+		mockMvc.perform(MockMvcRequestBuilders.post("/ratings/addRating/1").with(csrf()))
+		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+		.andExpect(MockMvcResultMatchers.redirectedUrl("/users/profile/1"));
 	}
 	
 	

@@ -16,7 +16,6 @@ public class ReportsController {
 	private final ReportService reportService;
 	public ReportsController(ReportService reportService) {
 		this.reportService = reportService;
-		// TODO Auto-generated constructor stub
 	}
 	
 	@GetMapping("/getReportInfo/{id}")
