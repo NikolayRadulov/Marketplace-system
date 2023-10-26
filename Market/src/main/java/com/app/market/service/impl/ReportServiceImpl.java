@@ -70,7 +70,7 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public void removeReport(long id) {
-		reportRepository.delete(reportRepository.findById(id).get());
+		reportRepository.deleteById(id);
 	}
 
 
