@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -85,7 +86,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/register")
-	public String getHomePage(Model model, @Valid @ModelAttribute("userRegisterDto") UserRegisterDto userRegisterDto, BindingResult bindingResult, HttpSession httpSession) {
+	public String getHomePage(Model model,@RequestAttribute @Valid @ModelAttribute("userRegisterDto") UserRegisterDto userRegisterDto, BindingResult bindingResult, HttpSession httpSession) {
+		
 		if(bindingResult.hasErrors()) {
 			if(!userRegisterDto.getPassword().equals(userRegisterDto.getConfirmPassword())) model.addAttribute("passwordMismatch", true);
 			model.addAttribute("userRegisterDto", userRegisterDto);
@@ -93,6 +95,7 @@ public class UserController {
 			return "register";
 		}
 		userService.registerUser(userRegisterDto);
+		
 		userService.loginUser(userRegisterDto.getUsername());
 		httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
 		
