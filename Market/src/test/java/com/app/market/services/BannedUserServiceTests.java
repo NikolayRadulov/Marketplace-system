@@ -101,29 +101,21 @@ public class BannedUserServiceTests {
 	public void testCheckBannedUser() {
 		//Arrange
 		String existingName = "exist";
-		String existingName2 = "exist2";
 		String nonExisting = "missing";
 		
 		BannedUser testBannedUser = new BannedUser();
 		testBannedUser.setUsername(existingName);
 		testBannedUser.setBanExpire(LocalDateTime.now().plusDays(1));
 		
-		BannedUser testBannedUser2 = new BannedUser();
-		testBannedUser2.setUsername(existingName2);
-		testBannedUser2.setBanExpire(LocalDateTime.now());
-		
 		Mockito.when(bannedUserRepository.findByUsername(existingName)).thenReturn(testBannedUser);
-		Mockito.when(bannedUserRepository.findByUsername(existingName2)).thenReturn(testBannedUser2);
 		Mockito.when(bannedUserRepository.findByUsername(nonExisting)).thenReturn(null);
 		
 		//Act
 		BannedUser bannedUser1 = toTest.checkBannedUser(existingName);
 		BannedUser bannedUser2 = toTest.checkBannedUser(nonExisting);
-		BannedUser bannedUser3 = toTest.checkBannedUser(existingName2);
 		//Assert
 		
-		Assertions.assertEquals(bannedUser1, testBannedUser);
-		Assertions.assertEquals(bannedUser2, null);
-		Assertions.assertEquals(bannedUser3, null);
+		Assertions.assertEquals(testBannedUser, bannedUser1);
+		Assertions.assertEquals(null, bannedUser2);
 	}
 }

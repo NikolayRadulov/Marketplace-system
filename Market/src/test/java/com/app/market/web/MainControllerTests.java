@@ -1,7 +1,10 @@
 package com.app.market.web;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,32 +13,31 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.app.market.model.dto.UserRegisterDto;
-import com.app.market.repository.UserRepository;
-import com.app.market.service.UserService;
+import com.app.market.util.TestDataService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(Lifecycle.PER_CLASS)
 public class MainControllerTests {
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private UserRepository userRepository;
 	
 	@Autowired
 	private MockMvc mockMvc;
 	
-	@BeforeEach
+	@Autowired
+	private TestDataService testDataService;
+	
+	@BeforeAll
 	public void setUp() {
-		UserRegisterDto userRegisterDto = new UserRegisterDto("user", "user@abv.bg", "0894536772", "somePassword", "somePassword");
-
-		if(userRepository.count() == 0) userService.registerUser(userRegisterDto);
+		testDataService.initUsers();
+	}
+	
+	@AfterAll
+	public void tearDown() {
+		testDataService.tearDownDB();
 	}
 	
 	@Test
-	@WithMockUser(username = "user1")
+	@WithMockUser(username = "Dragan")
 	public void getMainPage() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/"))
 		.andExpect(MockMvcResultMatchers.status().isOk())
@@ -52,7 +54,7 @@ public class MainControllerTests {
 	}
 	
 	@Test
-	@WithMockUser(username = "user1")
+	@WithMockUser(username = "Dragan")
 	public void getForbiddenPage() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/permissions/forbidden"))
 		.andExpect(MockMvcResultMatchers.status().isForbidden())

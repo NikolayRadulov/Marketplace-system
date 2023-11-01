@@ -1,7 +1,10 @@
 package com.app.market.web;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,15 +14,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.app.market.model.dto.ImportReportDto;
-import com.app.market.model.dto.UserRegisterDto;
-import com.app.market.repository.UserRepository;
 import com.app.market.service.ReportService;
-import com.app.market.service.UserService;
+import com.app.market.util.TestDataService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(Lifecycle.PER_CLASS)
 public class ReportsControllerTests {
-
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -28,40 +29,46 @@ public class ReportsControllerTests {
 	private ReportService reportService;
 	
 	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@BeforeEach
+	private TestDataService testDataService;
+		
+	@BeforeAll
 	public void setUp() {
-		if(userRepository.count() == 0) {
-			UserRegisterDto userRegisterDto = new UserRegisterDto("user", "user@abv.bg", "0894536772", "somePassword", "somePassword");
-			UserRegisterDto userRegisterDto2 = new UserRegisterDto("user2", "user2@abv.bg", "0892136772", "somePassword", "somePassword");
-	
-			userService.registerUser(userRegisterDto);
-			userService.registerUser(userRegisterDto2);
-		}
+		testDataService.initUsers();
+		
+		long user1Id = testDataService.getUserIdByUsername("Ivan");
+		long user2Id = testDataService.getUserIdByUsername("Dragan");
 		
 		ImportReportDto importReportDto = new ImportReportDto();
 		importReportDto.setReportText("set text");
-		reportService.issueReport(importReportDto, 1, 2);
+		reportService.issueReport(importReportDto, user1Id, user2Id);
 	}
 	
+	@AfterAll
+	public void tearDown() {
+		testDataService.tearDownDB();
+	}
 	
 	@Test
-	@WithMockUser("user")
+	@WithMockUser(username = "Ivan", authorities = "MODERATOR")
 	public void getReportInfoPage() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/reports/getReportInfo/1"))
+		
+		long user1Id = testDataService.getUserIdByUsername("Ivan");
+		long user2Id = testDataService.getUserIdByUsername("Dragan");
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/reports/getReportInfo/"+testDataService.getReportIdByUsersIds(user1Id, user2Id)))
 		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.model().attributeExists("report", "userReportDto"))
+		.andExpect(MockMvcResultMatchers.model().attributeExists("report", "reportedUserId"))
 		.andExpect(MockMvcResultMatchers.view().name("reportOverview"));
 	}
 	
 	@Test
-	@WithMockUser("user")
+	@WithMockUser(username = "Dragan", authorities = "MODERATOR")
 	public void markReportAsRead() throws Exception {	
-		mockMvc.perform(MockMvcRequestBuilders.get("/reports/markReportAsRead/1"))
+		
+		long user1Id = testDataService.getUserIdByUsername("Ivan");
+		long user2Id = testDataService.getUserIdByUsername("Dragan");
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/reports/markReportAsRead/"+testDataService.getReportIdByUsersIds(user1Id, user2Id)))
 		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
 		.andExpect(MockMvcResultMatchers.redirectedUrl("/users/moderators"));
 	}

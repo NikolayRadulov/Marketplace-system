@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -18,31 +19,26 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.app.market.repository.ReportRepository;
-import com.app.market.repository.UserRepository;
+import com.app.market.util.TestDataService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
 public class UserControllerTests {
 
+	@Autowired
+	private MockMvc mockMvc;	
 	
 	@Autowired
-	private MockMvc mockMvc;
+	private TestDataService testDataService;
 	
-	@Autowired
-	private ReportRepository reportRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	
-	@AfterAll
+	@BeforeAll
 	public void setUp() {
-		if(userRepository.count() != 0) {
-			reportRepository.deleteAll();
-			userRepository.deleteAll();
-		}
+		testDataService.initUsers();
+	}
+	@AfterAll
+	public void tearDown() {
+		testDataService.tearDownDB();
 	}
 	
 	@Test
@@ -52,9 +48,9 @@ public class UserControllerTests {
 		.andExpect(status().isOk()).andExpect(view().name("register"));
 						
 		mockMvc.perform(post("/users/register").with(csrf())
-				.param("username", "user")
-				.param("email", "example@abv.bg")
-				.param("phoneNumber", "0889453256")
+				.param("username", "Ilian")
+				.param("email", "ilian@abv.bg")
+				.param("phoneNumber", "0819431256")
 				.param("password", "somePassword")
 				.param("confirmPassword", "somePassword"))
 		.andExpect(status().is3xxRedirection())
@@ -64,6 +60,7 @@ public class UserControllerTests {
 				.param("password", "")
 				.param("confirmPassword", ""))
 		.andExpect(status().isOk())
+		.andExpect(MockMvcResultMatchers.model().errorCount(7))
 		.andExpect(view().name("register"));
 	}
 	
@@ -78,17 +75,18 @@ public class UserControllerTests {
 		.andExpect(status().isOk())
 		.andExpect(view().name("moderatorPage"));
 	}
+	
 	@Test
 	@WithMockUser(username = "moderator", authorities = {"MODERATOR"})
 	public void testChangeRole() throws Exception {
-		mockMvc.perform(post("/users/changeRole/1").with(csrf())
+		mockMvc.perform(post("/users/changeRole/" + testDataService.getUserIdByUsername("Ilian")).with(csrf())
 				.param("authority", "MODERATOR"))
 		.andExpect(status().is3xxRedirection());
 	}
 	@Test
 	@WithMockUser("someUser")
 	public void testRandomProfileOverview() throws Exception {
-		mockMvc.perform(get("/users/profile/1"))
+		mockMvc.perform(get("/users/profile/" + testDataService.getUserIdByUsername("Ilian")).with(csrf()))
 		.andExpect(status().isOk())
 		.andExpect(view().name("profileOverview"))
 		.andExpect(MockMvcResultMatchers.model().attributeExists("user", "isUserAdmin", "isProfileOwned",
@@ -97,9 +95,9 @@ public class UserControllerTests {
 		
 	}
 	@Test
-	@WithMockUser("user")
+	@WithMockUser("Ilian")
 	public void testProfileOwnedOverview() throws Exception {
-		mockMvc.perform(get("/users/profile/1"))
+		mockMvc.perform(get("/users/profile/" + testDataService.getUserIdByUsername("Ilian")))
 		.andExpect(status().isOk())
 		.andExpect(view().name("profileOverview"))
 		.andExpect(MockMvcResultMatchers.model().attribute("isProfileOwned", true));
@@ -110,7 +108,7 @@ public class UserControllerTests {
 	@WithMockUser("someUser")
 	public void testProfileSearch() throws Exception {
 		mockMvc.perform(post("/users/profileSearch").with(csrf())
-				.param("profileName", "user"))
+				.param("profileName", "Ilian"))
 		.andExpect(status().is3xxRedirection());
 		
 		mockMvc.perform(post("/users/profileSearch").with(csrf())
@@ -123,7 +121,7 @@ public class UserControllerTests {
 	@WithMockUser("someUser")
 	public void testReportUser() throws Exception {
 		mockMvc.perform(post("/users/profileSearch").with(csrf())
-				.param("profileName", "user"))
+				.param("profileName", "Ilian"))
 		.andExpect(status().is3xxRedirection());
 		
 		mockMvc.perform(post("/users/profileSearch").with(csrf())

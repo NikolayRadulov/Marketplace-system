@@ -54,7 +54,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void registerUser(UserRegisterDto userRegisterDto) {
+		
 		User user = modelMapper.map(userRegisterDto, User.class);
+		
+		if(userRepository.existsByUsernameOrEmail(user.getUsername(), user.getEmail())) throw new IllegalArgumentException("User already exists!");
 		user.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
 		user.setCreatedOn(LocalDateTime.now());
 

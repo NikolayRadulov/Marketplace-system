@@ -9,6 +9,7 @@
 <body>
     <section id = "form-container">
         <h1>Register</h1>
+        <small th:if = "${userExists}">User already exists!</small>
         <form th:action="@{/users/register}" th:method = "POST">
             <div th:object = "${userRegisterDto}">
                 <div class="field">

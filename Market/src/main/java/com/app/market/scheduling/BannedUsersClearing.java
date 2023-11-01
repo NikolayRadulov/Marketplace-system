@@ -1,4 +1,4 @@
-package com.app.market.event;
+package com.app.market.scheduling;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
