@@ -18,19 +18,11 @@ import com.app.market.service.AdService;
 public class AdsRestController {
 
 	private final AdService adService;
+	
 	public AdsRestController(AdService adService) {
 		this.adService = adService;
 	}
 	
-	
-	//@GetMapping("/ads_by_category/{categoryName}")
-/*	public ResponseEntity<String> getAdsByCategory(@PathVariable("categoryName")String categoryName) {
-		
-		List<Ad> ads = adService.getByCategoryName(categoryName);
-		
-		return new ResponseEntity<String>(adService.exportAds(ads), HttpStatus.OK);
-	}
-	*/
 	@GetMapping("/getImages/{adId}")
 	public HttpEntity<byte[]> getAdImages(@PathVariable("adId") long id) {
 		Ad ad = adService.findById(id);

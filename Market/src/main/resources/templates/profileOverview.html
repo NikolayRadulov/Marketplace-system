@@ -72,7 +72,9 @@
         </article>
 
         <article id = "moderator-panel" sec:authorize = "hasAuthority('MODERATOR')" th:unless = "${isProfileOwned}"> 
+            <small th:if="${banAdmin}">An admin cannot be banned!</small>
             <h1>Ban user</h1>
+            
             <form th:action="@{/users/banUser/{id}(id = ${user.id})}" th:method = "post">
                 <div class="radio-button-div">
                     <input type="radio" name="numberOfHours" value="12">

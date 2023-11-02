@@ -70,13 +70,6 @@ public class UserController {
 		
 		return "redirect:/users/profile/"+id;
 	}
-
-	
-	@GetMapping("/loadUsers")
-	public String redirectHomeFromLoading() {
-		userService.registerInitialUsers();
-		return "redirect:/";
-	}
 	
 	@GetMapping("/register")
 	public String getRegisterPage(Model model) {
@@ -109,9 +102,10 @@ public class UserController {
 	}
 	
 	@PostMapping("changeRole/{id}")
-	public String changeUserRole(@PathVariable("id") long userId, @RequestParam("authority")String authority) {
+	public String changeUserRole(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id") long userId, @RequestParam("authority")String authority, HttpSession httpSession) {
 		userService.changeUserAuthority(userId, authority);
 		
+		if(userId == userService.getByName(userDetails.getUsername()).getId())httpSession.invalidate();
 		return "redirect:/users/profile/"+userId;
 	}
 	
@@ -169,8 +163,13 @@ public class UserController {
 	}
 	
 	@PostMapping("/banUser/{id}")
-	public String banUser(@PathVariable("id")long id, @RequestParam("numberOfHours")long hours) {
-		bannedUserService.banUser(id, hours);
+	public String banUser(@PathVariable("id")long id, @RequestParam("numberOfHours")long hours, RedirectAttributes redirectAttributes) {
+		
+		try {
+			bannedUserService.banUser(id, hours);
+		} catch (IllegalArgumentException e) {
+			redirectAttributes.addFlashAttribute("banAdmin", true);
+		}
 		
 		return "redirect:/users/profile/"+id;
 	}

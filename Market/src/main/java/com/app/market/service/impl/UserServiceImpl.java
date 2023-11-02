@@ -66,6 +66,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void registerInitialUsers() {
+		if(userRepository.count() != 0) return;
+		
 		UserRole adminRole = new UserRole(UserRoleEnum.ADMIN);
 		UserRole moderatorRole = new UserRole(UserRoleEnum.MODERATOR);
 		

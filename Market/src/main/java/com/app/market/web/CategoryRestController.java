@@ -15,16 +15,9 @@ public class CategoryRestController {
 	public CategoryRestController(CategoryService categoryService) {
 		this.categoryService = categoryService;
 	}
-	
-	@GetMapping("/loadCategories")
-	public String loadCategories() {
-		categoryService.addCategories();
-		return "redirect:/";
-	}
 
 	@GetMapping("/categories/getAll")
-	public ResponseEntity<String> getAllCategories() {
-		
+	public ResponseEntity<String> getAllCategories() {	
 		return new ResponseEntity<String>(categoryService.exportAllCategories(), HttpStatus.OK);
 	}
 

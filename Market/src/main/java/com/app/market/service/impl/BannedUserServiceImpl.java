@@ -36,6 +36,9 @@ public class BannedUserServiceImpl implements BannedUserService {
 	@Override
 	public void banUser(long userId, long hours) {
 		User user = userRepository.findById(userId).get();
+		
+		if(user.getRoles().size() == 2) throw new IllegalArgumentException("Admins cannot be banned!");
+		
 		bannedUserRepository.save(new BannedUser(user.getUsername(), LocalDateTime.now().plusHours(hours)));
 	}
 
