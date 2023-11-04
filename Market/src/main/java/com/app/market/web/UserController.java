@@ -105,7 +105,7 @@ public class UserController {
 	public String changeUserRole(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id") long userId, @RequestParam("authority")String authority, HttpSession httpSession) {
 		userService.changeUserAuthority(userId, authority);
 		
-		if(userId == userService.getByName(userDetails.getUsername()).getId())httpSession.invalidate();
+		if(userId == userService.getByName(userDetails.getUsername()).getId()) httpSession.invalidate();
 		return "redirect:/users/profile/"+userId;
 	}
 	

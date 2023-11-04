@@ -1,5 +1,6 @@
 package com.app.market.services;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -21,6 +22,7 @@ import org.mockito.quality.Strictness;
 
 import com.app.market.model.entity.BannedUser;
 import com.app.market.model.entity.User;
+import com.app.market.model.entity.UserRole;
 import com.app.market.repository.BannedUserRepository;
 import com.app.market.repository.UserRepository;
 import com.app.market.service.impl.BannedUserServiceImpl;
@@ -74,14 +76,37 @@ public class BannedUserServiceTests {
 	@Test
 	public void testBanUser() {
 		//Arrange
-		Mockito.when(userRepository.findById(anyLong())).thenReturn(Optional.of(new User()));
+		User mockUser = new User();
+		mockUser.setRoles(new ArrayList<>());
+		Mockito.when(userRepository.findById(anyLong())).thenReturn(Optional.of(mockUser));
 		//Act
 		toTest.banUser(1, 1);
 		
 		//Assert
 		
 		Mockito.verify(bannedUserRepository).save(any());
+	}
+	
+	@Test()
+	public void testBanAdmin() {
+		//Arrange
+		@SuppressWarnings("unchecked")
+		ArrayList<UserRole> userRoles = Mockito.mock(ArrayList.class);
 		
+		User mockUser = Mockito.mock(User.class);
+		
+		Mockito.when(userRepository.findById(anyLong())).thenReturn(Optional.of(mockUser));
+		Mockito.when(mockUser.getRoles()).thenReturn(userRoles);
+		Mockito.when(userRoles.size()).thenReturn(2);
+		
+		//Act
+		
+		
+		//Assert
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			toTest.banUser(1, 1);
+		});
 	}
 	
 	@Test

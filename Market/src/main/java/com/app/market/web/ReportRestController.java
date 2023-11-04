@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.market.service.ReportService;
 
-@RequestMapping("reports")
+@RequestMapping("/reports")
 @RestController
 public class ReportRestController {
 

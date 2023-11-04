@@ -68,11 +68,19 @@ public class UserServiceImpl implements UserService {
 	public void registerInitialUsers() {
 		if(userRepository.count() != 0) return;
 		
-		UserRole adminRole = new UserRole(UserRoleEnum.ADMIN);
-		UserRole moderatorRole = new UserRole(UserRoleEnum.MODERATOR);
-		
-		userRoleRepository.save(adminRole);
-		userRoleRepository.save(moderatorRole);
+		UserRole adminRole;
+		UserRole moderatorRole;
+		if(userRoleRepository.count() == 0) {
+			adminRole = new UserRole(UserRoleEnum.ADMIN);
+			moderatorRole = new UserRole(UserRoleEnum.MODERATOR);
+			
+			userRoleRepository.save(adminRole);
+			userRoleRepository.save(moderatorRole);
+		}
+		else {
+			adminRole = userRoleRepository.findByUserRole(UserRoleEnum.ADMIN);
+			moderatorRole = userRoleRepository.findByUserRole(UserRoleEnum.MODERATOR);
+		}
 		
 		User adminUser = new User("admin", "admin@gmail.com", "0984589332", passwordEncoder.encode("adminPassword"));
 		adminUser.addRole(adminRole);
@@ -95,7 +103,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getByName(String name) {
-		// TODO Auto-generated method stub
 		return userRepository.findByUsername(name);
 	}
 

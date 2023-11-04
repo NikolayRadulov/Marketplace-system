@@ -77,7 +77,7 @@ public class UserControllerTests {
 	}
 	
 	@Test
-	@WithMockUser(username = "moderator", authorities = {"MODERATOR"})
+	@WithMockUser(username = "Dragan", authorities = {"MODERATOR"})
 	public void testChangeRole() throws Exception {
 		mockMvc.perform(post("/users/changeRole/" + testDataService.getUserIdByUsername("Ilian")).with(csrf())
 				.param("authority", "MODERATOR"))
