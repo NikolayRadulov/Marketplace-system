@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not supported</title>
+    <link rel="stylesheet" th:href="@{/styles/errorPageStyles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/fragmentStyles/headerStyles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/responsive/headerResponsive.css}">
+</head>
+<body>
+    <header th:replace="fragments/headerFragment :: header"></header>
+    <div id="error-container">
+        <h1>Method not supported</h1>
+        <h3>
+            Invalid method.
+        </h3>
+    </div>
+
+</body>
+</html>
