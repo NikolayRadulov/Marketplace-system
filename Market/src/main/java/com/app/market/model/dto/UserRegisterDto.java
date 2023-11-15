@@ -13,8 +13,8 @@ public class UserRegisterDto {
 	private String username;
 	
 	@NotBlank
-	@Email
-	@Size(min = 9, max = 30, message = "Email must be between 9 and 30 charecters")
+	@Email(message = "Must be a valid email!")
+	@Size(min = 6, max = 30, message = "Email must be between 6 and 30 charecters")
 	private String email;
 	
 	@NotBlank
@@ -22,11 +22,12 @@ public class UserRegisterDto {
 	private String phoneNumber;
 	
 	@NotBlank
-	@Size(min = 6, max = 25, message = "Password must be between 6 and 25 characters")
+	@Size(min = 8, max = 25, message = "Password must be between 6 and 25 characters")
+	@Pattern(regexp = "^(?=(.*[a-z]){3,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\\-__+.]){1,}).{8,}$", message = "The password must contain at least 2 upper case letters, 1 special character and 2 numerals!")
 	private String password;
 	
 	@NotBlank
-	@Size(min = 6, max = 25)
+	@Size(min = 8, max = 25, message = "Password must be between 6 and 25 characters")
 	private String confirmPassword;
 	
 	public UserRegisterDto() {

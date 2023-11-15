@@ -8,6 +8,7 @@ import com.app.market.model.entity.Report;
 import com.app.market.repository.AdRepository;
 import com.app.market.repository.BannedUserRepository;
 import com.app.market.repository.CategoryRepository;
+import com.app.market.repository.FileRepository;
 import com.app.market.repository.RatingRepository;
 import com.app.market.repository.ReportRepository;
 import com.app.market.repository.UserRepository;
@@ -23,18 +24,20 @@ public class TestDataService {
 	private final RatingRepository ratingRepository;
 	private final ReportRepository reportRepository;
 	private final UserRepository userRepository;
+	private final FileRepository fileRepository;
 	
 	private final UserService userService;
 	
 	public TestDataService(AdRepository adRepository, BannedUserRepository bannedUserRepository,
 			CategoryRepository categoryRepository, RatingRepository ratingRepository, ReportRepository reportRepository,
-			UserRepository userRepository, UserService userService) {
+			UserRepository userRepository, UserService userService, FileRepository fileRepository) {
 		this.adRepository = adRepository;
 		this.bannedUserRepository = bannedUserRepository;
 		this.categoryRepository = categoryRepository;
 		this.ratingRepository = ratingRepository;
 		this.reportRepository = reportRepository;
 		this.userRepository = userRepository;
+		this.fileRepository = fileRepository;
 		this.userService = userService;
 	}
 	
@@ -54,6 +57,7 @@ public class TestDataService {
 	}
 	
 	public void tearDownDB() {
+		fileRepository.deleteAll();
 		adRepository.deleteAll();
 		bannedUserRepository.deleteAll();
 		categoryRepository.deleteAll();

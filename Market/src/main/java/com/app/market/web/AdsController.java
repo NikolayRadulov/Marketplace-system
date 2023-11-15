@@ -83,7 +83,8 @@ public class AdsController {
 	
 	@DeleteMapping("/deleteAd/{id}")
 	public String deleteAd(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id")long id) {	
-		if(!adService.findById(id).getOwner().getUsername().equals(userDetails.getUsername())) {
+		User deleter = userService.getByName(userDetails.getUsername());
+		if(!adService.findById(id).getOwner().getUsername().equals(deleter.getUsername()) && deleter.getRoles().size() < 2) {
 			return "redirect:/ads/forbidden";
 		}
 		
@@ -105,6 +106,7 @@ public class AdsController {
 		model.addAttribute("ad", adService.findOverviewById(id));
 		model.addAttribute("user", userService.getById(adService.getOwnerId(id)));
 		model.addAttribute("isProfileOwned", isProfileOwned);
+		model.addAttribute("isDeleteAuthorized", isProfileOwned || userService.getByName(userDetails.getUsername()).getRoles().size() == 2);
 		return "adInfoPage";
 	}
 	
