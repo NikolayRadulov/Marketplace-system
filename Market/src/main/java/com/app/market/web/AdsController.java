@@ -66,7 +66,7 @@ public class AdsController {
 	@PostMapping("/addAd")
 	public String redirectToHome(Model model, @AuthenticationPrincipal UserDetails userDetails, @Valid @ModelAttribute("importAdDto") ImportAdDto importAdDto, BindingResult bindingResult) throws IOException {
 		
-		if(importAdDto.getImage().getSize() > 1048576) {
+		if(importAdDto.getImage() != null && importAdDto.getImage().getSize() > 1048576) {
 			return "redirect:/error";
 		}
 		
@@ -87,8 +87,9 @@ public class AdsController {
 	}
 	
 	@DeleteMapping("/deleteAd/{id}")
-	public String deleteAd(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id")long id) {	
-		if(!adService.findById(id).getOwner().getUsername().equals(userDetails.getUsername())) {
+	public String deleteAd(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id")long id) {
+		User deleter = userService.getByName(userDetails.getUsername());
+		if(!adService.findById(id).getOwner().getUsername().equals(userDetails.getUsername()) && deleter.getRoles().size() < 2) {
 			return "redirect:/ads/forbidden";
 		}
 		
