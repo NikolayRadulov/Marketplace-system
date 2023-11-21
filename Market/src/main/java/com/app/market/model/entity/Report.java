@@ -1,6 +1,5 @@
 package com.app.market.model.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -13,10 +12,10 @@ public class Report extends BaseEntity {
 	@Column(nullable = false)
 	private String reportText;
 	
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	private User reportedUser;
 	
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	private User reporterUser;
 	
 	public Report(String reportText) {

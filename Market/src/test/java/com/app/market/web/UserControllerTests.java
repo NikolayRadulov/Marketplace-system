@@ -48,11 +48,11 @@ public class UserControllerTests {
 		.andExpect(status().isOk()).andExpect(view().name("register"));
 						
 		mockMvc.perform(post("/users/register").with(csrf())
-				.param("username", "Ilian2")
-				.param("email", "ilian2@abv.bg")
-				.param("phoneNumber", "0813431256")
-				.param("password", "somePA*93ssword")
-				.param("confirmPassword", "somePA*93ssword"))
+				.param("username", "Ilian")
+				.param("email", "ilian@abv.bg")
+				.param("phoneNumber", "0819431256")
+				.param("password", "somePassword")
+				.param("confirmPassword", "somePassword"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("/"));
 		
@@ -60,7 +60,7 @@ public class UserControllerTests {
 				.param("password", "")
 				.param("confirmPassword", ""))
 		.andExpect(status().isOk())
-		.andExpect(MockMvcResultMatchers.model().errorCount(8))
+		.andExpect(MockMvcResultMatchers.model().errorCount(7))
 		.andExpect(view().name("register"));
 	}
 	
@@ -79,14 +79,14 @@ public class UserControllerTests {
 	@Test
 	@WithMockUser(username = "Dragan", authorities = {"MODERATOR"})
 	public void testChangeRole() throws Exception {
-		mockMvc.perform(post("/users/changeRole/" + testDataService.getUserIdByUsername("Ilian2")).with(csrf())
+		mockMvc.perform(post("/users/changeRole/" + testDataService.getUserIdByUsername("Ilian")).with(csrf())
 				.param("authority", "MODERATOR"))
 		.andExpect(status().is3xxRedirection());
 	}
 	@Test
 	@WithMockUser("someUser")
 	public void testRandomProfileOverview() throws Exception {
-		mockMvc.perform(get("/users/profile/" + testDataService.getUserIdByUsername("Ilian2")).with(csrf()))
+		mockMvc.perform(get("/users/profile/" + testDataService.getUserIdByUsername("Ilian")).with(csrf()))
 		.andExpect(status().isOk())
 		.andExpect(view().name("profileOverview"))
 		.andExpect(MockMvcResultMatchers.model().attributeExists("user", "isUserAdmin", "isProfileOwned",
@@ -95,9 +95,9 @@ public class UserControllerTests {
 		
 	}
 	@Test
-	@WithMockUser("Ilian2")
+	@WithMockUser("Ilian")
 	public void testProfileOwnedOverview() throws Exception {
-		mockMvc.perform(get("/users/profile/" + testDataService.getUserIdByUsername("Ilian2")))
+		mockMvc.perform(get("/users/profile/" + testDataService.getUserIdByUsername("Ilian")))
 		.andExpect(status().isOk())
 		.andExpect(view().name("profileOverview"))
 		.andExpect(MockMvcResultMatchers.model().attribute("isProfileOwned", true));
@@ -108,7 +108,7 @@ public class UserControllerTests {
 	@WithMockUser("someUser")
 	public void testProfileSearch() throws Exception {
 		mockMvc.perform(post("/users/profileSearch").with(csrf())
-				.param("profileName", "Ilian2"))
+				.param("profileName", "Ilian"))
 		.andExpect(status().is3xxRedirection());
 		
 		mockMvc.perform(post("/users/profileSearch").with(csrf())
@@ -121,7 +121,7 @@ public class UserControllerTests {
 	@WithMockUser("someUser")
 	public void testReportUser() throws Exception {
 		mockMvc.perform(post("/users/profileSearch").with(csrf())
-				.param("profileName", "Ilian2"))
+				.param("profileName", "Ilian"))
 		.andExpect(status().is3xxRedirection());
 		
 		mockMvc.perform(post("/users/profileSearch").with(csrf())

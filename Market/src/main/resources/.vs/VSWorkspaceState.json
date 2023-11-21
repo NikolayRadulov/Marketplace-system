@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\templates",
-    "\\templates\\error"
+    "\\templates"
   ],
-  "SelectedNode": "\\templates\\error\\404.html",
+  "SelectedNode": "\\templates\\profileOverview.html",
   "PreviewInSolutionExplorer": false
 }

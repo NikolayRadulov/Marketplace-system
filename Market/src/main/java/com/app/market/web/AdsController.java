@@ -66,6 +66,10 @@ public class AdsController {
 	@PostMapping("/addAd")
 	public String redirectToHome(Model model, @AuthenticationPrincipal UserDetails userDetails, @Valid @ModelAttribute("importAdDto") ImportAdDto importAdDto, BindingResult bindingResult) throws IOException {
 		
+		if(importAdDto.getImage().getSize() > 1048576) {
+			return "redirect:/error";
+		}
+		
 		if(bindingResult.hasErrors()) {
 			User user = userService.getByName(userDetails.getUsername());
 			model.addAttribute("categories", categoryService.getAllCategories());
@@ -73,6 +77,7 @@ public class AdsController {
 			model.addAttribute("contactUserDto", userService.getById(user.getId()));
 			return "addAd";
 		}
+		
 		
 		Ad currentAd = adService.addNewAdd(userDetails.getUsername(), importAdDto);
 		
@@ -83,8 +88,7 @@ public class AdsController {
 	
 	@DeleteMapping("/deleteAd/{id}")
 	public String deleteAd(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id")long id) {	
-		User deleter = userService.getByName(userDetails.getUsername());
-		if(!adService.findById(id).getOwner().getUsername().equals(deleter.getUsername()) && deleter.getRoles().size() < 2) {
+		if(!adService.findById(id).getOwner().getUsername().equals(userDetails.getUsername())) {
 			return "redirect:/ads/forbidden";
 		}
 		
@@ -106,7 +110,6 @@ public class AdsController {
 		model.addAttribute("ad", adService.findOverviewById(id));
 		model.addAttribute("user", userService.getById(adService.getOwnerId(id)));
 		model.addAttribute("isProfileOwned", isProfileOwned);
-		model.addAttribute("isDeleteAuthorized", isProfileOwned || userService.getByName(userDetails.getUsername()).getRoles().size() == 2);
 		return "adInfoPage";
 	}
 	

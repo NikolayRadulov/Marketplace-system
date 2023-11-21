@@ -37,5 +37,11 @@ public class MainController {
 	public String pageNotVisible() {
 		return "errors/notAuthorized";
 	}
+	
+	@GetMapping("/error")
+	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+	public String getErrorPage() {
+		return "error.html";
+	}
 
 }

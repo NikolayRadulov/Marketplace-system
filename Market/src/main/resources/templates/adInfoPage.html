@@ -28,7 +28,7 @@
                 <h2>BGN</h2>
             </div>
 
-            <form th:action="@{/ads/deleteAd/{id}(id = ${ad.id})}" th:method = "DELETE" id = "deleteAd" th:if = "${isDeleteAuthorized}">
+            <form th:action="@{/ads/deleteAd/{id}(id = ${ad.id})}" th:method = "DELETE" id = "deleteAd" th:if = "${isProfileOwned}">
                 <button type="submit">Delete</button>
             </form>
         </article>
