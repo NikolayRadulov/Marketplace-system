@@ -111,6 +111,7 @@ public class AdsController {
 		model.addAttribute("ad", adService.findOverviewById(id));
 		model.addAttribute("user", userService.getById(adService.getOwnerId(id)));
 		model.addAttribute("isProfileOwned", isProfileOwned);
+		model.addAttribute("isDeleteAuthorized", isProfileOwned || userService.getByName(userDetails.getUsername()).getRoles().size() == 2);
 		return "adInfoPage";
 	}
 	
