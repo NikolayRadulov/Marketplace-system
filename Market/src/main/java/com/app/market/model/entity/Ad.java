@@ -33,17 +33,17 @@ public class Ad extends BaseEntity {
 	@OneToOne(mappedBy = "ad")
 	private FileEntity image;
 	
-	public Ad(String name, BigDecimal price, String description) {
-		this.name = name;
-		this.price = price;
-		this.description = description;
-	}
-	
 	@ManyToOne
 	private Category category;
 	
 	@OneToOne
 	private Location location;
+	
+	public Ad(String name, BigDecimal price, String description) {
+		this.name = name;
+		this.price = price;
+		this.description = description;
+	}
 	
 	public Ad() {
 		// TODO Auto-generated constructor stub

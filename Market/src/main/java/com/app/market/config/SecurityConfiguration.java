@@ -22,25 +22,25 @@ import com.app.market.service.impl.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class SecurityConfiguration {
 	
-	@SuppressWarnings("removal")
 	@Bean
 	public SecurityFilterChain getSecurityFilterChain(HttpSecurity httpSecurity, SecurityContextRepository securityContextRepository) throws Exception {
 		
-		
-		httpSecurity.authorizeHttpRequests()
-		.requestMatchers("/", "/users/register", "/users/login", "/static/**", "styles/**", "js/**", "categoryImages/**", "/categories/getAll", "/error", "/users/loadUsers", "/users/logout", "/users/login-error").permitAll()
-		.requestMatchers("/users/admins", "/users/changeRole").hasAuthority(UserRoleEnum.ADMIN.name())
-		.requestMatchers("/users/moderators", "/users/banUser/{id}", "/reports/**").hasAuthority(UserRoleEnum.MODERATOR.name())
-		.anyRequest().authenticated()
-		.and().formLogin().loginPage("/users/login")
+		httpSecurity.authorizeHttpRequests((requests) -> 
+			requests.requestMatchers("/", "/users/register", "/users/login", "/static/**", "styles/**", "js/**", "categoryImages/**", "/categories/getAll", "/error", "/users/loadUsers", "/users/logout", "/users/login-error").permitAll()
+			.requestMatchers("/users/admins", "/users/changeRole").hasAuthority(UserRoleEnum.ADMIN.name())
+			.requestMatchers("/users/moderators", "/users/banUser/{id}", "/reports/**").hasAuthority(UserRoleEnum.MODERATOR.name())
+			.anyRequest().authenticated())
+		.formLogin((form) -> 
+		form.loginPage("/users/login")
 		.usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
 		.passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
 		.defaultSuccessUrl("/", true)
-		.failureForwardUrl("/users/login-error")
-		.and().logout().logoutUrl("/users/logout")
-		.logoutSuccessUrl("/")
-		.and().securityContext()
-		.securityContextRepository(securityContextRepository);
+		.failureForwardUrl("/users/login-error"))
+		.logout((logout) -> 
+		logout.logoutUrl("/users/logout")
+		.logoutSuccessUrl("/"))
+		.securityContext((securityContext) -> 
+		securityContext.securityContextRepository(securityContextRepository));
 		
 		return httpSecurity.build();
 	}

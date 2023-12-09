@@ -117,8 +117,16 @@ public class AdsController {
 	
 	@GetMapping("/ads_by_category/{categoryName}")
 	public String getOverviewPage(Model model, @PathVariable("categoryName") String categoryName, AdFilterDto adFilterDto) {
-		if(adFilterDto.getMaxPrice() == 0 || adFilterDto.getMinPrice() == 0)model.addAttribute("ads", adService.getByCategoryName(categoryName));
-		else model.addAttribute("ads", adService.getByCategoryNameAndFilters(categoryName, adFilterDto));
+		model.addAttribute("ads", adService.getByCategoryName(categoryName));
+		model.addAttribute("categoryName", categoryName); 
+		model.addAttribute("filters", true);
+		
+		return "adsOverview";	
+	}
+	
+	@PostMapping("/ads_by_category/{categoryName}")
+	public String getOverviewPageWithFilters(Model model, @PathVariable("categoryName") String categoryName, AdFilterDto adFilterDto) {
+		model.addAttribute("ads", adService.getByCategoryNameAndFilters(categoryName, adFilterDto));
 		model.addAttribute("categoryName", categoryName);
 		model.addAttribute("filters", true);
 		

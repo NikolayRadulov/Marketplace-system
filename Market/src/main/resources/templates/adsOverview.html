@@ -16,14 +16,14 @@
 
     <section id="filters" th:if = "${filters}">
         <h1>Filters</h1>
-        <form th:action="@{/ads/ads_by_category/{categoryName}(categoryName = ${categoryName})}">
+        <form th:action="@{/ads/ads_by_category/{categoryName}(categoryName = ${categoryName})}" th:method = "post">
             <div class="input">
                 <label for="minPrice">Enter minimal price</label>
-                <input type="number" name="minPrice">
+                <input type="number" name="minPrice" value = "1" min = "0" max = "9999999999">
             </div>
             <div class="input">
                 <label for="maxPrice">Enter maximal price</label>
-                <input type="number" name="maxPrice">
+                <input type="number" name="maxPrice" value = "1000" min = "1" max = "9999999999">
             </div>
             <button type="submit">Apply</button>
         </form>

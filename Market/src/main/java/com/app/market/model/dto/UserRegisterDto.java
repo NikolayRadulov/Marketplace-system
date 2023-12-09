@@ -22,8 +22,8 @@ public class UserRegisterDto {
 	private String phoneNumber;
 	
 	@NotBlank
-	@Size(min = 6, max = 25, message = "Password must be between 6 and 25 characters")
-	@Pattern(regexp = "^(?=(.*[a-z]){3,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\\-__+.]){1,}).{8,}$", message = "The password must contain at least 2 upper case letters, 1 special character and 2 numerals!")
+	@Size(min = 6, max = 25, message = "Password must be between 9 and 25 characters")
+	@Pattern(regexp = "^(?=(.*[a-z]){2,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\\-__+.]){1,}).{8,}$", message = "The password must contain at least 2 upper case letters, 2 lowercase letters, 1 special character and 2 numerals!")
 	private String password;
 	
 	@NotBlank
